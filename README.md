@@ -1,2 +1,7 @@
-# reddit-comments-engine
-Recreation of the nested reddit comments using MERN stack. (Typescript)
+# About
+This is an accurate recreation of the infinitely nested reddit comments.
+
+# Stack
+- Node Express (Typescript)
+- MongoDB
+- React (Vite & Typescript)
