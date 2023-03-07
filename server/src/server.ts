@@ -3,16 +3,23 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-const app = express();
-app.use(cors());
+// Controllers
+import { getPostsController } from "./controller/posts/getPostsController";
+import { createPostController } from "./controller/posts/createPostController";
 
+const app = express();
+app.use(express.json());
+
+// Setup
+app.use(cors());
 mongoose.set("strictQuery", false);
 dotenv.config();
 
-app.get("/", (req: Request, res: Response) => {
-  return res.send("HeY");
-});
+// Endpoints
+app.get("/", getPostsController);
+app.post("/createPost", createPostController);
 
+// MONGO
 console.log("Connecting to the db...");
 mongoose
   .connect(process.env.MONGO_URL!)
