@@ -10,7 +10,6 @@ const Postlist = () => {
 
   if (loading) return <h1>Loading...</h1>;
   if (error) return <h1>Error!</h1>;
-  if (!posts) return <h1>No posts</h1>;
 
   return (
     <div>

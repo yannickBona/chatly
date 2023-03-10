@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 // Controllers
 import { getPostsController } from "./controller/posts/getPostsController";
 import { createPostController } from "./controller/posts/createPostController";
+import { getSinglePostController } from "./controller/posts/getSinglePostController";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ mongoose.set("strictQuery", false);
 
 // Endpoints
 app.get("/posts", getPostsController);
+app.get("/post/:id", getSinglePostController);
 app.post("/createPost", createPostController);
 
 // MONGO
