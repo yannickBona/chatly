@@ -16,8 +16,7 @@ export const logger = {
  */
 function formatDateTime() {
   const now = new Date();
-  const offset = now.getTimezoneOffset();
-  const gmtDate = new Date(now.getTime() + offset * 60 * 1000);
+  const gmtDate = new Date(now.getTime());
   const formattedDate = gmtDate
     .toISOString()
     .replace("T", " ")

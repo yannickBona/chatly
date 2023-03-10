@@ -7,16 +7,22 @@ import dotenv from "dotenv";
 import { getPostsController } from "./controller/posts/getPostsController";
 import { createPostController } from "./controller/posts/createPostController";
 
-const app = express();
-app.use(express.json());
-
-// Setup
-app.use(cors());
-mongoose.set("strictQuery", false);
 dotenv.config();
 
+// Server setup
+const app = express();
+app.use(express.json());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  })
+);
+
+mongoose.set("strictQuery", false);
+
 // Endpoints
-app.get("/", getPostsController);
+app.get("/posts", getPostsController);
 app.post("/createPost", createPostController);
 
 // MONGO
