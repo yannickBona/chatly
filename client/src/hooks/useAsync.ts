@@ -5,7 +5,10 @@ import { useCallback, useEffect, useState } from "react";
  * @param func is the function that contains the request
  * @param dependencies is the dependency array used in the useCallback hook to re-run the hook when the values inside itself change
  */
-export function useAsync(func: () => Promise<any>, dependencies = []) {
+export function useAsync(
+  func: (...options: unknown[]) => Promise<any>,
+  dependencies = []
+) {
   const { execute, ...state } = useAsyncInternal(func, dependencies, true);
 
   // Call immediately the function

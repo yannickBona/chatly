@@ -10,7 +10,7 @@ const Container = styled.form`
   gap: 1rem;
   background: #fff;
   border-radius: 0.5rem;
-  border: 1px solid #c9c9c9;
+  border: 1px solid #cccdcd;
 
   h2 {
     align-self: flex-start;
@@ -18,13 +18,17 @@ const Container = styled.form`
 
   input[type="text"],
   textarea {
-    border: 1px solid #c9c9c9;
+    border: 1px solid #cccdcd;
     background-color: #f7f7f9;
     padding: 1rem;
     font-family: inherit;
     width: 100%;
     border-radius: 0.5rem;
     align-self: center;
+
+    &:focus {
+      outline: 1px solid #b9b9b9;
+    }
   }
 
   textarea {
@@ -35,7 +39,7 @@ const Container = styled.form`
   button {
     align-self: flex-end;
     padding: 1rem 2rem;
-    border: 1px solid #f7f7f9;
+    border: 1px solid #cccdcd;
     background-color: #c9c9c9;
     border-radius: 0.5rem;
     cursor: pointer;
@@ -46,7 +50,11 @@ const Container = styled.form`
       background-color: #b9b9b9;
     }
 
-    :active {
+    &[disabled] {
+      cursor: no-drop;
+    }
+
+    :active:not([disabled]) {
       transform: scale(0.95);
     }
   }

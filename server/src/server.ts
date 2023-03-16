@@ -24,7 +24,7 @@ mongoose.set("strictQuery", false);
 
 // Endpoints
 app.get("/posts", getPostsController);
-app.get("/post/:id", getSinglePostController);
+app.get("/posts/:id", getSinglePostController);
 app.post("/createPost", createPostController);
 
 // MONGO

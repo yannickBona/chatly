@@ -1,5 +1,9 @@
 export interface IPost {
-  _id: string;
+  _id?: string;
   title: string;
   body: string;
 }
+
+// export interface ICreatePostFormData {
+
+// }
