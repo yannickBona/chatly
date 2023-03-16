@@ -1,22 +1,26 @@
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* border: 1px solid red; */
 }
 
 body {
+  font-family: sans-serif;
+  font-size: 16px;
+}
+
+.App {
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  width: 100%;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  border: 1px solid red;
+  min-width: 100vw;
+  background-color: #dae1e7;
 }
 
 img,
