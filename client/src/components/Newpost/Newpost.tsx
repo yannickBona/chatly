@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { IPost } from "../../types";
 import styled from "./styled";
-import { useAsync } from "../../hooks/useAsync";
+import { useAsyncFn } from "../../hooks/useAsync";
 import { createPost } from "../../api/Posts/createPosts";
 
-const Newpost = () => {
+const Newpost: React.FC = () => {
   const [formData, setFormData] = useState<IPost>({ title: "", body: "" });
 
   // useEffect(() => {
@@ -13,12 +13,13 @@ const Newpost = () => {
 
   const handleCreatePost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // const { value, error, loading } = useAsync(() => createPost(formData));
+    // const { value, error, loading } = useAsyncFn(() => createPost(formData));
 
     // if (error) return alert(error);
     // if (loading) alert("Loading...");
     // if (value) return console.log("PostCreated");
     const response = createPost(formData);
+    setFormData({ title: "", body: "" });
   };
 
   return (
