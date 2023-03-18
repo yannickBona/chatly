@@ -4,6 +4,8 @@ export interface IPost {
   body: string;
 }
 
+export type ReqMethods = "GET" | "POST" | "PUT" | "DELETE";
+
 // export interface ICreatePostFormData {
 
 // }

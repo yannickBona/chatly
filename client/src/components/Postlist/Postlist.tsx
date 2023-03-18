@@ -5,7 +5,7 @@ import { useAsync } from "../../hooks/useAsync";
 import { IPost } from "../../types";
 
 const Postlist = () => {
-  const { loading, error, value } = useAsync(getPosts);
+  const { loading, error, value } = useAsync(() => getPosts());
   const posts: IPost[] = value;
 
   if (loading) return <h1>Loading...</h1>;

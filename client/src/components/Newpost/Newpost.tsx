@@ -19,7 +19,6 @@ const Newpost = () => {
     // if (loading) alert("Loading...");
     // if (value) return console.log("PostCreated");
     const response = createPost(formData);
-    console.log(response);
   };
 
   return (
