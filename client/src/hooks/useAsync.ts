@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
  */
 export function useAsync(
   func: (...options: unknown[]) => Promise<any>,
-  dependencies = []
+  dependencies: any[] = []
 ) {
   const { execute, ...state } = useAsyncInternal(func, dependencies, true);
 
@@ -35,7 +35,7 @@ export function useAsyncFn(func: () => Promise<any>, dependencies = []) {
  */
 function useAsyncInternal(
   func: (...params: any[]) => Promise<any>,
-  dependencies = [],
+  dependencies: any[] = [],
   initialLoadingState = false
 ) {
   const [loading, setLoading] = useState(initialLoadingState);

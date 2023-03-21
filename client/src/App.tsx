@@ -3,6 +3,8 @@ import Postlist from "./components/Postlist/Postlist";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Error404 from "./pages/Error/Error404";
 import Home from "./pages/Home/Home";
+import Post from "./components/Post/Post";
+import { PostProvider } from "./contexts/PostContext";
 
 const router = createBrowserRouter([
   {
@@ -12,7 +14,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/post/:id",
-    element: <h1>Inside post</h1>,
+    element: (
+      <PostProvider>
+        <Post />
+      </PostProvider>
+    ),
   },
 ]);
 
