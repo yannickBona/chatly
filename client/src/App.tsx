@@ -1,5 +1,4 @@
 import "./Globals.css";
-import Postlist from "./components/Postlist/Postlist";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Error404 from "./pages/Error/Error404";
 import Home from "./pages/Home/Home";

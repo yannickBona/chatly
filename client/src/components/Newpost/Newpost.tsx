@@ -1,24 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IPost } from "../../types";
 import styled from "./styled";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { createPost } from "../../api/Posts/createPosts";
 
-const Newpost: React.FC = () => {
+interface INewPost {
+  // setPosts: React.Dispatch<React.SetStateAction<IPost[] | undefined>>;
+  // postList?: IPost[] | undefined;
+  setNewPost: React.Dispatch<React.SetStateAction<boolean>>;
+}
+const Newpost: React.FC<INewPost> = ({ setNewPost }) => {
   const [formData, setFormData] = useState<IPost>({ title: "", body: "" });
+  const { loading, error, execute: createNewPostFn } = useAsyncFn(createPost);
 
-  // useEffect(() => {
-  //   console.log(formData);
-  // }, [formData]);
-
+  /**
+   * This creates a new post
+   * @param e is the Subimt event
+   */
   const handleCreatePost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // const { value, error, loading } = useAsyncFn(() => createPost(formData));
 
-    // if (error) return alert(error);
-    // if (loading) alert("Loading...");
-    // if (value) return console.log("PostCreated");
-    const response = createPost(formData);
+    createNewPostFn(formData);
+    setNewPost(true);
+
+    // let newPostList: IPost[];
+    // postList
+    //   ? (newPostList = [...postList, formData])
+    //   : (newPostList = [formData]);
+
+    // setPostList(newPostList);
     setFormData({ title: "", body: "" });
   };
 

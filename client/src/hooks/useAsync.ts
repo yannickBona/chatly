@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react";
  * @param dependencies is the dependency array used in the useCallback hook to re-run the hook when the values inside itself change
  */
 export function useAsync(
-  func: (...options: unknown[]) => Promise<any>,
+  func: (...args: any[]) => Promise<any>,
   dependencies: any[] = []
 ) {
   const { execute, ...state } = useAsyncInternal(func, dependencies, true);
@@ -23,7 +23,10 @@ export function useAsync(
  * @param func is the function that contains the request, this is passed to the internal function
  * @param dependencies is the dependency array used in the useCallback hook, this is passed to the internal function
  */
-export function useAsyncFn(func: () => Promise<any>, dependencies = []) {
+export function useAsyncFn(
+  func: (...args: any[]) => Promise<any>,
+  dependencies: any[] = []
+) {
   return useAsyncInternal(func, dependencies, false);
 }
 
@@ -34,7 +37,7 @@ export function useAsyncFn(func: () => Promise<any>, dependencies = []) {
  * @param initialLoadingState is the initial value of the loading state during the request
  */
 function useAsyncInternal(
-  func: (...params: any[]) => Promise<any>,
+  func: (...args: any[]) => Promise<any>,
   dependencies: any[] = [],
   initialLoadingState = false
 ) {
@@ -45,9 +48,9 @@ function useAsyncInternal(
   /**
    * This is the function used to automatically run the function and set the different states
    */
-  const execute = useCallback((...params: unknown[]) => {
+  const execute = useCallback((...args: unknown[]) => {
     setLoading(true);
-    return func(...params)
+    return func(...args)
       .then((data: unknown) => {
         setValue(data);
         setError(undefined);

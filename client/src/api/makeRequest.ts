@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { ReqMethods } from "../types";
 
 const api = axios.create({
@@ -6,9 +6,9 @@ const api = axios.create({
   withCredentials: true,
 });
 
-export async function makeRequest(method: ReqMethods, url: string, data?: any) {
+export async function makeRequest(options: AxiosRequestConfig<unknown>) {
   return await api
-    .request({ method: method, url: url, data: data })
+    .request(options)
     .then((res) => res.data)
     .catch((err) => Promise.reject(err.response?.data?.error) ?? "Error");
 }
