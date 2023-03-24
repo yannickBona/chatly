@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { colors } from "../../themes/tokens";
 
 const Container = styled.form`
   width: 50%;
@@ -8,9 +9,9 @@ const Container = styled.form`
   justify-content: center;
   padding: 1rem;
   gap: 1rem;
-  background: #fff;
+  background: ${colors.white};
   border-radius: 0.5rem;
-  border: 1px solid #cccdcd;
+  border: 1px solid ${colors.borderColor};
 
   h2 {
     align-self: flex-start;
@@ -18,8 +19,8 @@ const Container = styled.form`
 
   input[type="text"],
   textarea {
-    border: 1px solid #cccdcd;
-    background-color: #f7f7f9;
+    border: 1px solid ${colors.borderColor};
+    background-color: ${colors.background};
     padding: 1rem;
     font-family: inherit;
     width: 100%;
@@ -27,7 +28,7 @@ const Container = styled.form`
     align-self: center;
 
     &:focus {
-      outline: 1px solid #b9b9b9;
+      outline: 1px solid ${colors.borderColorDark};
     }
   }
 
@@ -39,7 +40,7 @@ const Container = styled.form`
   button {
     align-self: flex-end;
     padding: 1rem 2rem;
-    border: 1px solid #cccdcd;
+    border: 1px solid ${colors.borderColor};
     background-color: #c9c9c9;
     border-radius: 0.5rem;
     cursor: pointer;
@@ -47,7 +48,7 @@ const Container = styled.form`
     transition: background-color 200ms ease-in-out;
 
     :hover {
-      background-color: #b9b9b9;
+      background-color: ${colors.borderColorDark};
     }
 
     &[disabled] {
