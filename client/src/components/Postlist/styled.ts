@@ -8,6 +8,7 @@ const Container = styled.div`
   gap: 1.5rem;
 
 
+
   .post {
       background: ${colors.white};
       border-radius: 0.5rem;
@@ -35,6 +36,7 @@ const Container = styled.div`
         right: 0.5rem;
         top: 0rem;
         font-size: 1.2rem;
+        z-ndex: 2;
         :hover{
             transform: scale(1.1)
         }

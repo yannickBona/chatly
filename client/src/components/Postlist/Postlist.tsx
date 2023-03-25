@@ -21,7 +21,7 @@ const Postlist: React.FC<IPostList> = ({ newPost }) => {
     e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
     id: string
   ) => {
-    e.stopPropagation();
+    e.preventDefault();
     const response = await deletePost(id);
   };
 
