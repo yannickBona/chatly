@@ -1,14 +1,14 @@
-import React, { useContext } from "react";
-import { PostContext } from "../../contexts/PostContext";
-import { IPostContext } from "../../contexts/types";
+import React from "react";
 
-const Post = () => {
-  const { post } = useContext<IPostContext>(PostContext);
+import { IPost } from "../../types";
+import styled from "./styled";
+
+const Post: React.FC<IPost> = ({ body, title, _id }) => {
   return (
-    <>
-      <h1>{post?.title}</h1>
-      <p>{post?.body}</p>
-    </>
+    <styled.Container key={_id}>
+      <h1>{title}</h1>
+      <p>{body}</p>
+    </styled.Container>
   );
 };
 

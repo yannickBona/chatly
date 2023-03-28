@@ -7,7 +7,7 @@ import { IPostContext } from "./types";
 
 export const PostContext = createContext<IPostContext>({ post: undefined });
 
-export const PostProvider = ({ children }: { children: JSX.Element }) => {
+export const PostProvider = ({ children }: { children: ReactNode }) => {
   // const [loading, setLoading] = useState(false)
   // const [error, setError] = useState(false)
 
@@ -16,7 +16,6 @@ export const PostProvider = ({ children }: { children: JSX.Element }) => {
   const { loading, error, value } = useAsync(() => getPost(id!), [id]);
   const post: IPost = value;
 
-  console.log(post);
   return (
     <PostContext.Provider
       value={{

@@ -51,7 +51,7 @@ function useAsyncInternal(
   const execute = useCallback((...args: unknown[]) => {
     setLoading(true);
     return func(...args)
-      .then((data: unknown) => {
+      .then((data: any) => {
         setValue(data);
         setError(undefined);
         return data;

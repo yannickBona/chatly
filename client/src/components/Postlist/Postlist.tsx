@@ -1,21 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { deletePost } from "../../api/Posts/deletePost";
 import { getPosts } from "../../api/Posts/getPosts";
+import { PostListContext } from "../../contexts/PostListContext";
+import { IPostListContext } from "../../contexts/types";
 import { useAsync } from "../../hooks/useAsync";
 import { IPost } from "../../types";
+import Post from "../Post/Post";
 import styled from "./styled";
 
-interface IPostList {
-  // setPosts: React.Dispatch<React.SetStateAction<IPost[] | undefined>>;
-  // posts: IPost[] | undefined;
-  newPost: boolean;
-}
-
-const Postlist: React.FC<IPostList> = ({ newPost }) => {
-  const [posts, setPosts] = useState<IPost[]>();
-  const { loading, error, value } = useAsync(() => getPosts(), [newPost]);
-  const postList: IPost[] | undefined = value;
+const Postlist: React.FC = () => {
+  const { postList, setPosts } = useContext<IPostListContext>(PostListContext);
 
   const handleDelete = async (
     e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
@@ -23,17 +18,24 @@ const Postlist: React.FC<IPostList> = ({ newPost }) => {
   ) => {
     e.preventDefault();
     const response = await deletePost(id);
+    const newPosts = postList?.filter((post) => post._id !== response._id);
+    setPosts(newPosts);
   };
 
-  if (loading) return <h1>Loading...</h1>;
-  if (error) return <h1>Error!</h1>;
+  // if (loading) return <h1>Loading...</h1>;
+  // if (error) return <h1>Error!</h1>;
+
   return (
     <styled.Container>
       {postList?.map((post: IPost) => (
-        <Link className="post" key={post._id} to={`/post/${post._id}`}>
-          <h3>{post.title}</h3>
-          <p>{post.body}</p>
-          <span onClick={(e) => handleDelete(e, post._id!)}>x</span>
+        <Link key={post._id} className="post-card" to={`/post/${post._id}`}>
+          <Post title={post?.title} body={post?.body} key={post?._id} />
+          <span
+            className="delete-post"
+            onClick={(e) => handleDelete(e, post._id!)}
+          >
+            ❌
+          </span>
         </Link>
       ))}
     </styled.Container>

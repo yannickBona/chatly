@@ -6,35 +6,37 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  position: relative;
 
 
-
-  .post {
+  .post-card {
       background: ${colors.white};
       border-radius: 0.5rem;
       border: 1px solid ${colors.borderColorDark};
-      padding: 1.5rem;
+      padding: 2rem;
       min-height: 200px;
       font-size: 22px;
       text-decoration: none;
       color: ${colors.black};
       position: relative;
 
-
       :hover{
         outline: 1px solid ${colors.neutral}
       }
+
+      > div{
+        width: 100%;
+        :hover{
+          outline: none;
+        }
+      }
     }
 
-    p {
-      color: ${colors.neutral};
-      margin-top: 1rem;
-    }
 
-    span{
+    .delete-post{
         position: absolute;
         right: 0.5rem;
-        top: 0rem;
+        top: 0.5rem;
         font-size: 1.2rem;
         z-ndex: 2;
         :hover{

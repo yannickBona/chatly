@@ -5,11 +5,10 @@ import { IPost } from "../../types";
 import styled from "./styled";
 
 const Home = () => {
-  const [newPost, setNewPost] = useState<boolean>(false);
   return (
     <styled.Container>
-      <Newpost setNewPost={setNewPost} />
-      <Postlist newPost={newPost} />
+      <Newpost />
+      <Postlist />
     </styled.Container>
   );
 };

@@ -47,7 +47,9 @@ const Container = styled.form`
     font-family: inherit;
     transition: background-color 200ms ease-in-out;
 
-    :hover {
+    :hover,
+    :focus,
+    :active {
       background-color: ${colors.borderColorDark};
     }
 
