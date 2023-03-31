@@ -8,6 +8,7 @@ import { getPostsController } from "./controller/posts/getPostsController";
 import { createPostController } from "./controller/posts/createPostController";
 import { getSinglePostController } from "./controller/posts/getSinglePostController";
 import { deletePostController } from "./controller/posts/deletePostController";
+import { createCommentController } from "./controller/comments/createCommentController";
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.get("/posts", getPostsController);
 app.get("/posts/:id", getSinglePostController);
 app.delete("/posts", deletePostController);
 app.post("/createPost", createPostController);
+app.post("/createComment", createCommentController);
 
 // MONGO
 console.log("Connecting to the db...");

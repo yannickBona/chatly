@@ -8,17 +8,24 @@ const CommentSchema = new Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      default: null,
     },
     postId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Post",
+      default: null,
     },
-    parentId: String,
-    children: [String],
-    like: [
+    parentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
+      default: null,
+    },
+    children: { type: [String], default: [] },
+    likes: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Like",
+        default: [],
       },
     ],
   },
