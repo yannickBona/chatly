@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import CommentForm from "../../components/CommentForm/CommentForm";
 import Post from "../../components/Post/Post";
 import { PostContext } from "../../contexts/PostContext";
 import { IPostContext } from "../../contexts/types";
@@ -11,10 +12,13 @@ const PostPage: React.FC = () => {
 
   return (
     <styled.Container>
-      <Post title={post?.title!} body={post?.body!} key={post?._id} />
       <Link to="/" className="back-button">
         ⬅️
       </Link>
+      <Post title={post?.title!} body={post?.body!} key={post?._id} />
+      <styled.CommentsSection>
+        <CommentForm />
+      </styled.CommentsSection>
     </styled.Container>
   );
 };

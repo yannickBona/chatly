@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { colors } from "../../themes/tokens";
 
 const Container = styled.div`
-  width: 60%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -13,7 +13,6 @@ const Container = styled.div`
       background: ${colors.white};
       border-radius: 0.5rem;
       border: 1px solid ${colors.borderColorDark};
-      padding: 2rem;
       min-height: 200px;
       font-size: 22px;
       text-decoration: none;
@@ -21,7 +20,7 @@ const Container = styled.div`
       position: relative;
 
       :hover{
-        outline: 1px solid ${colors.neutral}
+        border: 1px solid ${colors.neutral}
       }
 
       > div{

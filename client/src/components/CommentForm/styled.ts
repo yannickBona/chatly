@@ -2,22 +2,9 @@ import styled from "styled-components";
 import { colors } from "../../themes/tokens";
 
 const Container = styled.form`
-  width: 70%;
-  align-self: center;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 1rem;
   gap: 1rem;
-  background: ${colors.white};
-  border-radius: 0.5rem;
-  border: 1px solid ${colors.borderColor};
 
-  h2 {
-    align-self: flex-start;
-  }
-
-  input[type="text"],
   textarea {
     border: 1px solid ${colors.borderColor};
     background-color: ${colors.background};
@@ -26,24 +13,21 @@ const Container = styled.form`
     width: 100%;
     border-radius: 0.5rem;
     align-self: center;
+    height: 150px;
+    resize: none;
 
     &:focus {
       outline: 1px solid ${colors.borderColorDark};
     }
   }
 
-  textarea {
-    height: 150px;
-    resize: none;
-  }
-
   button {
-    align-self: flex-end;
     padding: 1rem 2rem;
     border: 1px solid ${colors.borderColor};
     background-color: #c9c9c9;
     border-radius: 0.5rem;
     cursor: pointer;
+    height: 150px;
     font-family: inherit;
     transition: background-color 200ms ease-in-out;
 

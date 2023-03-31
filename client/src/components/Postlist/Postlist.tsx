@@ -29,7 +29,12 @@ const Postlist: React.FC = () => {
     <styled.Container>
       {postList?.map((post: IPost) => (
         <Link key={post._id} className="post-card" to={`/post/${post._id}`}>
-          <Post title={post?.title} body={post?.body} key={post?._id} />
+          <Post
+            isHomePage={true}
+            title={post?.title}
+            body={post?.body}
+            key={post?._id}
+          />
           <span
             className="delete-post"
             onClick={(e) => handleDelete(e, post._id!)}

@@ -4,8 +4,8 @@ export interface IPost {
   body: string;
 }
 
+export interface IPostComponent extends IPost {
+  isHomePage?: boolean;
+}
+
 export type ReqMethods = "GET" | "POST" | "PUT" | "DELETE";
-
-// export interface ICreatePostFormData {
-
-// }
