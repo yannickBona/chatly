@@ -27,6 +27,8 @@ const router = createBrowserRouter([
   },
 ]);
 
+console.log(document.cookie);
+
 function App() {
   return (
     <div className="App">
