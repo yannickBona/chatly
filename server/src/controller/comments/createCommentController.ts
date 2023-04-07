@@ -1,5 +1,5 @@
-import Post from "../../models/Post";
 import Comment from "../../models/Comment";
+import Post from "../../models/Post";
 import { Request, Response } from "express";
 import { logger } from "../../utils/general";
 
@@ -10,17 +10,31 @@ import { logger } from "../../utils/general";
  * @returns the new comment
  */
 
-// TODO: ADD logic
 export const createCommentController = async (req: Request, res: Response) => {
-  logger.info("creating new Post...");
-  // Creating new Post
-  const newComment = new Comment({
-    content: req.body.content,
-    parentId: req.body.parentId,
-  });
+  logger.info("creating new Comment...");
+  try {
+    const postId: string = req.body.postId;
 
-  const savedComment = await newComment.save();
-  logger.info("post created.");
+    // Creating new Post
+    const newComment = new Comment({
+      content: req.body.comment,
+      parentId: req.body.parentId,
+      userId: req.cookies.userId,
+      postId: postId,
+    });
 
-  return res.json(savedComment);
+    // saving comment
+    const savedComment = await newComment.save();
+    logger.info("Comment created.");
+
+    // Adding comment reference in post
+    const post = await Post.findById(postId);
+    post?.comments.push(newComment._id);
+    await post?.save();
+
+    return res.json(savedComment);
+  } catch (err) {
+    logger.error(err as string);
+    return res.status(400).send({ status: "Error", details: err });
+  }
 };

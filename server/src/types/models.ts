@@ -3,6 +3,7 @@ import { Date, ObjectId } from "mongoose";
 export interface IPost {
   title: string;
   body: string;
+  comments: IComment[] | null;
 }
 
 export interface IComment {

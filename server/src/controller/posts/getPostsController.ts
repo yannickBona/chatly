@@ -11,6 +11,6 @@ import { logger } from "../../utils/general";
 
 export const getPostsController = async (req: Request, res: Response) => {
   logger.info("Getting posts...");
-  const posts = await Posts.find();
+  const posts = await Posts.find().populate("comments");
   return res.json(posts.reverse());
 };

@@ -6,19 +6,34 @@ import { PostContext } from "../../contexts/PostContext";
 import { IPostContext } from "../../contexts/types";
 
 import styled from "./styled";
+import { IComment } from "../../types";
 
 const PostPage: React.FC = () => {
-  const { post } = useContext<IPostContext>(PostContext);
+  const { currentPost } = useContext<IPostContext>(PostContext);
 
   return (
     <styled.Container>
       <Link to="/" className="back-button">
         ⬅️
       </Link>
-      <Post title={post?.title!} body={post?.body!} key={post?._id} />
+      <Post
+        comments={currentPost?.comments!}
+        title={currentPost?.title!}
+        body={currentPost?.body!}
+        key={currentPost?._id}
+      />
       <styled.CommentsSection>
         <CommentForm />
       </styled.CommentsSection>
+      {currentPost?.comments
+        ?.map((comment: IComment) => (
+          <div className="comment" key={comment._id}>
+            {/* <span>{comment.userId}</span> */}
+            <p>{comment.content}</p>
+            <span>{comment.createdAt.toString()}</span>
+          </div>
+        ))
+        .reverse()}
     </styled.Container>
   );
 };

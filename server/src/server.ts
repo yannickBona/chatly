@@ -11,6 +11,7 @@ import { createPostController } from "./controller/posts/createPostController";
 import { getSinglePostController } from "./controller/posts/getSinglePostController";
 import { deletePostController } from "./controller/posts/deletePostController";
 import { createCommentController } from "./controller/comments/createCommentController";
+import { getPostCommentsController } from "./controller/comments/getPostCommentsController";
 
 dotenv.config();
 
@@ -35,7 +36,6 @@ let CURRENT_USER_ID: string;
 })();
 
 app.use((req, res, next) => {
-  console.log("Request from id ", req.cookies.userId);
   if (req.cookies.userId !== CURRENT_USER_ID) {
     req.cookies.userId = CURRENT_USER_ID;
     res.clearCookie("userId");
@@ -58,6 +58,7 @@ app.get("/posts/:id", getSinglePostController);
 app.delete("/posts", deletePostController);
 app.post("/createPost", createPostController);
 app.post("/createComment", createCommentController);
+app.get("/posts/:id/comments", getPostCommentsController);
 
 // MONGO
 console.log("Connecting to the db...");

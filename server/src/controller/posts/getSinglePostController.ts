@@ -14,12 +14,10 @@ export const getSinglePostController = async (req: Request, res: Response) => {
   logger.info("Getting post with id", id);
 
   try {
-    const singlePost = await Post.findById(id);
+    const singlePost = await Post.findById(id).populate("comments");
     return res.json(singlePost);
   } catch (err) {
     logger.error(`No post found for id ${id}`);
-    return res
-      .status(400)
-      .send({ status: "Error", details: `No post found for id ${id}` });
+    return res.status(400).send({ status: "Error", details: err });
   }
 };

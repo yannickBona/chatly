@@ -1,4 +1,6 @@
+import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
+import Post from "./Post";
 
 const { Schema } = mongoose;
 
@@ -20,7 +22,7 @@ const CommentSchema = new Schema(
       ref: "Comment",
       default: null,
     },
-    children: { type: [String], default: [] },
+    children: { type: [String], default: null },
     likes: [
       {
         type: mongoose.Schema.Types.ObjectId,

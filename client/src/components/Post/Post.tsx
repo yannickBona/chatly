@@ -6,12 +6,16 @@ import {
   AiOutlineComment,
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { PostContext } from "../../contexts/PostContext";
-import { IPostContext } from "../../contexts/types";
 import { IPostComponent } from "../../types";
 import styled from "./styled";
 
-const Post: React.FC<IPostComponent> = ({ body, title, _id, isHomePage }) => {
+const Post: React.FC<IPostComponent> = ({
+  body,
+  title,
+  _id,
+  comments,
+  isHomePage,
+}) => {
   return (
     <styled.Container key={_id}>
       <i>r/Yannickbona</i>
@@ -20,10 +24,9 @@ const Post: React.FC<IPostComponent> = ({ body, title, _id, isHomePage }) => {
 
       <styled.PostActionsContainer>
         <AiOutlineHeart onClick={() => null} />
-
+        <AiOutlineComment onClick={() => null} />
         {isHomePage && (
           <>
-            <AiOutlineComment onClick={() => null} />
             <AiFillEdit onClick={() => null} />
             <AiFillDelete onClick={() => null} />
           </>
