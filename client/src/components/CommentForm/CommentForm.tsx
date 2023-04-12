@@ -4,14 +4,16 @@ import { useAsyncFn } from "../../hooks/useAsync";
 import { createComment } from "../../api/Comments/createComment";
 import { useParams } from "react-router-dom";
 import { PostContext } from "../../contexts/PostContext";
-import { IPostContext } from "../../contexts/types";
+import { IPostContext, IPostListContext } from "../../contexts/types";
 import { $ResponseData, IPost } from "../../types";
+import { PostListContext } from "../../contexts/PostListContext";
 
 const CommentForm = () => {
   const [comment, setComment] = useState("");
   const { execute: createCommentFn } = useAsyncFn(createComment);
   const { id: postId } = useParams();
   const { setCurrentPost, currentPost } = useContext<IPostContext>(PostContext);
+  const { postList, setPosts } = useContext<IPostListContext>(PostListContext);
 
   /**
    * Creates a new comment for a specific post
@@ -19,19 +21,27 @@ const CommentForm = () => {
    */
   const handleCommentCreate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!currentPost) return;
+
     const response: $ResponseData = await createCommentFn(comment, postId);
     if (response.status !== 200) return;
 
     const newComment = response.data.comment;
+    const updatedPosts = [...postList!];
+
+    const postIdx = updatedPosts.findIndex(
+      (post) => post._id === currentPost?._id
+    );
 
     const newComments = [...(currentPost?.comments ?? []), newComment];
-
-    if (!currentPost) return;
     const newPost: IPost = {
       ...currentPost,
       comments: newComments,
     };
+
+    updatedPosts[postIdx] = newPost;
     setCurrentPost(newPost);
+    setPosts(updatedPosts);
     setComment("");
   };
   return (

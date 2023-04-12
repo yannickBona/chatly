@@ -128,11 +128,11 @@ const PostPage: React.FC = () => {
       <Post onDelete={() => null} {...currentPost} key={currentPost?._id} />
       <styled.CommentsSection>
         <CommentForm />
-        {currentPost?.comments?.length === 0 && (
+        {currentPost.comments.length === 0 && (
           <span className="no-comments">No comments here. Be the first!</span>
         )}
-        {currentPost?.comments
-          ?.map((comment: IComment) => (
+        {currentPost.comments
+          .map((comment: IComment) => (
             <div className="comment" key={comment._id}>
               <div>
                 <span className="comment__user-avatar">
@@ -173,7 +173,7 @@ const PostPage: React.FC = () => {
                     />
                   )}
 
-                  {comment?.likes.length}
+                  {comment.likes.length}
                 </span>
 
                 {comment.owner === user?.username && (
