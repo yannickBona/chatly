@@ -10,7 +10,7 @@ const Container = styled.div`
   gap: 2rem;
 
   .back-button {
-    position: absolute;
+    position: fixed;
     left: 3rem;
     text-decoration: none;
     font-size: 1.5rem;
@@ -30,8 +30,54 @@ const CommentsSection = styled.div`
   font-size: 18px;
   line-height: 1.5rem;
   color: ${colors.black};
-  cursor: pointer;
   position: relative;
+
+  .no-comments {
+    width: 100%;
+    text-align: center;
+    color: ${colors.neutral};
+    margin-top: 1rem;
+  }
+
+  .comment {
+    padding: 1.5rem;
+    margin-right: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .comment__date {
+      font-size: 1rem;
+      color: ${colors.neutral};
+    }
+
+    .comment__user-avatar {
+      position: relative;
+      margin-right: 0.8rem;
+
+      padding: 1rem;
+      font-size: 1.5rem;
+
+      svg {
+        position: absolute;
+
+        padding: 0.5rem;
+        box-sizing: content-box;
+        border: 2px solid ${colors.borderColorDark};
+        color: ${colors.neutral};
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    p {
+      color: ${colors.neutral};
+      line-height: 1.5rem;
+      padding: 0.5rem 0;
+    }
+  }
 
   :has(textarea:active, textarea:focus, button:active, button:focus) {
     outline: none;
@@ -47,4 +93,20 @@ const CommentsSection = styled.div`
   }
 `;
 
-export default { Container, CommentsSection };
+const commentActionsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.5rem;
+
+  svg:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+
+  > svg:nth-child(1) {
+    color: red;
+  }
+`;
+
+export default { Container, CommentsSection, commentActionsContainer };

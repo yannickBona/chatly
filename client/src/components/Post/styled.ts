@@ -30,8 +30,14 @@ const Container = styled.div`
 const PostActionsContainer = styled.div`
   display: flex;
   align-items: center;
-  font-size: 20px;
+  font-size: 1.5rem;
   gap: 1rem;
+
+  .comment {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+  }
 
   svg:hover {
     transform: scale(1.2);

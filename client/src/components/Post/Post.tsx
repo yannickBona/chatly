@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import {
-  AiFillEdit,
-  AiFillDelete,
+  AiOutlineEdit,
+  AiOutlineDelete,
   AiOutlineHeart,
   AiOutlineComment,
 } from "react-icons/ai";
@@ -24,11 +24,13 @@ const Post: React.FC<IPostComponent> = ({
 
       <styled.PostActionsContainer>
         <AiOutlineHeart onClick={() => null} />
-        <AiOutlineComment onClick={() => null} />
+        <span className="comment">
+          <AiOutlineComment onClick={() => null} /> {comments?.length}
+        </span>
         {isHomePage && (
           <>
-            <AiFillEdit onClick={() => null} />
-            <AiFillDelete onClick={() => null} />
+            <AiOutlineEdit onClick={() => null} />
+            <AiOutlineDelete onClick={() => null} />
           </>
         )}
       </styled.PostActionsContainer>

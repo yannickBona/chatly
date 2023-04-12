@@ -31,7 +31,7 @@ app.use(
  */
 let CURRENT_USER_ID: string;
 (async () => {
-  const response = await User.findOne({ username: "gio" });
+  const response = await User.findOne({ username: "yan" });
   CURRENT_USER_ID = response?._id.toString() ?? "1";
 })();
 

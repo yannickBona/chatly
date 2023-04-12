@@ -33,6 +33,7 @@ const Postlist: React.FC = () => {
             isHomePage={true}
             title={post?.title}
             body={post?.body}
+            comments={post?.comments}
             key={post?._id}
           />
           <span
