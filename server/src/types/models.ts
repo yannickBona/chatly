@@ -1,9 +1,17 @@
 import { Date, ObjectId } from "mongoose";
 
 export interface IPost {
+  _id: string;
   title: string;
   body: string;
-  comments: IComment[] | null;
+  likes: ObjectId[] | [];
+  comments: IComment[] | [];
+}
+export interface ILike {
+  _id: string;
+  userId: string;
+  postId?: string;
+  commentId?: string;
 }
 
 export interface IComment {

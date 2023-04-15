@@ -15,8 +15,11 @@ const Container = styled.div`
   line-height: 1.5rem;
   text-decoration: none;
   color: ${colors.black};
-  cursor: pointer;
   position: relative;
+
+  svg {
+    cursor: pointer;
+  }
 
   p {
     color: ${colors.neutral};
@@ -33,10 +36,15 @@ const PostActionsContainer = styled.div`
   font-size: 1.5rem;
   gap: 1rem;
 
-  .comment {
+  .comments,
+  .likes {
     display: flex;
     gap: 0.3rem;
     align-items: center;
+
+    .liked {
+      color: red;
+    }
   }
 
   svg:hover {

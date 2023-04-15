@@ -14,6 +14,6 @@ export const deletePostController = async (req: Request, res: Response) => {
   const id = req.body.id;
   logger.info(`deleting post${id}`);
   const deletedPost = await Post.findByIdAndDelete(id);
-  logger.info(`post deleted${id}`);
+  logger.info(`post deleted ${id}`);
   return res.status(200).json(deletedPost);
 };

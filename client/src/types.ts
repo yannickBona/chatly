@@ -3,6 +3,7 @@ export interface IPost {
   title: string | undefined;
   body: string | undefined;
   comments?: IComment[] | null;
+  likes: ILike[] | [];
 }
 
 export interface IComment {
@@ -12,9 +13,15 @@ export interface IComment {
   postId: string;
   parentId: string;
   children: string[];
-  likes: string[];
+  likes: ILike[];
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface ILike {
+  userid: string;
+  postId?: string;
+  commentId: string;
 }
 
 export interface IPostComponent extends IPost {

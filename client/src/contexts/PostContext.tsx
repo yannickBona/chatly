@@ -26,7 +26,7 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
     if (post) {
       setCurrentPost(post);
     }
-  }, [post?.comments]);
+  }, [post?.comments, post?.likes]);
 
   const contextData: IPostContext = { currentPost, setCurrentPost };
 

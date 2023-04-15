@@ -12,6 +12,8 @@ import { getSinglePostController } from "./controller/posts/getSinglePostControl
 import { deletePostController } from "./controller/posts/deletePostController";
 import { createCommentController } from "./controller/comments/createCommentController";
 import { getPostCommentsController } from "./controller/comments/getPostCommentsController";
+import { createLikeOnPostController } from "./controller/likes/createLikeOnPostController";
+import { removeLikeOnPostController } from "./controller/likes/removeLikeOnPostController";
 
 dotenv.config();
 
@@ -28,6 +30,7 @@ app.use(
 
 /**
  * Cookie middleware, forces the cookie to the selected user before any request
+ * This "fakes" an auth system
  */
 let CURRENT_USER_ID: string;
 (async () => {
@@ -36,6 +39,7 @@ let CURRENT_USER_ID: string;
 })();
 
 app.use((req, res, next) => {
+  console.log(req.cookies.userId);
   if (req.cookies.userId !== CURRENT_USER_ID) {
     req.cookies.userId = CURRENT_USER_ID;
     res.clearCookie("userId");
@@ -59,6 +63,8 @@ app.delete("/posts", deletePostController);
 app.post("/createPost", createPostController);
 app.post("/createComment", createCommentController);
 app.get("/posts/:id/comments", getPostCommentsController);
+app.post("/post/:id/like", createLikeOnPostController);
+app.delete("/post/:id/like", removeLikeOnPostController);
 
 // MONGO
 console.log("Connecting to the db...");

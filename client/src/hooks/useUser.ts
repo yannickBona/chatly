@@ -1,4 +1,4 @@
 export function useUser() {
-  const id = document.cookie.match(/userId=(?<id>[^;]+);?$/)?.groups?.id;
+  const id = /userId=([^;]*)/.exec(document.cookie)?.[1];
   return { id: id };
 }

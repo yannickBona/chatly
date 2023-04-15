@@ -25,9 +25,10 @@ const PostPage: React.FC = () => {
         ⬅️
       </Link>
       <Post
-        comments={currentPost?.comments!}
-        title={currentPost?.title!}
-        body={currentPost?.body!}
+        comments={currentPost?.comments}
+        likes={currentPost?.likes}
+        title={currentPost?.title}
+        body={currentPost?.body}
         key={currentPost?._id}
       />
       <styled.CommentsSection>
