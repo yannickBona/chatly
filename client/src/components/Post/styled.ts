@@ -41,8 +41,8 @@ const PostActionsContainer = styled.div`
     display: flex;
     gap: 0.3rem;
     align-items: center;
-
-    .liked {
+    user-select: none;
+    .filled {
       color: red;
     }
   }

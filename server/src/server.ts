@@ -14,6 +14,8 @@ import { createCommentController } from "./controller/comments/createCommentCont
 import { getPostCommentsController } from "./controller/comments/getPostCommentsController";
 import { createLikeOnPostController } from "./controller/likes/createLikeOnPostController";
 import { removeLikeOnPostController } from "./controller/likes/removeLikeOnPostController";
+import { createLikeOnCommentController } from "./controller/likes/createLikeOnCommentController";
+import { removeLikeOnCommentController } from "./controller/likes/removeLikeOnCommentController";
 
 dotenv.config();
 
@@ -34,15 +36,14 @@ app.use(
  */
 let CURRENT_USER_ID: string;
 (async () => {
-  const response = await User.findOne({ username: "yan" });
+  const response = await User.findOne({ username: "gio" });
   CURRENT_USER_ID = response?._id.toString() ?? "1";
 })();
 
 app.use((req, res, next) => {
-  console.log(req.cookies.userId);
+  console.log("LOGGED AS ", CURRENT_USER_ID);
   if (req.cookies.userId !== CURRENT_USER_ID) {
     req.cookies.userId = CURRENT_USER_ID;
-    res.clearCookie("userId");
     console.log(`Auth cookie set to ${CURRENT_USER_ID}`);
     res.cookie("userId", CURRENT_USER_ID, {
       maxAge: 3600000000,
@@ -65,6 +66,14 @@ app.post("/createComment", createCommentController);
 app.get("/posts/:id/comments", getPostCommentsController);
 app.post("/post/:id/like", createLikeOnPostController);
 app.delete("/post/:id/like", removeLikeOnPostController);
+app.post(
+  "/posts/:postId/comments/:commentId/like",
+  createLikeOnCommentController
+);
+app.delete(
+  "/posts/:postId/comments/:commentId/like",
+  removeLikeOnCommentController
+);
 
 // MONGO
 console.log("Connecting to the db...");

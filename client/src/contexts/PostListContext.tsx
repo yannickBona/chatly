@@ -13,8 +13,6 @@ export function PostListProvider({ children }: { children: ReactNode }) {
 
   const data: IPostListContext = { postList, setPosts };
 
-  useEffect(() => {}, [posts]);
-
   return (
     <PostListContext.Provider value={data}>
       {loading ? <h1>Loading</h1> : error ? <h1>error</h1> : children}

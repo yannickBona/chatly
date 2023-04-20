@@ -99,6 +99,17 @@ const commentActionsContainer = styled.div`
   gap: 1rem;
   font-size: 1.5rem;
 
+  .comments,
+  .likes {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+    user-select: none;
+    .filled {
+      color: red;
+    }
+  }
+
   svg:hover {
     transform: scale(1.2);
     cursor: pointer;

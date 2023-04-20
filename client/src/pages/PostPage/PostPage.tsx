@@ -1,12 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CommentForm from "../../components/CommentForm/CommentForm";
 import Post from "../../components/Post/Post";
 import { PostContext } from "../../contexts/PostContext";
 import { IPostContext } from "../../contexts/types";
+import { manageLikeOnComment } from "../../api/likes/manageLikeOnComment";
 
 import styled from "./styled";
-import { IComment } from "../../types";
+import { IComment, ILike, IPost } from "../../types";
 import { formatDate } from "../../helpers/dateFormat";
 import {
   AiOutlineDelete,
@@ -14,10 +15,64 @@ import {
   AiOutlineComment,
   AiOutlineHeart,
   AiOutlineUser,
+  AiFillHeart,
 } from "react-icons/ai";
+import { useAsyncFn } from "../../hooks/useAsync";
+import { useUser } from "../../hooks/useUser";
 
 const PostPage: React.FC = () => {
-  const { currentPost } = useContext<IPostContext>(PostContext);
+  const { currentPost, setCurrentPost } = useContext<IPostContext>(PostContext);
+  const { execute: manageCommentFn } = useAsyncFn(manageLikeOnComment);
+  const { id: userId } = useUser();
+
+  const [isLiked, setisLiked] = useState(false);
+
+  const handleLikeOnComment = async (comment: IComment) => {
+    if (!comment || !currentPost?.comments) return;
+    const idx = currentPost.comments.findIndex(
+      (comm) => comm._id === comment._id
+    );
+
+    if (!comment.likes.some((like: ILike) => like.postId === userId)) {
+      const newLike: ILike = await manageCommentFn(
+        comment._id,
+        currentPost._id,
+        "POST"
+      );
+      const newLikes = [...(comment.likes ?? []), newLike];
+
+      const updatedComments = [...currentPost?.comments];
+      updatedComments[idx] = { ...updatedComments[idx], likes: newLikes };
+
+      setCurrentPost((prevPost: IPost | undefined) => {
+        return {
+          ...prevPost,
+          comments: updatedComments,
+        };
+      });
+    }
+
+    if (comment.likes.some((like: ILike) => like.postId === userId)) {
+      const removedLike: ILike = await manageCommentFn(
+        comment._id,
+        currentPost._id,
+        "DELETE"
+      );
+      const newLikes = comment.likes?.filter(
+        (like: ILike) => like.userid !== removedLike.userid
+      );
+
+      const updatedComments = [...currentPost?.comments];
+      updatedComments[idx] = { ...updatedComments[idx], likes: newLikes };
+
+      setCurrentPost((prevPost: IPost | undefined) => {
+        return {
+          ...prevPost,
+          comments: updatedComments,
+        };
+      });
+    }
+  };
 
   return (
     <styled.Container>
@@ -51,9 +106,24 @@ const PostPage: React.FC = () => {
               <p>{comment.content}</p>
 
               <styled.commentActionsContainer>
-                <AiOutlineHeart onClick={() => null} />
+                <span className="likes">
+                  {comment.likes.some((like) => like.userid === userId) ? (
+                    <AiFillHeart
+                      className="filled"
+                      onClick={() => handleLikeOnComment(comment)}
+                    />
+                  ) : (
+                    <AiOutlineHeart
+                      onClick={() => handleLikeOnComment(comment)}
+                    />
+                  )}
+
+                  {comment?.likes.length}
+                </span>
+
                 <AiOutlineEdit onClick={() => null} />
                 <AiOutlineDelete onClick={() => null} />
+
                 <AiOutlineComment onClick={() => null} />
               </styled.commentActionsContainer>
             </div>

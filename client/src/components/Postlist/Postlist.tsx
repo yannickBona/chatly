@@ -34,7 +34,9 @@ const Postlist: React.FC = () => {
             title={post?.title}
             body={post?.body}
             comments={post?.comments}
+            likes={post?.likes}
             key={post?._id}
+            _id={post?._id}
           />
           <span
             className="delete-post"

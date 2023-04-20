@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
+import mongoose, { Error } from "mongoose";
 import Post from "./Post";
 import Comment from "./Comment";
+import { FilterQuery, ObjectId } from "mongoose";
 import { ILike } from "../types/models";
 
 const { Schema } = mongoose;
@@ -46,26 +47,35 @@ LikeSchema.pre("save", async function (next) {
 
 /**
  * Middleware that deletes the like to the post/comment
+ * this is done before deleting the actual like
  */
-LikeSchema.pre("findOneAndRemove", async function (next) {
-  const postId = this.getQuery()["postId"];
-  const commentId = this.getQuery()["commentId"];
+LikeSchema.pre(
+  "findOneAndRemove",
+  async function (this: FilterQuery<ILike>, next) {
+    const { userId, postId } = this._conditions;
+    const commentId = this.getQuery()["commentId"];
 
-  if (postId) {
-    const post = await Post.findById(postId);
-    console.log(post?.likes);
-    throw new Error("DSD");
-    await post?.save();
+    if (postId) {
+      const post = await Post.findById(postId);
+      if (!post) return next(); // Check if post exists
+
+      post.likes = post.likes.filter((like) => like.toString() !== userId);
+      await post.save();
+    }
+
+    if (commentId) {
+      const comment = await Comment.findById(commentId);
+      if (!comment) return next(); // Check if comment exists
+      console.log(comment);
+      comment.likes = comment.likes.filter(
+        (like) => like.toString() !== userId
+      );
+      await comment.save();
+    }
+
+    next();
   }
-
-  if (commentId) {
-    const comment = await Comment.findById(commentId).populate("likes");
-    if (!comment) return;
-    await comment?.save();
-  }
-
-  next();
-});
+);
 
 const likeModel = mongoose.model("Like", LikeSchema);
 

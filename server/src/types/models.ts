@@ -20,7 +20,7 @@ export interface IComment {
   postId: ObjectId;
   parentId: ObjectId;
   children: ObjectId[];
-  likes: ObjectId[];
+  likes: ILike[];
   createdAt: NativeDate;
   updatedAt: NativeDate;
 }

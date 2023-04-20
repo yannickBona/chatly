@@ -3,11 +3,11 @@ import Like from "../../models/Like";
 import { Response, Request } from "express";
 
 /**
- * This sets a like on a post
+ * This sets a like on a comment
  * @param req
  * @param res
  */
-export const removeLikeOnPostController = async (
+export const removeLikeOnCommentController = async (
   req: Request,
   res: Response
 ) => {
@@ -15,9 +15,9 @@ export const removeLikeOnPostController = async (
     const userId = req.cookies.userId;
     const deletedLike = await Like.findOneAndRemove({
       userId: userId,
-      postId: req.params.id,
+      commentId: req.params.commentId,
     });
-    logger.info(`Removed like on post ${req.params.id}`);
+    logger.info(`Removed like on comment ${req.params.commentId}`);
 
     return res.json(deletedLike);
   } catch (err) {

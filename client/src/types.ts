@@ -1,9 +1,9 @@
 export interface IPost {
   _id?: string;
-  title: string | undefined;
-  body: string | undefined;
+  title?: string | undefined;
+  body?: string | undefined;
   comments?: IComment[] | null;
-  likes: ILike[] | [];
+  likes?: ILike[] | [];
 }
 
 export interface IComment {
