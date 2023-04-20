@@ -24,7 +24,6 @@ const Postlist: React.FC = () => {
 
   // if (loading) return <h1>Loading...</h1>;
   // if (error) return <h1>Error!</h1>;
-  console.log(postList);
 
   return (
     <styled.Container>

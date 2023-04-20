@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import Comments from "./Comment";
-import { IPost } from "../types/models";
 import { logger } from "../utils/general";
+import Like from "./Like";
 
 const { Schema } = mongoose;
 
@@ -25,17 +25,22 @@ const PostSchema = new Schema(
   }
 );
 
-// Middleware to delete all comments related to the post before deleting the actual post
+// Middleware to delete all comments and likes related to the post before deleting the actual post
 PostSchema.pre("findOneAndDelete", async function (next) {
-  console.log("YO", this.getQuery());
   try {
     const postId = this.getQuery()["_id"];
     const postComments = await Comments.deleteMany({ postId });
+    const postLikes = await Like.deleteMany({ postId });
+
+    logger.info(
+      `Deleted ${postLikes.deletedCount} likes related to post ${postId}`
+    );
+
     logger.info(
       `Deleted ${postComments.deletedCount} comments related to post ${postId}`
     );
-  } catch {
-    logger.info(`No comments found`);
+  } catch (err) {
+    logger.error(`No comments found`, err);
   }
   next();
 });

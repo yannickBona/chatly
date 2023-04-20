@@ -66,7 +66,6 @@ LikeSchema.pre(
     if (commentId) {
       const comment = await Comment.findById(commentId);
       if (!comment) return next(); // Check if comment exists
-      console.log(comment);
       comment.likes = comment.likes.filter(
         (like) => like.toString() !== userId
       );

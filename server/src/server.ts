@@ -16,6 +16,7 @@ import { createLikeOnPostController } from "./controller/likes/createLikeOnPostC
 import { removeLikeOnPostController } from "./controller/likes/removeLikeOnPostController";
 import { createLikeOnCommentController } from "./controller/likes/createLikeOnCommentController";
 import { removeLikeOnCommentController } from "./controller/likes/removeLikeOnCommentController";
+import { logger } from "./utils/general";
 
 dotenv.config();
 
@@ -41,10 +42,10 @@ let CURRENT_USER_ID: string;
 })();
 
 app.use((req, res, next) => {
-  console.log("LOGGED AS ", CURRENT_USER_ID);
+  logger.info("LOGGED AS ", CURRENT_USER_ID);
   if (req.cookies.userId !== CURRENT_USER_ID) {
     req.cookies.userId = CURRENT_USER_ID;
-    console.log(`Auth cookie set to ${CURRENT_USER_ID}`);
+    logger.info(`Auth cookie set to ${CURRENT_USER_ID}`);
     res.cookie("userId", CURRENT_USER_ID, {
       maxAge: 3600000000,
       sameSite: "none",
@@ -76,15 +77,17 @@ app.delete(
 );
 
 // MONGO
-console.log("Connecting to the db...");
+logger.info("Connecting to the db...");
 mongoose
   .connect(process.env.MONGO_URL!)
   .then(() => {
-    console.log("connected to the DB");
+    logger.info("DB Ready");
     app.listen(process.env.PORT, () => {
-      console.log(`listening on port ${process.env.PORT}..`);
+      logger.info(
+        `Server listening on  >${process.env.API_URL}:${process.env.PORT}`
+      );
     });
   })
   .catch((err) => {
-    console.log(`Failed to connect to the DB: ${err}`);
+    logger.error(`Failed to connect to the DB: ${err}`);
   });

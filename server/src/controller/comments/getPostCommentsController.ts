@@ -9,10 +9,9 @@ export const getPostCommentsController = async (
   req: Request,
   res: Response
 ) => {
-  logger.info("Getting Comments...");
+  logger.info(`/posts/${req.params.id}/comments`);
   try {
     const postId = req.params.id;
-    console.log("ID is", postId);
     const comments = await Comments.find({ postId: postId });
     return res.json(comments);
   } catch (err) {

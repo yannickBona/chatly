@@ -11,7 +11,7 @@ import { logger } from "../../utils/general";
  */
 
 export const createCommentController = async (req: Request, res: Response) => {
-  logger.info("creating new Comment...");
+  logger.info("/createComment");
   try {
     const postId: string = req.body.postId;
 
@@ -25,7 +25,6 @@ export const createCommentController = async (req: Request, res: Response) => {
 
     // saving comment
     const savedComment = await newComment.save();
-    logger.info("Comment created.");
 
     // Adding comment reference in post
     const post = await Post.findById(postId);
