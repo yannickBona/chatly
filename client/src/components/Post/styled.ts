@@ -17,6 +17,15 @@ const Container = styled.div`
   color: ${colors.black};
   position: relative;
 
+  .owner {
+    .post-date {
+      font-size: 1rem;
+      color: ${colors.neutral};
+    }
+    display: flex;
+    gap: 0.5rem;
+  }
+
   svg {
     cursor: pointer;
   }

@@ -79,13 +79,7 @@ const PostPage: React.FC = () => {
       <Link to="/" className="back-button">
         ⬅️
       </Link>
-      <Post
-        comments={currentPost?.comments}
-        likes={currentPost?.likes}
-        title={currentPost?.title}
-        body={currentPost?.body}
-        key={currentPost?._id}
-      />
+      <Post {...currentPost} key={currentPost?._id} />
       <styled.CommentsSection>
         <CommentForm />
         {currentPost?.comments?.length === 0 && (

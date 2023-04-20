@@ -1,4 +1,5 @@
-export function formatDate(dateString: string) {
+export function formatDate(dateString: string | undefined) {
+  if (!dateString) return;
   const date = new Date(dateString);
   date.setHours(date.getHours()); // Add 1 hour for CET timezone
   const monthNames = [

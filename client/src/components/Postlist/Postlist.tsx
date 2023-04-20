@@ -24,20 +24,13 @@ const Postlist: React.FC = () => {
 
   // if (loading) return <h1>Loading...</h1>;
   // if (error) return <h1>Error!</h1>;
+  console.log(postList);
 
   return (
     <styled.Container>
       {postList?.map((post: IPost) => (
         <Link key={post._id} className="post-card" to={`/post/${post._id}`}>
-          <Post
-            isHomePage={true}
-            title={post?.title}
-            body={post?.body}
-            comments={post?.comments}
-            likes={post?.likes}
-            key={post?._id}
-            _id={post?._id}
-          />
+          <Post isHomePage={true} key={post?._id} {...post} />
           <span
             className="delete-post"
             onClick={(e) => handleDelete(e, post._id!)}

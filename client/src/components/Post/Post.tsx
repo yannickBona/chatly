@@ -14,7 +14,7 @@ import { IPostContext, IPostListContext } from "../../contexts/types";
 import { PostContext } from "../../contexts/PostContext";
 import { useUser } from "../../hooks/useUser";
 import { PostListContext } from "../../contexts/PostListContext";
-import Postlist from "../Postlist/Postlist";
+import { formatDate } from "../../helpers/dateFormat";
 
 const Post: React.FC<IPostComponent> = ({
   body,
@@ -22,6 +22,7 @@ const Post: React.FC<IPostComponent> = ({
   _id,
   likes,
   comments,
+  createdAt,
   isHomePage,
 }) => {
   /**
@@ -34,7 +35,7 @@ const Post: React.FC<IPostComponent> = ({
   const { execute: manageLikeFn } = useAsyncFn(manageLikeOnPost);
   const { id: userId } = useUser();
 
-  useEffect(() => {
+  const postDate = useEffect(() => {
     if (likes?.length === 0 || !likes) return;
     setisLiked(likes.some((like: ILike) => like.userid === userId));
   }, []);
@@ -100,7 +101,17 @@ const Post: React.FC<IPostComponent> = ({
 
   return (
     <styled.Container key={_id}>
-      <i>r/Yannickbona</i>
+      <div className="owner">
+        <i>r/Yannickbona</i>·{" "}
+        <span className="post-date">
+          {formatDate(
+            currentPost?.createdAt
+              ? currentPost?.createdAt.toString()
+              : createdAt?.toString()
+          )}
+        </span>
+      </div>
+
       <h1>{title}</h1>
       <p>{body}</p>
 
