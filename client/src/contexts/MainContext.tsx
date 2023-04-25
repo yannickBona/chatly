@@ -1,15 +1,29 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { getPosts } from "../api/Posts/getPosts";
 import { IPost } from "../types";
-import { IMainContext, ModalTypes } from "./types";
+import { IAuthContext, IMainContext, ModalTypes } from "./types";
+import { deletePost } from "../api/Posts/deletePost";
+import { AuthContext } from "./AuthContext";
 
 export const MainContext = createContext<any>({});
 
 export function MainContextProvider({ children }: { children: ReactNode }) {
   const [posts, setPosts] = useState<IPost[] | undefined>();
   const [openModal, setOpenModal] = useState<ModalTypes | null>(null);
+  const [selectedPost, setSelectedPost] = useState<IPost | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const { setUser } = useContext<IAuthContext>(AuthContext);
+
+  useEffect(() => {
+    loadPosts();
+  }, []);
 
   const loadPosts = async () => {
     try {
@@ -25,15 +39,30 @@ export function MainContextProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  useEffect(() => {
-    loadPosts();
-  }, []);
+  const handlePostDelete = async (id: string) => {
+    // e.preventDefault();
+    const response = await deletePost(id);
+    if (response.status !== 200) return;
+
+    setUser((prevUser) => {
+      if (!prevUser) return null;
+      return { ...prevUser, postsUploaded: prevUser?.postsUploaded - 1 };
+    });
+
+    const newPosts = posts?.filter(
+      (post) => post._id !== response.data.post._id
+    );
+    setPosts(newPosts);
+  };
 
   const data: IMainContext = {
     postList: posts,
     setPosts,
     openModal,
     setOpenModal,
+    selectedPost,
+    setSelectedPost,
+    handlePostDelete,
   };
 
   return (

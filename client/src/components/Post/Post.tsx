@@ -18,7 +18,6 @@ import { formatDate } from "../../helpers/dateFormat";
 import EditForm from "../EditForm/EditForm";
 import { useParams } from "react-router-dom";
 import { MainContext } from "../../contexts/MainContext";
-import DeletePostModal from "../DeletePostModal";
 
 const Post: React.FC<IPostComponent> = ({
   body,
@@ -28,7 +27,6 @@ const Post: React.FC<IPostComponent> = ({
   comments,
   createdAt,
   isHomePage,
-  onDelete,
   owner,
   suggestedPosts,
   setSuggestedPosts,
@@ -37,7 +35,7 @@ const Post: React.FC<IPostComponent> = ({
    * Creates a like on the post
    */
   const { currentPost } = useContext<IPostContext>(PostContext);
-  const { setPosts, postList, setOpenModal, openModal } =
+  const { setPosts, postList, setOpenModal, setSelectedPost } =
     useContext<IMainContext>(MainContext);
   const [isLiked, setisLiked] = useState(false);
   const [currentLikes, setCurrentLikes] = useState(likes?.length ?? 0);
@@ -132,6 +130,17 @@ const Post: React.FC<IPostComponent> = ({
     setEditMode((prevMode) => !prevMode);
   };
 
+  const handlePostDelete = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
+    e.preventDefault();
+
+    const selectedPost =
+      currentPost ?? postList?.find((post) => post._id === _id);
+
+    if (!selectedPost) return;
+    setSelectedPost(selectedPost);
+    setOpenModal("delete-post");
+  };
+
   return (
     <styled.Container key={`post-${_id}`}>
       <div className="owner">
@@ -169,12 +178,7 @@ const Post: React.FC<IPostComponent> = ({
 
         {isOwner &&
           (isHomePage ? (
-            <AiOutlineDelete
-              onClick={(e) => {
-                e.preventDefault();
-                setOpenModal("delete-post");
-              }}
-            />
+            <AiOutlineDelete onClick={handlePostDelete} />
           ) : (
             <AiOutlineEdit onClick={handleEditMode} />
           ))}

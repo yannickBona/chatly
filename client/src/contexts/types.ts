@@ -11,6 +11,9 @@ export interface IMainContext {
   setPosts: React.Dispatch<React.SetStateAction<IPost[] | undefined>>;
   openModal: ModalTypes | null;
   setOpenModal: React.Dispatch<React.SetStateAction<ModalTypes | null>>;
+  selectedPost: IPost | null;
+  setSelectedPost: React.Dispatch<React.SetStateAction<IPost | null>>;
+  handlePostDelete: (id: string) => Promise<void>;
 }
 
 export type TUser = {

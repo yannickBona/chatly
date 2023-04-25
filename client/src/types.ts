@@ -30,7 +30,6 @@ export interface ILike {
 
 export interface IPostComponent extends IPost {
   isHomePage?: boolean;
-  onDelete: (id: string) => Promise<void> | null;
   suggestedPosts?: IPost[];
   setSuggestedPosts?: React.Dispatch<React.SetStateAction<IPost[]>>;
 }
