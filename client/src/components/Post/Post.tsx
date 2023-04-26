@@ -123,7 +123,7 @@ const Post: React.FC<IPostComponent> = ({
   };
 
   const updateLikes = () => {
-    const updatedLikes = isLiked ? 1 : -1;
+    const updatedLikes = !isLiked ? 1 : -1;
     setCurrentLikes((prevLikes) => prevLikes + updatedLikes);
     setisLiked((isLiked) => !isLiked);
   };
