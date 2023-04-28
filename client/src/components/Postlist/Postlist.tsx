@@ -13,7 +13,7 @@ const Postlist: React.FC = () => {
   const { postList, setPosts } = useContext<IPostListContext>(PostListContext);
 
   const handleDelete = async (
-    e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+    e: React.MouseEvent<SVGElement, MouseEvent>,
     id: string
   ) => {
     e.preventDefault();
@@ -29,13 +29,12 @@ const Postlist: React.FC = () => {
     <styled.Container>
       {postList?.map((post: IPost) => (
         <Link key={post._id} className="post-card" to={`/post/${post._id}`}>
-          <Post isHomePage={true} key={post?._id} {...post} />
-          <span
-            className="delete-post"
-            onClick={(e) => handleDelete(e, post._id!)}
-          >
-            ❌
-          </span>
+          <Post
+            onDelete={handleDelete}
+            isHomePage={true}
+            key={post?._id}
+            {...post}
+          />
         </Link>
       ))}
     </styled.Container>

@@ -5,6 +5,7 @@ import {
   AiOutlineHeart,
   AiFillHeart,
   AiOutlineComment,
+  AiOutlineUser,
 } from "react-icons/ai";
 import { ILike, IPost, IPostComponent } from "../../types";
 import styled from "./styled";
@@ -15,6 +16,7 @@ import { PostContext } from "../../contexts/PostContext";
 import { useUser } from "../../hooks/useUser";
 import { PostListContext } from "../../contexts/PostListContext";
 import { formatDate } from "../../helpers/dateFormat";
+import Newpost from "../Newpost/Newpost";
 
 const Post: React.FC<IPostComponent> = ({
   body,
@@ -24,22 +26,28 @@ const Post: React.FC<IPostComponent> = ({
   comments,
   createdAt,
   isHomePage,
+  onDelete,
 }) => {
   /**
    * Creates a like on the post
    */
   const { currentPost, setCurrentPost } = useContext<IPostContext>(PostContext);
   const { postList, setPosts } = useContext<IPostListContext>(PostListContext);
-
   const [isLiked, setisLiked] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const { execute: manageLikeFn } = useAsyncFn(manageLikeOnPost);
   const { id: userId } = useUser();
 
-  const postDate = useEffect(() => {
+  useEffect(() => {
     if (likes?.length === 0 || !likes) return;
     setisLiked(likes.some((like: ILike) => like.userid === userId));
   }, []);
 
+  /**
+   * Manages likes on post
+   * @param e
+   * @returns
+   */
   const handleLikeOnPost = async (
     e: React.MouseEvent<SVGElement, MouseEvent>
   ) => {
@@ -99,10 +107,21 @@ const Post: React.FC<IPostComponent> = ({
     }
   };
 
+  /**
+   * Handles Edit Mode on post
+   */
+  const handleEditMode = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
+    e.preventDefault();
+    setEditMode((prevMode) => !prevMode);
+  };
+
   return (
     <styled.Container key={_id}>
       <div className="owner">
-        <i>r/Yannickbona</i>·{" "}
+        <span className="comment__user-avatar">
+          <AiOutlineUser />
+        </span>
+        <i>Posted By yannickBona</i>·{" "}
         <span className="post-date">
           {formatDate(
             currentPost?.createdAt
@@ -112,8 +131,30 @@ const Post: React.FC<IPostComponent> = ({
         </span>
       </div>
 
-      <h1>{title}</h1>
-      <p>{body}</p>
+      {editMode ? (
+        <styled.EditForm>
+          <input
+            type="text"
+            placeholder="Title"
+            // onChange={(e) =>
+            //   setFormData({ ...formData, title: e.currentTarget.value })
+            // }
+            value={title}
+          />
+          <textarea
+            placeholder="Text (optional)"
+            // onChange={(e) =>
+            //   setFormData({ ...formData, body: e.currentTarget.value })
+            // }
+            value={body}
+          />
+        </styled.EditForm>
+      ) : (
+        <>
+          <h1>{title}</h1>
+          <p>{body}</p>
+        </>
+      )}
 
       <styled.PostActionsContainer>
         <span className="likes">
@@ -129,11 +170,11 @@ const Post: React.FC<IPostComponent> = ({
         <span className="comments">
           <AiOutlineComment onClick={() => null} /> {comments?.length}
         </span>
-        {isHomePage && (
-          <>
-            <AiOutlineEdit onClick={() => null} />
-            <AiOutlineDelete onClick={() => null} />
-          </>
+
+        {isHomePage ? (
+          <AiOutlineDelete onClick={(e) => onDelete(e, _id!)} />
+        ) : (
+          <AiOutlineEdit onClick={handleEditMode} />
         )}
       </styled.PostActionsContainer>
     </styled.Container>

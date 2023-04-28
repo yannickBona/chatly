@@ -28,6 +28,10 @@ export interface ILike {
 
 export interface IPostComponent extends IPost {
   isHomePage?: boolean;
+  onDelete: (
+    e: React.MouseEvent<SVGElement, MouseEvent>,
+    id: string
+  ) => Promise<void>;
 }
 
 export type ReqMethods = "GET" | "POST" | "PUT" | "DELETE";

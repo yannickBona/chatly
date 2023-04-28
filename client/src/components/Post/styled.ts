@@ -18,12 +18,38 @@ const Container = styled.div`
   position: relative;
 
   .owner {
+    i {
+      font-size: 1.1rem;
+    }
     .post-date {
       font-size: 1rem;
       color: ${colors.neutral};
     }
     display: flex;
+    align-items: center;
     gap: 0.5rem;
+  }
+
+  .comment__user-avatar {
+    position: relative;
+
+    padding: 1rem;
+    font-size: 1.5rem;
+
+    svg {
+      position: absolute;
+      height: 20px;
+      width: 20px;
+
+      padding: 0.5rem;
+      box-sizing: content-box;
+      border: 2px solid ${colors.borderColorDark};
+      color: ${colors.neutral};
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 
   svg {
@@ -64,4 +90,30 @@ const PostActionsContainer = styled.div`
     color: red;
   }
 `;
-export default { Container, PostActionsContainer };
+
+const EditForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  input[type="text"],
+  textarea {
+    border: 1px solid ${colors.borderColor};
+    background-color: ${colors.background};
+    padding: 0.5rem;
+    font-family: inherit;
+    width: fit-content;
+    border-radius: 0.5rem;
+
+    &:focus {
+      outline: 1px solid ${colors.borderColorDark};
+    }
+  }
+  textarea {
+    resize: none;
+    height: 150px;
+    width: 100%;
+  }
+`;
+
+export default { Container, PostActionsContainer, EditForm };
