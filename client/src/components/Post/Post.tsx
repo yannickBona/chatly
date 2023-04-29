@@ -26,6 +26,7 @@ const Post: React.FC<IPostComponent> = ({
   likes,
   comments,
   createdAt,
+  updatedAt,
   isHomePage,
   onDelete,
 }) => {
@@ -38,6 +39,9 @@ const Post: React.FC<IPostComponent> = ({
   const [editMode, setEditMode] = useState(false);
   const { execute: manageLikeFn } = useAsyncFn(manageLikeOnPost);
   const { id: userId } = useUser();
+  const postedDate = currentPost?.createdAt
+    ? currentPost?.createdAt.toString()
+    : createdAt?.toString();
 
   useEffect(() => {
     if (likes?.length === 0 || !likes) return;
@@ -123,13 +127,7 @@ const Post: React.FC<IPostComponent> = ({
           <AiOutlineUser />
         </span>
         <i>Posted By yannickBona</i>·{" "}
-        <span className="post-date">
-          {formatDate(
-            currentPost?.createdAt
-              ? currentPost?.createdAt.toString()
-              : createdAt?.toString()
-          )}
-        </span>
+        <span className="post-date">{formatDate(postedDate)}</span>
       </div>
       <h1>{title}</h1>
 

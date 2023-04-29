@@ -1,5 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styled from "./styled";
+import { useAsyncFn } from "../../hooks/useAsync";
+import { modifyPost } from "../../api/Posts/modifyPost";
+import { PostContext } from "../../contexts/PostContext";
+import { IPostContext } from "../../contexts/types";
+import { IPost } from "../../types";
 
 interface IEditForm {
   body: string;
@@ -9,6 +14,8 @@ interface IEditForm {
 const EditForm: React.FC<IEditForm> = ({ body, setEditMode }) => {
   const [content, setContent] = useState(body);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { currentPost, setCurrentPost } = useContext<IPostContext>(PostContext);
+  const { execute: modifyPostFn } = useAsyncFn(modifyPost);
 
   // This sets the height of the textarea to the content if it is greater than min-height
   useEffect(() => {
@@ -21,10 +28,18 @@ const EditForm: React.FC<IEditForm> = ({ body, setEditMode }) => {
   /**
    * Handles Edit Mode on post
    */
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!currentPost) return;
 
     // TODO: add logics to modify comment
+    const updatedPost: IPost = await modifyPostFn(currentPost._id, content);
+    setCurrentPost((prevPost: IPost | undefined) => {
+      return {
+        ...prevPost,
+        body: updatedPost.body,
+      };
+    });
     setEditMode(false);
   };
 
