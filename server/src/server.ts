@@ -17,6 +17,7 @@ import { removeLikeOnPostController } from "./controller/likes/removeLikeOnPostC
 import { createLikeOnCommentController } from "./controller/likes/createLikeOnCommentController";
 import { removeLikeOnCommentController } from "./controller/likes/removeLikeOnCommentController";
 import { logger } from "./utils/general";
+import { modifyPostController } from "./controller/posts/modifyPostController";
 
 dotenv.config();
 
@@ -61,6 +62,7 @@ mongoose.set("strictQuery", false);
 // Endpoints
 app.get("/posts", getPostsController);
 app.get("/posts/:id", getSinglePostController);
+app.put("/posts/:id", modifyPostController);
 app.delete("/posts", deletePostController);
 app.post("/createPost", createPostController);
 app.post("/createComment", createCommentController);
