@@ -39,7 +39,7 @@ const Container = styled.form`
 
   button {
     align-self: flex-end;
-    padding: 1rem 2rem;
+    padding: 0.5rem 1rem;
     border: 1px solid ${colors.borderColor};
     background-color: #c9c9c9;
     border-radius: 0.5rem;

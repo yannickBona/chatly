@@ -109,7 +109,7 @@ const Post: React.FC<IPostComponent> = ({
   };
 
   /**
-   * Handles Edit Mode on post
+   * Enables/disables Edit Mode on post
    */
   const handleEditMode = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
     e.preventDefault();
@@ -133,7 +133,11 @@ const Post: React.FC<IPostComponent> = ({
       </div>
       <h1>{title}</h1>
 
-      {editMode ? <EditForm body={body!} /> : <p>{body}</p>}
+      {editMode ? (
+        <EditForm setEditMode={setEditMode} body={body!} />
+      ) : (
+        <p>{body}</p>
+      )}
 
       <styled.PostActionsContainer>
         <span className="likes">

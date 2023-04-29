@@ -25,7 +25,7 @@ const Newpost: React.FC = () => {
   };
 
   return (
-    <styled.Container onSubmit={(e) => handleCreatePost(e)}>
+    <styled.Container onSubmit={handleCreatePost}>
       <h2>Create Post</h2>
       <input
         type="text"
