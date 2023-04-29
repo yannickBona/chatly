@@ -17,6 +17,7 @@ import { useUser } from "../../hooks/useUser";
 import { PostListContext } from "../../contexts/PostListContext";
 import { formatDate } from "../../helpers/dateFormat";
 import Newpost from "../Newpost/Newpost";
+import EditForm from "../EditForm/EditForm";
 
 const Post: React.FC<IPostComponent> = ({
   body,
@@ -130,31 +131,9 @@ const Post: React.FC<IPostComponent> = ({
           )}
         </span>
       </div>
+      <h1>{title}</h1>
 
-      {editMode ? (
-        <styled.EditForm>
-          <input
-            type="text"
-            placeholder="Title"
-            // onChange={(e) =>
-            //   setFormData({ ...formData, title: e.currentTarget.value })
-            // }
-            value={title}
-          />
-          <textarea
-            placeholder="Text (optional)"
-            // onChange={(e) =>
-            //   setFormData({ ...formData, body: e.currentTarget.value })
-            // }
-            value={body}
-          />
-        </styled.EditForm>
-      ) : (
-        <>
-          <h1>{title}</h1>
-          <p>{body}</p>
-        </>
-      )}
+      {editMode ? <EditForm body={body!} /> : <p>{body}</p>}
 
       <styled.PostActionsContainer>
         <span className="likes">

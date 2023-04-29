@@ -25,8 +25,6 @@ const PostPage: React.FC = () => {
   const { execute: manageCommentFn } = useAsyncFn(manageLikeOnComment);
   const { id: userId } = useUser();
 
-  const [isLiked, setisLiked] = useState(false);
-
   const handleLikeOnComment = async (comment: IComment) => {
     if (!comment || !currentPost?.comments) return;
     const idx = currentPost.comments.findIndex(
