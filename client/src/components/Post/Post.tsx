@@ -71,17 +71,17 @@ const Post: React.FC<IPostComponent> = ({
   ) => {
     e.preventDefault();
 
-    if (!postId) return;
+    if (!postId || !postList) return;
+
+    const updatedPostList = [...postList];
+    const postIdx = updatedPostList.findIndex((post) => post._id === postId);
+
+    if (postIdx === -1 || !user) return;
 
     if (!isLiked) {
       const response: $ResponseData = await manageLikeFn(postId, "POST");
 
       if (response.status !== 200 || !postList) return;
-
-      const updatedPostList = [...postList];
-      const postIdx = updatedPostList.findIndex((post) => post._id === postId);
-
-      if (postIdx === -1 || !user) return;
 
       const updatedPost = {
         ...updatedPostList[postIdx],
@@ -89,7 +89,7 @@ const Post: React.FC<IPostComponent> = ({
       };
 
       updatedPostList[postIdx] = updatedPost;
-      setPosts(postList);
+      setPosts(updatedPostList);
 
       setCurrentLikes((prevLikes) => prevLikes + 1);
       setisLiked(true);
@@ -98,9 +98,17 @@ const Post: React.FC<IPostComponent> = ({
 
     if (isLiked) {
       const response: $ResponseData = await manageLikeFn(postId, "DELETE");
-      if (response.status !== 200) return;
+      if (response.status !== 200 || !postList) return;
 
-      // setPosts([]);
+      const updatedPost = {
+        ...updatedPostList[postIdx],
+        likes: updatedPostList[postIdx].likes.filter(
+          (like) => like !== user.username
+        ),
+      };
+
+      updatedPostList[postIdx] = updatedPost;
+      setPosts(updatedPostList);
 
       setCurrentLikes((prevLikes) => prevLikes - 1);
       setisLiked(false);

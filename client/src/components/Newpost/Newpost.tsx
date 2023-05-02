@@ -12,8 +12,8 @@ const Newpost: React.FC = () => {
     title: "",
     body: "",
   });
-  const [showForm, setShowForm] = useState(false);
-  const { postList, setPosts } = useContext<IPostListContext>(PostListContext);
+  // const [showForm, setShowForm] = useState(false);
+  const { setPosts } = useContext<IPostListContext>(PostListContext);
   const { execute: createNewPostFn } = useAsyncFn(createPost);
   const { setUser } = useUser();
 
@@ -39,7 +39,7 @@ const Newpost: React.FC = () => {
   };
 
   return (
-    <styled.Container showForm={showForm} onSubmit={handleCreatePost}>
+    <styled.Container showForm={false} onSubmit={handleCreatePost}>
       <h2>Share your thoughts!</h2>
       <input
         type="text"
