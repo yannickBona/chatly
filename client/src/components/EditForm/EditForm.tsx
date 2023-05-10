@@ -98,7 +98,7 @@ const EditForm: React.FC<IEditForm> = ({
   return (
     <styled.EditForm onSubmit={handleSubmit} isComment>
       <textarea
-        placeholder="Text (optional)"
+        placeholder={comment ? "" : "Text (optional)"}
         ref={textareaRef}
         onChange={(e) => setContent(e.currentTarget.value)}
       />
