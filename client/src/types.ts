@@ -34,6 +34,8 @@ export interface IPostComponent extends IPost {
     e: React.MouseEvent<SVGElement, MouseEvent>,
     id: string
   ) => Promise<void> | null;
+  suggestedPosts?: IPost[];
+  setSuggestedPosts?: React.Dispatch<React.SetStateAction<IPost[]>>;
 }
 
 export type ReqMethods = "GET" | "POST" | "PUT" | "DELETE";

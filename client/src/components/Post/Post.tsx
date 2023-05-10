@@ -35,6 +35,8 @@ const Post: React.FC<IPostComponent> = ({
   isHomePage,
   onDelete,
   owner,
+  suggestedPosts,
+  setSuggestedPosts,
 }) => {
   /**
    * Creates a like on the post
@@ -73,10 +75,12 @@ const Post: React.FC<IPostComponent> = ({
 
     if (!postId || !postList) return;
 
-    const updatedPostList = [...postList];
+    const updatedPostList = suggestedPosts
+      ? [...suggestedPosts]
+      : [...postList];
     const postIdx = updatedPostList.findIndex((post) => post._id === postId);
 
-    if (postIdx === -1 || !user) return;
+    if ((postIdx === -1 && !suggestedPosts) || !user) return;
 
     if (!isLiked) {
       const response: $ResponseData = await manageLikeFn(postId, "POST");
@@ -89,7 +93,10 @@ const Post: React.FC<IPostComponent> = ({
       };
 
       updatedPostList[postIdx] = updatedPost;
-      setPosts(updatedPostList);
+
+      suggestedPosts && setSuggestedPosts
+        ? setSuggestedPosts(updatedPostList)
+        : setPosts(updatedPostList);
 
       setCurrentLikes((prevLikes) => prevLikes + 1);
       setisLiked(true);
@@ -108,7 +115,9 @@ const Post: React.FC<IPostComponent> = ({
       };
 
       updatedPostList[postIdx] = updatedPost;
-      setPosts(updatedPostList);
+      suggestedPosts && setSuggestedPosts
+        ? setSuggestedPosts(updatedPostList)
+        : setPosts(updatedPostList);
 
       setCurrentLikes((prevLikes) => prevLikes - 1);
       setisLiked(false);

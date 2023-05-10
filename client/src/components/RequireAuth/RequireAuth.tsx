@@ -1,11 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { IAuthContext } from "../../contexts/types";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useAsyncFn } from "../../hooks/useAsync";
-import { checkSession } from "../../api/User/sessionCheck";
-import { PostListProvider } from "../../contexts/PostListContext";
-import LogoutButton from "../LogoutButton/LogoutButton";
+import { PostListContextProvider } from "../../contexts/PostListContext";
 import Navbar from "../Navbar/Navbar";
 
 const RequireAuth = () => {
@@ -15,10 +12,10 @@ const RequireAuth = () => {
   const isAuthorized = !!user;
 
   return isAuthorized ? (
-    <PostListProvider>
+    <PostListContextProvider>
       <Navbar />
       <Outlet />
-    </PostListProvider>
+    </PostListContextProvider>
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />
   );

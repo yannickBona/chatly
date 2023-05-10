@@ -52,7 +52,12 @@ const Explore = () => {
           {postList.length ? (
             postList.map((post) => (
               <Link to={`/post/${post._id}`} key={post._id}>
-                <Post onDelete={() => null} {...post} />
+                <Post
+                  setSuggestedPosts={setPostList}
+                  suggestedPosts={postList}
+                  onDelete={() => null}
+                  {...post}
+                />
               </Link>
             ))
           ) : (

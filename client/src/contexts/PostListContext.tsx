@@ -6,7 +6,7 @@ import { IPostListContext } from "./types";
 
 export const PostListContext = createContext<any>({});
 
-export function PostListProvider({ children }: { children: ReactNode }) {
+export function PostListContextProvider({ children }: { children: ReactNode }) {
   const [posts, setPosts] = useState<IPost[] | undefined>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
