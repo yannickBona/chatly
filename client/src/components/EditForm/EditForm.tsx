@@ -3,9 +3,10 @@ import styled from "./styled";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { modifyPost } from "../../api/Posts/modifyPost";
 import { PostContext } from "../../contexts/PostContext";
-import { IPostContext } from "../../contexts/types";
+import { IPostContext, IPostListContext } from "../../contexts/types";
 import { $ResponseData, IComment, IPost } from "../../types";
 import { editComment } from "../../api/Comments/editComment";
+import { PostListContext } from "../../contexts/PostListContext";
 
 interface IEditForm {
   body: string;
@@ -23,6 +24,7 @@ const EditForm: React.FC<IEditForm> = ({
   const [content, setContent] = useState(body);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { currentPost, setCurrentPost } = useContext<IPostContext>(PostContext);
+  const { postList, setPosts } = useContext<IPostListContext>(PostListContext);
   const { execute: modifyPostFn } = useAsyncFn(modifyPost);
   const { execute: modifyCommentFn } = useAsyncFn(editComment);
 
@@ -79,19 +81,20 @@ const EditForm: React.FC<IEditForm> = ({
     if (!comment) {
       const response: $ResponseData = await modifyPostFn(postId, content);
       if (response.status !== 200) return;
-
+      const updatedList = [...postList!];
+      const postIdx = updatedList.findIndex(
+        (post) => post._id === currentPost._id
+      );
       const updatedPost = response.data.post;
 
-      setCurrentPost((prevPost) => {
-        return prevPost
-          ? {
-              ...prevPost,
-              body: updatedPost.body,
-            }
-          : null;
-      });
+      updatedList[postIdx] = updatedPost;
+      setPosts(updatedList);
+
+      setCurrentPost((prevPost) => ({
+        ...prevPost!,
+        body: updatedPost.body,
+      }));
       setEditMode(false);
-      return;
     }
   };
 
