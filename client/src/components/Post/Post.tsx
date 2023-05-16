@@ -73,55 +73,59 @@ const Post: React.FC<IPostComponent> = ({
   ) => {
     e.preventDefault();
 
-    if (!postId || !postList) return;
+    if (!postId || !postList || !user) return;
+
+    const httpMethod = isLiked ? "DELETE" : "POST";
 
     const updatedPostList = suggestedPosts
       ? [...suggestedPosts]
       : [...postList];
+
     const postIdx = updatedPostList.findIndex((post) => post._id === postId);
 
-    if ((postIdx === -1 && !suggestedPosts) || !user) return;
-
-    if (!isLiked) {
-      const response: $ResponseData = await manageLikeFn(postId, "POST");
-
-      if (response.status !== 200 || !postList) return;
-
-      const updatedPost = {
-        ...updatedPostList[postIdx],
-        likes: [...updatedPostList[postIdx].likes, user.username],
-      };
-
-      updatedPostList[postIdx] = updatedPost;
-
-      suggestedPosts && setSuggestedPosts
-        ? setSuggestedPosts(updatedPostList)
-        : setPosts(updatedPostList);
-
-      setCurrentLikes((prevLikes) => prevLikes + 1);
-      setisLiked(true);
-      return;
+    if (currentPost && postIdx === -1) {
+      handleSuggestedPostLike(httpMethod);
     }
 
-    if (isLiked) {
-      const response: $ResponseData = await manageLikeFn(postId, "DELETE");
-      if (response.status !== 200 || !postList) return;
+    if (postIdx === -1) return; // Post not found in any list
 
-      const updatedPost = {
-        ...updatedPostList[postIdx],
-        likes: updatedPostList[postIdx].likes.filter(
-          (like) => like !== user.username
-        ),
-      };
+    const response = await manageLikeFn(postId, httpMethod);
+    if (response.status !== 200) return;
 
-      updatedPostList[postIdx] = updatedPost;
-      suggestedPosts && setSuggestedPosts
-        ? setSuggestedPosts(updatedPostList)
-        : setPosts(updatedPostList);
+    // Remove or add like to the Post depending on isLiked
+    const updatedPost = {
+      ...updatedPostList[postIdx],
+      likes: !isLiked
+        ? [...updatedPostList[postIdx].likes, user.username]
+        : updatedPostList[postIdx].likes.filter(
+            (like) => like !== user.username
+          ),
+    };
 
-      setCurrentLikes((prevLikes) => prevLikes - 1);
-      setisLiked(false);
-    }
+    updatedPostList[postIdx] = updatedPost;
+
+    // If explore page update suggested list, else update the feed list
+    const updatePosts =
+      suggestedPosts && setSuggestedPosts ? setSuggestedPosts : setPosts;
+
+    updatePosts(updatedPostList);
+    updateLikes();
+  };
+
+  /**
+   * Handles like on a post marked as suggested
+   * @returns void
+   */
+  const handleSuggestedPostLike = async (method: "POST" | "DELETE") => {
+    const response: $ResponseData = await manageLikeFn(postId, method);
+    if (response.status !== 200) return;
+    updateLikes();
+  };
+
+  const updateLikes = () => {
+    const updatedLikes = isLiked ? 1 : -1;
+    setCurrentLikes((prevLikes) => prevLikes + updatedLikes);
+    setisLiked((isLiked) => !isLiked);
   };
 
   /**
