@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { $ResponseData, IPost } from "../../types";
+import { $ResponseData } from "../../types";
 import styled from "./styled";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { createPost } from "../../api/Posts/createPosts";
-import { IPostContext, IPostListContext } from "../../contexts/types";
+import { IPostListContext } from "../../contexts/types";
 import { PostListContext } from "../../contexts/PostListContext";
 import { useUser } from "../../hooks/useUser";
 
@@ -26,8 +26,10 @@ const Newpost: React.FC = () => {
     const response: $ResponseData = await createNewPostFn(formData);
     if (response.status !== 200) return;
 
-    postList?.push(response.data.post);
-    setPosts(postList);
+    const newPost = response.data.post;
+
+    setPosts((prevPost) => (prevPost ? [newPost, ...prevPost] : [newPost]));
+
     setUser((prevUser) => {
       if (!prevUser) return null;
       return { ...prevUser, postsUploaded: prevUser?.postsUploaded + 1 };

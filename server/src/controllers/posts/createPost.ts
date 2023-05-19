@@ -30,8 +30,9 @@ export const createPost = async (req: Request, res: Response) => {
     });
 
     const savedPost = await newPost.save();
+    const publicPost = await savedPost.getPublicData();
 
-    return res.status(200).json({ ...HTTP_200_OK, data: { post: savedPost } });
+    return res.status(200).json({ ...HTTP_200_OK, data: { post: publicPost } });
   } catch (err) {
     return res
       .status(500)

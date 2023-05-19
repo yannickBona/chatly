@@ -40,7 +40,7 @@ const Post: React.FC<IPostComponent> = ({
    * Creates a like on the post
    */
   const { currentPost } = useContext<IPostContext>(PostContext);
-  const { setPosts } = useContext<IPostListContext>(PostListContext);
+  const { setPosts, postList } = useContext<IPostListContext>(PostListContext);
   const [isLiked, setisLiked] = useState(false);
   const [currentLikes, setCurrentLikes] = useState(likes?.length ?? 0);
   const [editMode, setEditMode] = useState(false);
@@ -76,8 +76,20 @@ const Post: React.FC<IPostComponent> = ({
     if (!isLiked) {
       const response: $ResponseData = await manageLikeFn(postId, "POST");
 
-      if (response.status !== 200) return;
-      setPosts([]);
+      if (response.status !== 200 || !postList) return;
+
+      const updatedPostList = [...postList];
+      const postIdx = updatedPostList.findIndex((post) => post._id === postId);
+
+      if (postIdx === -1 || !user) return;
+
+      const updatedPost = {
+        ...updatedPostList[postIdx],
+        likes: [...updatedPostList[postIdx].likes, user.username],
+      };
+
+      updatedPostList[postIdx] = updatedPost;
+      setPosts(postList);
 
       setCurrentLikes((prevLikes) => prevLikes + 1);
       setisLiked(true);
@@ -88,7 +100,7 @@ const Post: React.FC<IPostComponent> = ({
       const response: $ResponseData = await manageLikeFn(postId, "DELETE");
       if (response.status !== 200) return;
 
-      setPosts([]);
+      // setPosts([]);
 
       setCurrentLikes((prevLikes) => prevLikes - 1);
       setisLiked(false);
@@ -104,7 +116,7 @@ const Post: React.FC<IPostComponent> = ({
   };
 
   return (
-    <styled.Container key={_id}>
+    <styled.Container key={`post-${_id}`}>
       <div className="owner">
         <span className="comment__user-avatar">
           <AiOutlineUser />

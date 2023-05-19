@@ -37,14 +37,9 @@ const Postlist: React.FC = () => {
   return (
     <styled.Container>
       {postList && postList.length > 0 ? (
-        postList?.map((post: IPost) => (
+        postList.map((post: IPost) => (
           <Link key={post._id} className="post-card" to={`/post/${post._id}`}>
-            <Post
-              onDelete={handleDelete}
-              isHomePage={true}
-              key={post?._id}
-              {...post}
-            />
+            <Post onDelete={handleDelete} isHomePage={true} {...post} />
           </Link>
         ))
       ) : (

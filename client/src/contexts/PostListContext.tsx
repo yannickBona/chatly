@@ -8,10 +8,27 @@ export const PostListContext = createContext<any>({});
 
 export function PostListProvider({ children }: { children: ReactNode }) {
   const [posts, setPosts] = useState<IPost[] | undefined>();
-  const { error, loading, value: response } = useAsync(getPosts, [posts]);
-  const postList: IPost[] | undefined = response?.data?.posts;
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const data: IPostListContext = { postList, setPosts };
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoading(true);
+        const response = await getPosts();
+        if (response.status !== 200)
+          return setError(response.details as string);
+
+        setPosts(response.data.posts);
+      } catch (err) {
+        setError(err as string);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
+
+  const data: IPostListContext = { postList: posts, setPosts };
 
   return (
     <PostListContext.Provider value={data}>
