@@ -95,7 +95,7 @@ const PostPage: React.FC = () => {
       <Link to="/" className="back-button">
         ⬅️
       </Link>
-      <Post {...currentPost} key={currentPost?._id} />
+      <Post onDelete={() => null} {...currentPost} key={currentPost?._id} />
       <styled.CommentsSection>
         <CommentForm />
         {currentPost?.comments?.length === 0 && (

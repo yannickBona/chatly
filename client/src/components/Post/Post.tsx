@@ -36,6 +36,7 @@ const Post: React.FC<IPostComponent> = ({
   const { currentPost, setCurrentPost } = useContext<IPostContext>(PostContext);
   const { postList, setPosts } = useContext<IPostListContext>(PostListContext);
   const [isLiked, setisLiked] = useState(false);
+  const [currentLikes, setCurrentLikes] = useState(likes?.length ?? 0);
   const [editMode, setEditMode] = useState(false);
   const { execute: manageLikeFn } = useAsyncFn(manageLikeOnPost);
   const { id: userId } = useUser();
@@ -62,52 +63,14 @@ const Post: React.FC<IPostComponent> = ({
     if (!postId) return;
 
     if (!isLiked) {
-      const newLike: ILike = await manageLikeFn(postId, "POST");
-      const newLikes = [...(likes ?? []), newLike];
-
-      // Manages likes from post page
-      if (currentPost) {
-        setCurrentPost((prevPost: IPost | undefined) => {
-          return {
-            ...prevPost,
-            likes: newLikes,
-          };
-        });
-      }
-
-      // Manages likes from home page
-      if (postList) {
-        const idx = postList.findIndex((post) => post._id === postId);
-        const updatedPostList = [...postList];
-        updatedPostList[idx] = { ...updatedPostList[idx], likes: newLikes };
-        setPosts(updatedPostList);
-      }
-
+      await manageLikeFn(postId, "POST");
+      setCurrentLikes((prevLikes) => prevLikes + 1);
       setisLiked(true);
     }
 
     if (isLiked) {
-      const removedLike: ILike = await manageLikeFn(postId, "DELETE");
-      const newLikes = likes?.filter(
-        (like: ILike) => like.userid !== removedLike.userid
-      );
-
-      if (currentPost) {
-        setCurrentPost((prevPost: IPost | undefined) => {
-          return {
-            ...prevPost,
-            likes: newLikes,
-          };
-        });
-      }
-
-      // Manages likes from home page
-      if (postList) {
-        const idx = postList.findIndex((post) => post._id === postId);
-        const updatedPostList = postList.splice(idx, 1);
-        setPosts(updatedPostList);
-      }
-
+      await manageLikeFn(postId, "DELETE");
+      setCurrentLikes((prevLikes) => prevLikes - 1);
       setisLiked(false);
     }
   };
@@ -145,7 +108,7 @@ const Post: React.FC<IPostComponent> = ({
             <AiOutlineHeart onClick={handleLikeOnPost} />
           )}
 
-          {likes?.length}
+          {currentLikes}
         </span>
 
         <span className="comments">
