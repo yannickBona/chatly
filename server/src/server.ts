@@ -19,6 +19,7 @@ import { removeLikeOnCommentController } from "./controller/likes/removeLikeOnCo
 import { logger } from "./utils/general";
 import { modifyPostController } from "./controller/posts/modifyPostController";
 import { deleteCommentController } from "./controller/comments/deleteCommentController";
+import { editCommentController } from "./controller/comments/editCommentController";
 
 dotenv.config();
 
@@ -79,6 +80,7 @@ app.delete(
   removeLikeOnCommentController
 );
 app.delete("/comment", deleteCommentController);
+app.put("/comment", editCommentController);
 
 // MONGO
 logger.info("Connecting to the db...");
