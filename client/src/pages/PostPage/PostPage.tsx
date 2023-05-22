@@ -19,11 +19,29 @@ import {
 } from "react-icons/ai";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { useUser } from "../../hooks/useUser";
+import { deleteComment } from "../../api/Comments/deleteComment";
 
 const PostPage: React.FC = () => {
   const { currentPost, setCurrentPost } = useContext<IPostContext>(PostContext);
   const { execute: manageCommentFn } = useAsyncFn(manageLikeOnComment);
+  const { execute: deleteCommentFn } = useAsyncFn(deleteComment);
   const { id: userId } = useUser();
+
+  /**
+   * Deletes a comment given its ID
+   * @param id commentId
+   * @returns
+   */
+  const handleCommentDelete = async (id: string) => {
+    if (!id) return;
+
+    const deletedComment = await deleteCommentFn(id);
+
+    setCurrentPost((prevPost) => ({
+      ...prevPost,
+      comments: prevPost?.comments?.filter((c) => c._id !== id),
+    }));
+  };
 
   const handleLikeOnComment = async (comment: IComment) => {
     if (!comment || !currentPost?.comments) return;
@@ -114,7 +132,9 @@ const PostPage: React.FC = () => {
                 </span>
 
                 <AiOutlineEdit onClick={() => null} />
-                <AiOutlineDelete onClick={() => null} />
+                <AiOutlineDelete
+                  onClick={() => handleCommentDelete(comment._id.toString())}
+                />
 
                 <AiOutlineComment onClick={() => null} />
               </styled.commentActionsContainer>
