@@ -20,12 +20,15 @@ import {
 import { useAsyncFn } from "../../hooks/useAsync";
 import { useUser } from "../../hooks/useUser";
 import { deleteComment } from "../../api/Comments/deleteComment";
+import EditForm from "../../components/EditForm/EditForm";
 
 const PostPage: React.FC = () => {
   const { currentPost, setCurrentPost } = useContext<IPostContext>(PostContext);
   const { execute: manageCommentFn } = useAsyncFn(manageLikeOnComment);
   const { execute: deleteCommentFn } = useAsyncFn(deleteComment);
   const { id: userId } = useUser();
+  const [editMode, setEditMode] = useState(false);
+  const [selectedComment, setSelectedComment] = useState("");
 
   /**
    * Deletes a comment given its ID
@@ -90,6 +93,11 @@ const PostPage: React.FC = () => {
     }
   };
 
+  const handleCommentEdit = (id: string) => {
+    setEditMode((prev) => !prev);
+    setSelectedComment(id);
+  };
+
   return (
     <styled.Container>
       <Link to="/" className="back-button">
@@ -113,7 +121,16 @@ const PostPage: React.FC = () => {
                   {formatDate(comment.createdAt.toString())}
                 </span>
               </div>
-              <p>{comment.content}</p>
+
+              {editMode && selectedComment === comment._id ? (
+                <EditForm
+                  body={comment.content}
+                  setEditMode={setEditMode}
+                  comment={comment}
+                />
+              ) : (
+                <p>{comment.content}</p>
+              )}
 
               <styled.commentActionsContainer>
                 <span className="likes">
@@ -131,7 +148,7 @@ const PostPage: React.FC = () => {
                   {comment?.likes.length}
                 </span>
 
-                <AiOutlineEdit onClick={() => null} />
+                <AiOutlineEdit onClick={() => handleCommentEdit(comment._id)} />
                 <AiOutlineDelete
                   onClick={() => handleCommentDelete(comment._id.toString())}
                 />

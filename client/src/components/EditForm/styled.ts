@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { colors } from "../../themes/tokens";
 
-const EditForm = styled.form`
+const EditForm = styled.form<{ isComment: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -21,7 +21,7 @@ const EditForm = styled.form`
   }
   textarea {
     resize: none;
-    min-height: 150px;
+    min-height: ${(p) => (p.isComment ? "50" : "150")}px;
     width: 100%;
   }
 

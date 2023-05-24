@@ -1,5 +1,6 @@
 import Comment from "../../models/Comment";
 import Post from "../../models/Post";
+import Like from "../../models/Like";
 import { Request, Response } from "express";
 import { logger } from "../../utils/general";
 
@@ -19,6 +20,10 @@ export const deleteCommentController = async (req: Request, res: Response) => {
     const post = await Post.findOne({
       comments: { $elemMatch: { $eq: commentId } },
     });
+
+    // Deleting comment ref from like
+    const like = await Like.findOneAndDelete({ commentId });
+    if (like) logger.info("Deleted like on comment ", commentId);
 
     if (!post) return res.json("No post related to the comment").status(404);
     post.comments = post?.comments.filter((c) => c.toString() !== commentId);
