@@ -1,5 +1,5 @@
 import "./Globals.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Error404 from "./pages/Error/Error404";
 import Home from "./pages/Home/Home";
 import Post from "./components/Post/Post";
@@ -11,19 +11,30 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <PostListProvider>
-        <Home />
-      </PostListProvider>
+      <>
+        <h1>Chatly</h1>
+        <Outlet />
+      </>
     ),
     errorElement: <Error404 />,
-  },
-  {
-    path: "/post/:id",
-    element: (
-      <PostProvider>
-        <PostPage />
-      </PostProvider>
-    ),
+    children: [
+      {
+        index: true,
+        element: (
+          <PostListProvider>
+            <Home />
+          </PostListProvider>
+        ),
+      },
+      {
+        path: "/post/:id",
+        element: (
+          <PostProvider>
+            <PostPage />
+          </PostProvider>
+        ),
+      },
+    ],
   },
 ]);
 
