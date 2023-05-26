@@ -7,15 +7,16 @@ import { PostProvider } from "./contexts/PostContext";
 import { PostListProvider } from "./contexts/PostListContext";
 import PostPage from "./pages/PostPage/PostPage";
 import Login from "./pages/Login/Login";
+import { AuthContextProvider } from "./contexts/AuthContext";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <>
+      <AuthContextProvider>
         <h1>Chatly</h1>
         <Outlet />
-      </>
+      </AuthContextProvider>
     ),
     errorElement: <Error404 />,
     children: [
