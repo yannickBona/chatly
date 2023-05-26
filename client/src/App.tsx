@@ -6,6 +6,7 @@ import Post from "./components/Post/Post";
 import { PostProvider } from "./contexts/PostContext";
 import { PostListProvider } from "./contexts/PostListContext";
 import PostPage from "./pages/PostPage/PostPage";
+import Login from "./pages/Login/Login";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 
