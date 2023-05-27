@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Children } from "react";
 import {
   StyledModal,
   StyledBackDrop,
@@ -10,32 +10,41 @@ import {
 import { AiOutlineClose } from "react-icons/ai";
 import Button from "../Button";
 
-const Modal = () => {
-  return (
+interface ModalProps {
+  children: React.ReactNode;
+  isOpen: boolean;
+  title: string;
+  onCancel: () => void;
+  onClose: () => void;
+  onConfirm: () => void;
+  confirmText?: string;
+}
+
+const Modal: React.FC<ModalProps> = ({
+  children,
+  onCancel,
+  onClose,
+  onConfirm,
+  title,
+  confirmText = "Confirm",
+  isOpen,
+}) => {
+  return isOpen ? (
     <StyledModal>
       <StyledBackDrop />
       <StyledModalContainer>
         <StyledModalHeader>
-          <div className="title">Some title</div>
-          <div className="icon">
-            <AiOutlineClose />
-          </div>
+          <div className="title">{title}</div>
+          <AiOutlineClose onClick={onClose} />
         </StyledModalHeader>
-        <StyledModalContent>
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora
-            maiores ex facilis repellat dolor doloribus nulla unde saepe! Minus
-            voluptate vitae harum quia voluptatem ab accusantium dolores
-            distinctio consequatur eaque?
-          </p>
-        </StyledModalContent>
+        <StyledModalContent>{children}</StyledModalContent>
         <StyledModalFooter>
-          <span>Annulla</span>
-          <Button />
+          <span onClick={onCancel}>Cancel</span>
+          <Button onClick={onConfirm} text={confirmText} />
         </StyledModalFooter>
       </StyledModalContainer>
     </StyledModal>
-  );
+  ) : null;
 };
 
 export default Modal;

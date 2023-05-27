@@ -1,8 +1,12 @@
 import React from "react";
 import { StyledButton } from "./styled";
 
-const Button = () => {
-  return <StyledButton>Confirm</StyledButton>;
+interface ButtonProps {
+  text: string;
+  onClick: () => void;
+}
+const Button: React.FC<ButtonProps> = ({ onClick, text }) => {
+  return <StyledButton onClick={onClick}>{text}</StyledButton>;
 };
 
 export default Button;
