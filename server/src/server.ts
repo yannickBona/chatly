@@ -20,6 +20,8 @@ import { logger } from "./utils/general";
 import { modifyPostController } from "./controller/posts/modifyPostController";
 import { deleteCommentController } from "./controller/comments/deleteCommentController";
 import { editCommentController } from "./controller/comments/editCommentController";
+import { createUserController } from "./controller/users/createUserController";
+import { loginUserController } from "./controller/users/loginUserController";
 
 dotenv.config();
 
@@ -81,6 +83,9 @@ app.delete(
 );
 app.delete("/comment", deleteCommentController);
 app.put("/comment", editCommentController);
+
+app.post("/user/create", createUserController);
+app.post("/user/login", loginUserController);
 
 // MONGO
 logger.info("Connecting to the db...");

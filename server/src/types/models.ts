@@ -25,6 +25,14 @@ export interface IComment {
   updatedAt: NativeDate;
 }
 
+export interface $UserSchemaInterface {
+  name: string;
+  lastname: string;
+  username: string;
+  password: string;
+  getPublicData: () => { username: string };
+}
+
 /**
  * createdAt: NativeDate;
     updatedAt: NativeDate;

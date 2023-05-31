@@ -10,5 +10,5 @@ export async function makeRequest(options: AxiosRequestConfig<unknown>) {
   return await api
     .request(options)
     .then((res) => res.data)
-    .catch((err) => Promise.reject(err.response?.data?.error) ?? "Error");
+    .catch((err) => err.response.data);
 }

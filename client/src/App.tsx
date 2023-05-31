@@ -8,25 +8,24 @@ import { PostListProvider } from "./contexts/PostListContext";
 import PostPage from "./pages/PostPage/PostPage";
 import Login from "./pages/Login/Login";
 import { AuthContextProvider } from "./contexts/AuthContext";
+import RequireAuth from "./components/RequireAuth/RequireAuth";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <AuthContextProvider>
-        <h1>Chatly</h1>
-        <Outlet />
+        <PostListProvider>
+          <h1>Chatly</h1>
+          <RequireAuth />
+        </PostListProvider>
       </AuthContextProvider>
     ),
     errorElement: <Error404 />,
     children: [
       {
         index: true,
-        element: (
-          <PostListProvider>
-            <Home />
-          </PostListProvider>
-        ),
+        element: <Home />,
       },
       {
         path: "/post/:id",
@@ -40,7 +39,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <AuthContextProvider>
+        <Login />
+      </AuthContextProvider>
+    ),
   },
 ]);
 

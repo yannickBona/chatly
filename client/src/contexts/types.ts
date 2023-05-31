@@ -10,7 +10,7 @@ export interface IPostListContext {
   setPosts: React.Dispatch<React.SetStateAction<IPost[] | undefined>>;
 }
 
-export type TUser = { username: string };
+export type TUser = { username: string; name: string; lastName: string };
 export interface IAuthContext {
   user: TUser | null;
   setUser: React.Dispatch<React.SetStateAction<TUser | null>>;
