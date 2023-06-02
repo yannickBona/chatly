@@ -11,18 +11,14 @@ import { $ResponseData, ILike, IPostComponent } from "../../types";
 import styled from "./styled";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { manageLikeOnPost } from "../../api/likes/manageLikeOnPost";
-import {
-  IAuthContext,
-  IPostContext,
-  IPostListContext,
-} from "../../contexts/types";
+import { IAuthContext, IPostContext, IMainContext } from "../../contexts/types";
 import { PostContext } from "../../contexts/PostContext";
 import { useUser } from "../../hooks/useUser";
 import { formatDate } from "../../helpers/dateFormat";
 import Newpost from "../Newpost/Newpost";
 import EditForm from "../EditForm/EditForm";
 import { useLocation, useParams } from "react-router-dom";
-import { PostListContext } from "../../contexts/PostListContext";
+import { MainContext } from "../../contexts/MainContext";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const Post: React.FC<IPostComponent> = ({
@@ -42,7 +38,7 @@ const Post: React.FC<IPostComponent> = ({
    * Creates a like on the post
    */
   const { currentPost } = useContext<IPostContext>(PostContext);
-  const { setPosts, postList } = useContext<IPostListContext>(PostListContext);
+  const { setPosts, postList } = useContext<IMainContext>(MainContext);
   const [isLiked, setisLiked] = useState(false);
   const [currentLikes, setCurrentLikes] = useState(likes?.length ?? 0);
   const [editMode, setEditMode] = useState(false);

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { IAuthContext } from "../../contexts/types";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { PostListContextProvider } from "../../contexts/PostListContext";
+import { MainContextProvider } from "../../contexts/MainContext";
 import Navbar from "../Navbar/Navbar";
 import Modal from "../Modal";
 
@@ -13,11 +13,11 @@ const RequireAuth = () => {
   const isAuthorized = !!user;
 
   return isAuthorized ? (
-    <PostListContextProvider>
+    <MainContextProvider>
       <Navbar />
       <Outlet />
       <Modal />
-    </PostListContextProvider>
+    </MainContextProvider>
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />
   );

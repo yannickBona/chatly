@@ -3,8 +3,8 @@ import { $ResponseData } from "../../types";
 import styled from "./styled";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { createPost } from "../../api/Posts/createPosts";
-import { IPostListContext } from "../../contexts/types";
-import { PostListContext } from "../../contexts/PostListContext";
+import { IMainContext } from "../../contexts/types";
+import { MainContext } from "../../contexts/MainContext";
 import { useUser } from "../../hooks/useUser";
 
 const Newpost: React.FC = () => {
@@ -13,7 +13,7 @@ const Newpost: React.FC = () => {
     body: "",
   });
   // const [showForm, setShowForm] = useState(false);
-  const { setPosts } = useContext<IPostListContext>(PostListContext);
+  const { setPosts } = useContext<IMainContext>(MainContext);
   const { execute: createNewPostFn } = useAsyncFn(createPost);
   const { setUser } = useUser();
 

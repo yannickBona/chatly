@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { deletePost } from "../../api/Posts/deletePost";
-import { PostListContext } from "../../contexts/PostListContext";
-import { IPostListContext } from "../../contexts/types";
+import { MainContext } from "../../contexts/MainContext";
+import { IMainContext } from "../../contexts/types";
 import { IPost } from "../../types";
 import Post from "../Post/Post";
 import styled from "./styled";
 import { useUser } from "../../hooks/useUser";
 
 const Postlist: React.FC = () => {
-  const { postList, setPosts } = useContext<IPostListContext>(PostListContext);
+  const { postList, setPosts } = useContext<IMainContext>(MainContext);
   const { setUser } = useUser();
 
   const handleDelete = async (

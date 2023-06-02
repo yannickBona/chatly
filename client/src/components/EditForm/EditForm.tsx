@@ -3,10 +3,10 @@ import styled from "./styled";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { modifyPost } from "../../api/Posts/modifyPost";
 import { PostContext } from "../../contexts/PostContext";
-import { IPostContext, IPostListContext } from "../../contexts/types";
+import { IPostContext, IMainContext } from "../../contexts/types";
 import { $ResponseData, IComment, IPost } from "../../types";
 import { editComment } from "../../api/Comments/editComment";
-import { PostListContext } from "../../contexts/PostListContext";
+import { MainContext } from "../../contexts/MainContext";
 
 interface IEditForm {
   body: string;
@@ -24,7 +24,7 @@ const EditForm: React.FC<IEditForm> = ({
   const [content, setContent] = useState(body);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { currentPost, setCurrentPost } = useContext<IPostContext>(PostContext);
-  const { postList, setPosts } = useContext<IPostListContext>(PostListContext);
+  const { postList, setPosts } = useContext<IMainContext>(MainContext);
   const { execute: modifyPostFn } = useAsyncFn(modifyPost);
   const { execute: modifyCommentFn } = useAsyncFn(editComment);
 

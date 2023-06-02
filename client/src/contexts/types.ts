@@ -5,7 +5,7 @@ export interface IPostContext {
   setCurrentPost: React.Dispatch<React.SetStateAction<IPost | null>>;
 }
 
-export interface IPostListContext {
+export interface IMainContext {
   postList: IPost[] | undefined;
   setPosts: React.Dispatch<React.SetStateAction<IPost[] | undefined>>;
 }

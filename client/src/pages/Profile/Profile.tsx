@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { IAuthContext, IPostListContext } from "../../contexts/types";
+import { IAuthContext, IMainContext } from "../../contexts/types";
 import { AuthContext } from "../../contexts/AuthContext";
 import styled from "./styled";
 import { AiOutlineUser } from "react-icons/ai";
-import { PostListContext } from "../../contexts/PostListContext";
+import { MainContext } from "../../contexts/MainContext";
 import { IPost } from "../../types";
 import { Link } from "react-router-dom";
 import Post from "../../components/Post/Post";
@@ -13,7 +13,7 @@ import { useUser } from "../../hooks/useUser";
 
 const Profile = () => {
   const { user } = useContext<IAuthContext>(AuthContext);
-  const { postList } = useContext<IPostListContext>(PostListContext);
+  const { postList } = useContext<IMainContext>(MainContext);
   const [ownerPosts, setOwnerPosts] = useState<IPost[]>([]);
   const { setUser } = useUser();
 
