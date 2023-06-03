@@ -10,7 +10,7 @@ import {
 import { AiOutlineClose } from "react-icons/ai";
 import Button from "../Button";
 
-interface ModalProps {
+export interface ModalProps {
   children: React.ReactNode;
   isOpen: boolean;
   title: string;

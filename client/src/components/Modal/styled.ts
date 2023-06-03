@@ -8,6 +8,7 @@ export const StyledModal = styled.div`
   max-width: 100%;
   max-height: 100%;
   position: fixed;
+  top: 0;
   left: 0;
   z-index: 999999;
   display: grid;

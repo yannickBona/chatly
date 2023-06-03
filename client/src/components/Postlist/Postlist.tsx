@@ -12,11 +12,8 @@ const Postlist: React.FC = () => {
   const { postList, setPosts } = useContext<IMainContext>(MainContext);
   const { setUser } = useUser();
 
-  const handleDelete = async (
-    e: React.MouseEvent<SVGElement, MouseEvent>,
-    id: string
-  ) => {
-    e.preventDefault();
+  const handleDelete = async (id: string) => {
+    // e.preventDefault();
     const response = await deletePost(id);
     if (response.status !== 200) return;
 

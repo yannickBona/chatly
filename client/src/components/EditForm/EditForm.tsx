@@ -7,6 +7,7 @@ import { IPostContext, IMainContext } from "../../contexts/types";
 import { $ResponseData, IComment, IPost } from "../../types";
 import { editComment } from "../../api/Comments/editComment";
 import { MainContext } from "../../contexts/MainContext";
+import Button from "../Button";
 
 interface IEditForm {
   body: string;
@@ -108,7 +109,7 @@ const EditForm: React.FC<IEditForm> = ({
 
       <div className="button-container">
         <button onClick={() => setEditMode(false)}>Cancel</button>
-        <button disabled={content === body}>Save</button>
+        <Button text="Save" disabled={content === body} />
       </div>
     </styled.EditForm>
   );

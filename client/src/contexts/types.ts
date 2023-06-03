@@ -5,7 +5,7 @@ export interface IPostContext {
   setCurrentPost: React.Dispatch<React.SetStateAction<IPost | null>>;
 }
 
-export type ModalTypes = "share";
+export type ModalTypes = "delete-post";
 export interface IMainContext {
   postList: IPost[] | undefined;
   setPosts: React.Dispatch<React.SetStateAction<IPost[] | undefined>>;

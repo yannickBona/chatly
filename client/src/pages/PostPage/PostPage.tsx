@@ -191,7 +191,7 @@ const PostPage: React.FC = () => {
                   </>
                 )}
 
-                <AiOutlineComment onClick={() => setOpenModal("share")} />
+                <AiOutlineComment onClick={() => null} />
               </styled.commentActionsContainer>
             </div>
           ))

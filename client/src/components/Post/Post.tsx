@@ -7,19 +7,18 @@ import {
   AiOutlineComment,
   AiOutlineUser,
 } from "react-icons/ai";
-import { $ResponseData, ILike, IPostComponent } from "../../types";
+import { $ResponseData, IPostComponent } from "../../types";
 import styled from "./styled";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { manageLikeOnPost } from "../../api/likes/manageLikeOnPost";
-import { IAuthContext, IPostContext, IMainContext } from "../../contexts/types";
+import { IPostContext, IMainContext } from "../../contexts/types";
 import { PostContext } from "../../contexts/PostContext";
 import { useUser } from "../../hooks/useUser";
 import { formatDate } from "../../helpers/dateFormat";
-import Newpost from "../Newpost/Newpost";
 import EditForm from "../EditForm/EditForm";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { MainContext } from "../../contexts/MainContext";
-import { AuthContext } from "../../contexts/AuthContext";
+import DeletePostModal from "../DeletePostModal";
 
 const Post: React.FC<IPostComponent> = ({
   body,
@@ -38,7 +37,8 @@ const Post: React.FC<IPostComponent> = ({
    * Creates a like on the post
    */
   const { currentPost } = useContext<IPostContext>(PostContext);
-  const { setPosts, postList } = useContext<IMainContext>(MainContext);
+  const { setPosts, postList, setOpenModal, openModal } =
+    useContext<IMainContext>(MainContext);
   const [isLiked, setisLiked] = useState(false);
   const [currentLikes, setCurrentLikes] = useState(likes?.length ?? 0);
   const [editMode, setEditMode] = useState(false);
@@ -169,7 +169,12 @@ const Post: React.FC<IPostComponent> = ({
 
         {isOwner &&
           (isHomePage ? (
-            <AiOutlineDelete onClick={(e) => onDelete(e, _id!)} />
+            <AiOutlineDelete
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenModal("delete-post");
+              }}
+            />
           ) : (
             <AiOutlineEdit onClick={handleEditMode} />
           ))}

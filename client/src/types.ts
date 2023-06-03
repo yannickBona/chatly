@@ -30,10 +30,7 @@ export interface ILike {
 
 export interface IPostComponent extends IPost {
   isHomePage?: boolean;
-  onDelete: (
-    e: React.MouseEvent<SVGElement, MouseEvent>,
-    id: string
-  ) => Promise<void> | null;
+  onDelete: (id: string) => Promise<void> | null;
   suggestedPosts?: IPost[];
   setSuggestedPosts?: React.Dispatch<React.SetStateAction<IPost[]>>;
 }
