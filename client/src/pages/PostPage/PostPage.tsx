@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CommentForm from "../../components/CommentForm/CommentForm";
 import Post from "../../components/Post/Post";
 import { PostContext } from "../../contexts/PostContext";
-import { IAuthContext, IPostContext } from "../../contexts/types";
+import { IAuthContext, IMainContext, IPostContext } from "../../contexts/types";
 import { manageLikeOnComment } from "../../api/likes/manageLikeOnComment";
 
 import styled from "./styled";
@@ -21,10 +21,12 @@ import { useAsyncFn } from "../../hooks/useAsync";
 import { deleteComment } from "../../api/Comments/deleteComment";
 import EditForm from "../../components/EditForm/EditForm";
 import { AuthContext } from "../../contexts/AuthContext";
+import { MainContext } from "../../contexts/MainContext";
 
 const PostPage: React.FC = () => {
   const { currentPost, setCurrentPost } = useContext<IPostContext>(PostContext);
   const { user } = useContext<IAuthContext>(AuthContext);
+  const { setOpenModal } = useContext<IMainContext>(MainContext);
   const { execute: manageCommentFn } = useAsyncFn(manageLikeOnComment);
   const { execute: deleteCommentFn } = useAsyncFn(deleteComment);
   const [editMode, setEditMode] = useState(false);
@@ -189,7 +191,7 @@ const PostPage: React.FC = () => {
                   </>
                 )}
 
-                <AiOutlineComment onClick={() => null} />
+                <AiOutlineComment onClick={() => setOpenModal("share")} />
               </styled.commentActionsContainer>
             </div>
           ))

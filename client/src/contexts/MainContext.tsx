@@ -1,13 +1,13 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { getPosts } from "../api/Posts/getPosts";
-import { useAsync } from "../hooks/useAsync";
 import { IPost } from "../types";
-import { IMainContext } from "./types";
+import { IMainContext, ModalTypes } from "./types";
 
 export const MainContext = createContext<any>({});
 
 export function MainContextProvider({ children }: { children: ReactNode }) {
   const [posts, setPosts] = useState<IPost[] | undefined>();
+  const [openModal, setOpenModal] = useState<ModalTypes | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -29,7 +29,12 @@ export function MainContextProvider({ children }: { children: ReactNode }) {
     loadPosts();
   }, []);
 
-  const data: IMainContext = { postList: posts, setPosts };
+  const data: IMainContext = {
+    postList: posts,
+    setPosts,
+    openModal,
+    setOpenModal,
+  };
 
   return (
     <MainContext.Provider value={data}>

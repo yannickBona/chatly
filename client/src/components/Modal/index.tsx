@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React, { Children, useEffect } from "react";
 import {
   StyledModal,
   StyledBackDrop,
@@ -29,6 +29,10 @@ const Modal: React.FC<ModalProps> = ({
   confirmText = "Confirm",
   isOpen,
 }) => {
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "unset";
+  }, []);
+
   return isOpen ? (
     <StyledModal>
       <StyledBackDrop />

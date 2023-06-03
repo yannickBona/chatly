@@ -3,8 +3,8 @@ import { colors } from "../../themes/tokens";
 
 export const StyledModal = styled.div`
   background: rgba(0, 0, 0, 0.6);
-  height: 100%;
-  width: 100vw;
+  height: 100dvh;
+  width: 100dvw;
   max-width: 100%;
   max-height: 100%;
   position: fixed;
@@ -29,7 +29,7 @@ export const StyledModalContainer = styled.div`
   font-family: inherit;
   border-radius: 0.5rem;
   align-self: center;
-  animation: fadeAnimation 0.5s;
+  animation: fadeAnimation 0.3s;
 
   @keyframes fadeAnimation {
     from {

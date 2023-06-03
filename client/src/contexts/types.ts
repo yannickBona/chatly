@@ -5,9 +5,12 @@ export interface IPostContext {
   setCurrentPost: React.Dispatch<React.SetStateAction<IPost | null>>;
 }
 
+export type ModalTypes = "share";
 export interface IMainContext {
   postList: IPost[] | undefined;
   setPosts: React.Dispatch<React.SetStateAction<IPost[] | undefined>>;
+  openModal: ModalTypes | null;
+  setOpenModal: React.Dispatch<React.SetStateAction<ModalTypes | null>>;
 }
 
 export type TUser = {

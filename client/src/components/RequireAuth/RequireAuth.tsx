@@ -4,7 +4,6 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { MainContextProvider } from "../../contexts/MainContext";
 import Navbar from "../Navbar/Navbar";
-import Modal from "../Modal";
 
 const RequireAuth = () => {
   const { user } = useContext<IAuthContext>(AuthContext);
@@ -16,7 +15,6 @@ const RequireAuth = () => {
     <MainContextProvider>
       <Navbar />
       <Outlet />
-      <Modal />
     </MainContextProvider>
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />
