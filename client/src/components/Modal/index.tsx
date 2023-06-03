@@ -31,7 +31,7 @@ const Modal: React.FC<ModalProps> = ({
 }) => {
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "unset";
-  }, []);
+  }, [isOpen]);
 
   return isOpen ? (
     <StyledModal>
