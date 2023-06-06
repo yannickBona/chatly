@@ -8,7 +8,7 @@ import { manageLikeOnComment } from "../../api/likes/manageLikeOnComment";
 
 import styled from "./styled";
 import { $ResponseData, IComment, ILike } from "../../types";
-import { formatDate } from "../../helpers/dateFormat";
+import { formatDate } from "../../utils/dateFormat";
 import {
   AiOutlineDelete,
   AiOutlineEdit,

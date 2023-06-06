@@ -46,3 +46,7 @@ select {
   font: inherit;
   outline: none;
 }
+
+.Toastify {
+  z-index: 99999;
+}

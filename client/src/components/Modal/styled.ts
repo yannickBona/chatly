@@ -10,7 +10,7 @@ export const StyledModal = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 999999;
+  z-index: 99999;
   display: grid;
   place-items: center;
 `;

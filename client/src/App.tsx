@@ -9,7 +9,8 @@ import { AuthContextProvider } from "./contexts/AuthContext";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
 import Explore from "./pages/Explore/Explore";
 import Profile from "./pages/Profile/Profile";
-import Modal from "./components/Modal";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           </Routes>
         </AuthContextProvider>
       </BrowserRouter>
+      <ToastContainer />
     </div>
   );
 }

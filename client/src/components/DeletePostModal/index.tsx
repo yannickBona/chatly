@@ -1,14 +1,17 @@
 import React, { useContext } from "react";
-import Modal, { ModalProps } from "../Modal";
+import Modal from "../Modal";
 import { IMainContext } from "../../contexts/types";
 import { MainContext } from "../../contexts/MainContext";
+import { notifySuccess, notifyError } from "../../utils/toast";
+import { toast } from "react-toastify";
 
 const DeletePostModal: React.FC = () => {
   const { openModal, setOpenModal, handlePostDelete, selectedPost } =
     useContext<IMainContext>(MainContext);
 
   const handleConfirm = async () => {
-    if (!selectedPost) return;
+    if (!selectedPost) return notifyError("No post selected");
+    notifySuccess("Post Deleted");
     await handlePostDelete(selectedPost._id);
     setOpenModal(null);
   };

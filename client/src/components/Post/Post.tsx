@@ -14,7 +14,7 @@ import { manageLikeOnPost } from "../../api/likes/manageLikeOnPost";
 import { IPostContext, IMainContext } from "../../contexts/types";
 import { PostContext } from "../../contexts/PostContext";
 import { useUser } from "../../hooks/useUser";
-import { formatDate } from "../../helpers/dateFormat";
+import { formatDate } from "../../utils/dateFormat";
 import EditForm from "../EditForm/EditForm";
 import { useParams } from "react-router-dom";
 import { MainContext } from "../../contexts/MainContext";
