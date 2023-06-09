@@ -1,6 +1,7 @@
 import User from "../../models/User";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 /**
  *
@@ -28,6 +29,7 @@ export const loginUserController = async (req: Request, res: Response) => {
       });
 
     const logged = await bcrypt.compare(password, user.password);
+
     if (!logged) {
       return res.status(401).json({
         status: 401,
@@ -36,10 +38,22 @@ export const loginUserController = async (req: Request, res: Response) => {
       });
     }
 
-    return res
-      .status(200)
-      .json({ status: 200, statusText: "Success", user: user.getPublicData() });
+    // Creates a new JWT token given a SECRET
+    const userData = {
+      username: user.username,
+    };
+
+    const token = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET!, {
+      expiresIn: "60s",
+    });
+
+    return res.status(200).json({
+      status: 200,
+      statusText: "Success",
+      user: { ...user.getPublicData(), token: token },
+    });
   } catch (err) {
+    console.log(err);
     return res.status(500).json({ status: "Unhandled Error", details: err });
   }
 };

@@ -22,6 +22,7 @@ import { deleteCommentController } from "./controller/comments/deleteCommentCont
 import { editCommentController } from "./controller/comments/editCommentController";
 import { createUserController } from "./controller/users/createUserController";
 import { loginUserController } from "./controller/users/loginUserController";
+import { isAuthenticated } from "./middlewares/isAuthenticated";
 
 dotenv.config();
 
@@ -64,7 +65,7 @@ app.use((req, res, next) => {
 mongoose.set("strictQuery", false);
 
 // Endpoints
-app.get("/posts", getPostsController);
+app.get("/posts", isAuthenticated, getPostsController);
 app.get("/posts/:id", getSinglePostController);
 app.put("/posts/:id", modifyPostController);
 app.delete("/posts", deletePostController);
