@@ -11,7 +11,7 @@ export interface $PublicPost {
   body: string;
   user: mongoose.Types.ObjectId;
   likes: mongoose.Types.ObjectId[];
-  comments: $CommentSchemaInterface[];
+  comments: $PublicComment[];
   createdAt: Date;
   updatedAt: Date;
   owner: string;
@@ -27,4 +27,17 @@ export interface $PublicUser {
   refreshToken: string;
   lastName: string;
   name: string;
+}
+
+export interface $PublicComment {
+  _id: mongoose.Types.ObjectId;
+  content: string;
+  userId: mongoose.Types.ObjectId;
+  postId: mongoose.Types.ObjectId;
+  parentId: mongoose.Types.ObjectId;
+  children: mongoose.Types.ObjectId[];
+  likes: mongoose.Types.ObjectId[];
+  createdAt: NativeDate;
+  updatedAt: NativeDate;
+  owner: string | null;
 }

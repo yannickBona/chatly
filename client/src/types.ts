@@ -19,6 +19,7 @@ export interface IComment {
   likes: string[];
   createdAt: Date;
   updatedAt: Date;
+  owner: string | null;
 }
 
 export interface ILike {

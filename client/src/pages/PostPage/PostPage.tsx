@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import CommentForm from "../../components/CommentForm/CommentForm";
 import Post from "../../components/Post/Post";
 import { PostContext } from "../../contexts/PostContext";
-import { IPostContext } from "../../contexts/types";
+import { IAuthContext, IPostContext } from "../../contexts/types";
 import { manageLikeOnComment } from "../../api/likes/manageLikeOnComment";
 
 import styled from "./styled";
-import { $ResponseData, IComment, ILike, IPost } from "../../types";
+import { $ResponseData, IComment, ILike } from "../../types";
 import { formatDate } from "../../helpers/dateFormat";
 import {
   AiOutlineDelete,
@@ -21,16 +21,16 @@ import { useAsyncFn } from "../../hooks/useAsync";
 import { useUser } from "../../hooks/useUser";
 import { deleteComment } from "../../api/Comments/deleteComment";
 import EditForm from "../../components/EditForm/EditForm";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const PostPage: React.FC = () => {
   const { currentPost, setCurrentPost } = useContext<IPostContext>(PostContext);
+  const { user } = useContext<IAuthContext>(AuthContext);
   const { execute: manageCommentFn } = useAsyncFn(manageLikeOnComment);
   const { execute: deleteCommentFn } = useAsyncFn(deleteComment);
-  const { id: userId } = useUser();
   const [editMode, setEditMode] = useState(false);
   const [selectedComment, setSelectedComment] = useState("");
-
-  console.log(currentPost);
+  const { id: userId } = useUser();
 
   /**
    * Deletes a comment given its ID
@@ -47,7 +47,9 @@ const PostPage: React.FC = () => {
       return prevPost
         ? {
             ...prevPost,
-            comments: response.data.comment,
+            comments: prevPost.comments.filter(
+              (comment) => response.data.comment._id !== comment._id
+            ),
           }
         : null;
     });
@@ -74,7 +76,11 @@ const PostPage: React.FC = () => {
       const newLikes = [...(comment.likes ?? []), newLike.userId];
 
       const updatedComments = [...currentPost?.comments];
-      updatedComments[idx] = { ...updatedComments[idx], likes: newLikes };
+      updatedComments[idx] = {
+        ...updatedComments[idx],
+        likes: newLikes,
+        owner: user?.username ?? null,
+      };
 
       setCurrentPost((prevPost) => {
         return prevPost
@@ -100,7 +106,11 @@ const PostPage: React.FC = () => {
       );
 
       const updatedComments = [...currentPost?.comments];
-      updatedComments[idx] = { ...updatedComments[idx], likes: newLikes };
+      updatedComments[idx] = {
+        ...updatedComments[idx],
+        likes: newLikes,
+        owner: user?.username ?? null,
+      };
 
       setCurrentPost((prevPost) => {
         return prevPost
@@ -136,7 +146,11 @@ const PostPage: React.FC = () => {
                 <span className="comment__user-avatar">
                   <AiOutlineUser />
                 </span>
-                <b>{comment.userId}</b> ·{" "}
+                <b>
+                  {comment.owner ?? "Anonymous User"}{" "}
+                  {comment.owner === currentPost.owner && "(Owner)"}
+                </b>{" "}
+                ·{" "}
                 <span className="comment__date">
                   {formatDate(comment.createdAt.toString())}
                 </span>

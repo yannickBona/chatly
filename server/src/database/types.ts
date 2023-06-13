@@ -1,5 +1,10 @@
 import mongoose, { ObjectId } from "mongoose";
-import { $PublicLike, $PublicPost, $PublicUser } from "../types";
+import {
+  $PublicComment,
+  $PublicLike,
+  $PublicPost,
+  $PublicUser,
+} from "../types";
 
 export interface $PostSchemaInterface {
   _id: ObjectId;
@@ -31,6 +36,7 @@ export interface $CommentSchemaInterface {
   likes: mongoose.Types.ObjectId[];
   createdAt: NativeDate;
   updatedAt: NativeDate;
+  getPublicData: () => Promise<$PublicComment>;
 }
 
 export interface $UserSchemaInterface {

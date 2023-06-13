@@ -63,10 +63,12 @@ const EditForm: React.FC<IEditForm> = ({
       currentPost.comments[oldCommentIdx] = newComment;
       const updatedComments = currentPost.comments;
       setCurrentPost((prevPost) => {
-        return {
-          ...prevPost,
-          comments: updatedComments,
-        };
+        return prevPost
+          ? {
+              ...prevPost,
+              comments: updatedComments,
+            }
+          : null;
       });
       setEditMode(false);
       return;
@@ -74,16 +76,17 @@ const EditForm: React.FC<IEditForm> = ({
 
     if (!comment) {
       const response: $ResponseData = await modifyPostFn(postId, content);
-      console.log("DA", response, currentPost);
       if (response.status !== 200) return;
 
       const updatedPost = response.data.post;
 
-      setCurrentPost((prevPost: IPost | undefined) => {
-        return {
-          ...prevPost,
-          body: updatedPost.body,
-        };
+      setCurrentPost((prevPost) => {
+        return prevPost
+          ? {
+              ...prevPost,
+              body: updatedPost.body,
+            }
+          : null;
       });
       setEditMode(false);
       return;

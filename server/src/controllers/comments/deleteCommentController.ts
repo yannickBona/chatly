@@ -46,7 +46,10 @@ export const deleteCommentController = async (req: Request, res: Response) => {
 
     return res
       .status(200)
-      .json({ ...HTTP_200_OK, data: { comment: deletedComment } });
+      .json({
+        ...HTTP_200_OK,
+        data: { comment: await deletedComment.getPublicData() },
+      });
   } catch (err) {
     return res
       .status(500)

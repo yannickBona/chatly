@@ -48,7 +48,10 @@ export const createCommentController = async (req: Request, res: Response) => {
 
     return res
       .status(200)
-      .json({ ...HTTP_200_OK, data: { comment: savedComment } });
+      .json({
+        ...HTTP_200_OK,
+        data: { comment: await savedComment.getPublicData() },
+      });
   } catch (err) {
     return res
       .status(500)

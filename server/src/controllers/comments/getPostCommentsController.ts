@@ -11,9 +11,16 @@ export const getPostCommentsController = async (
   try {
     const { id: postId } = req.params;
     const comments = await Comment.find({ postId: postId });
+
+    const commentList = [];
+    for (let comment of comments) {
+      const publicComment = await comment.getPublicData();
+      commentList.push(publicComment);
+    }
+
     return res
       .status(200)
-      .json({ ...HTTP_200_OK, data: { comment: comments } });
+      .json({ ...HTTP_200_OK, data: { comment: commentList } });
   } catch (err) {
     return res
       .status(500)

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
-import { Like } from "../models";
+import { Like, User } from "../models";
 import { logger } from "../../utils/helpers";
 import { $CommentSchemaInterface } from "../types";
 
@@ -66,5 +66,23 @@ CommentSchema.pre("deleteOne", async function (next) {
   await Like.deleteMany({ commentId: commentId });
   next();
 });
+
+CommentSchema.methods.getPublicData = async function (
+  this: $CommentSchemaInterface
+) {
+  const user = await User.findById(this.userId);
+  return {
+    content: this.content,
+    children: this.children,
+    createdAt: this.createdAt,
+    updatedAt: this.updatedAt,
+    postId: this.postId,
+    parentId: this.parentId,
+    userId: this.userId,
+    likes: this.likes,
+    _id: this._id,
+    owner: user ? user.username : null,
+  };
+};
 
 export default CommentSchema;

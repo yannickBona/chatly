@@ -1,4 +1,6 @@
 import { Post } from "../../database/models";
+import { $CommentSchemaInterface } from "../../database/types";
+import { $PublicComment } from "../../types";
 import {
   HTTP_500_INTERNAL_SERVER_ERROR,
   HTTP_200_OK,
@@ -25,6 +27,15 @@ export const getSinglePostController = async (req: Request, res: Response) => {
       });
 
     const publicPost = await singlePost.getPublicData();
+
+    const publicComments: $PublicComment[] = await Promise.all(
+      //@ts-ignore
+      singlePost.comments.map(async (comment: $CommentSchemaInterface) => {
+        return await comment.getPublicData();
+      })
+    );
+
+    publicPost.comments = publicComments;
 
     return res.status(200).json({
       ...HTTP_200_OK,
