@@ -1,11 +1,12 @@
 export interface IPost {
-  _id?: string;
-  title?: string;
-  body?: string;
-  comments?: IComment[] | [];
-  likes?: string[] | [];
-  createdAt?: Date;
-  updatedAt?: Date;
+  _id: string;
+  title: string;
+  body: string;
+  comments: IComment[] | [];
+  likes: string[] | [];
+  createdAt: Date;
+  updatedAt: Date;
+  owner: string | null;
 }
 
 export interface IComment {

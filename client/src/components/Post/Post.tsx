@@ -11,7 +11,11 @@ import { $ResponseData, ILike, IPostComponent } from "../../types";
 import styled from "./styled";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { manageLikeOnPost } from "../../api/likes/manageLikeOnPost";
-import { IPostContext, IPostListContext } from "../../contexts/types";
+import {
+  IAuthContext,
+  IPostContext,
+  IPostListContext,
+} from "../../contexts/types";
 import { PostContext } from "../../contexts/PostContext";
 import { useUser } from "../../hooks/useUser";
 import { formatDate } from "../../helpers/dateFormat";
@@ -19,6 +23,7 @@ import Newpost from "../Newpost/Newpost";
 import EditForm from "../EditForm/EditForm";
 import { useLocation, useParams } from "react-router-dom";
 import { PostListContext } from "../../contexts/PostListContext";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Post: React.FC<IPostComponent> = ({
   body,
@@ -29,20 +34,24 @@ const Post: React.FC<IPostComponent> = ({
   createdAt,
   isHomePage,
   onDelete,
+  owner,
 }) => {
   /**
    * Creates a like on the post
    */
   const { currentPost } = useContext<IPostContext>(PostContext);
   const { setPosts } = useContext<IPostListContext>(PostListContext);
+  const { user } = useContext<IAuthContext>(AuthContext);
   const [isLiked, setisLiked] = useState(false);
   const [currentLikes, setCurrentLikes] = useState(likes?.length ?? 0);
   const [editMode, setEditMode] = useState(false);
   const { execute: manageLikeFn } = useAsyncFn(manageLikeOnPost);
+  const { id: userId } = useUser();
+
+  const isOwner = user?.username === owner;
 
   const { id: postIdParam } = useParams();
   const postId = currentPost?._id ?? _id ?? postIdParam;
-  const { id: userId } = useUser();
   const postedDate = currentPost?.createdAt
     ? currentPost?.createdAt.toString()
     : createdAt?.toString();
@@ -100,12 +109,14 @@ const Post: React.FC<IPostComponent> = ({
         <span className="comment__user-avatar">
           <AiOutlineUser />
         </span>
-        <i>Posted By yannickBona</i>·{" "}
-        <span className="post-date">{formatDate(postedDate)}</span>
+        <i>
+          Posted By <b>{owner ?? "Anonymous User"}</b>
+        </i>
+        · <span className="post-date">{formatDate(postedDate)}</span>
       </div>
       <h1>{title}</h1>
 
-      {editMode ? (
+      {isOwner && editMode ? (
         <EditForm postId={postId} setEditMode={setEditMode} body={body!} />
       ) : (
         <p>{body}</p>
@@ -126,11 +137,12 @@ const Post: React.FC<IPostComponent> = ({
           <AiOutlineComment onClick={() => null} /> {comments?.length}
         </span>
 
-        {isHomePage ? (
-          <AiOutlineDelete onClick={(e) => onDelete(e, _id!)} />
-        ) : (
-          <AiOutlineEdit onClick={handleEditMode} />
-        )}
+        {isOwner &&
+          (isHomePage ? (
+            <AiOutlineDelete onClick={(e) => onDelete(e, _id!)} />
+          ) : (
+            <AiOutlineEdit onClick={handleEditMode} />
+          ))}
       </styled.PostActionsContainer>
     </styled.Container>
   );

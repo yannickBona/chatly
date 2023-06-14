@@ -1,8 +1,8 @@
 import { IComment, IPost } from "../types";
 
 export interface IPostContext {
-  currentPost: IPost | undefined;
-  setCurrentPost: React.Dispatch<React.SetStateAction<IPost | undefined>>;
+  currentPost: IPost | null;
+  setCurrentPost: React.Dispatch<React.SetStateAction<IPost | null>>;
 }
 
 export interface IPostListContext {

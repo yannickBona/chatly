@@ -30,6 +30,8 @@ const PostPage: React.FC = () => {
   const [editMode, setEditMode] = useState(false);
   const [selectedComment, setSelectedComment] = useState("");
 
+  console.log(currentPost);
+
   /**
    * Deletes a comment given its ID
    * @param id commentId
@@ -41,10 +43,14 @@ const PostPage: React.FC = () => {
     const response: $ResponseData = await deleteCommentFn(id);
     if (response.status !== 200) return;
 
-    setCurrentPost((prevPost) => ({
-      ...prevPost,
-      comments: prevPost?.comments?.filter((c) => c._id !== id),
-    }));
+    setCurrentPost((prevPost) => {
+      return prevPost
+        ? {
+            ...prevPost,
+            comments: response.data.comment,
+          }
+        : null;
+    });
   };
 
   const handleLikeOnComment = async (comment: IComment) => {
@@ -70,11 +76,13 @@ const PostPage: React.FC = () => {
       const updatedComments = [...currentPost?.comments];
       updatedComments[idx] = { ...updatedComments[idx], likes: newLikes };
 
-      setCurrentPost((prevPost: IPost | undefined) => {
-        return {
-          ...prevPost,
-          comments: updatedComments,
-        };
+      setCurrentPost((prevPost) => {
+        return prevPost
+          ? {
+              ...prevPost,
+              comments: updatedComments,
+            }
+          : null;
       });
     }
 
@@ -94,11 +102,13 @@ const PostPage: React.FC = () => {
       const updatedComments = [...currentPost?.comments];
       updatedComments[idx] = { ...updatedComments[idx], likes: newLikes };
 
-      setCurrentPost((prevPost: IPost | undefined) => {
-        return {
-          ...prevPost,
-          comments: updatedComments,
-        };
+      setCurrentPost((prevPost) => {
+        return prevPost
+          ? {
+              ...prevPost,
+              comments: updatedComments,
+            }
+          : null;
       });
     }
   };

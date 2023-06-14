@@ -14,7 +14,7 @@ import { IPostContext } from "./types";
 export const PostContext = createContext<any>({});
 
 export const PostProvider = ({ children }: { children: ReactNode }) => {
-  const [currentPost, setCurrentPost] = useState<IPost | undefined>();
+  const [currentPost, setCurrentPost] = useState<IPost | null>(null);
   const { id } = useParams();
 
   const {
@@ -23,7 +23,7 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
     value: response,
   } = useAsync(() => getPost(id!), [id]);
 
-  const post: IPost | undefined = response?.data?.post;
+  const post: IPost | null = response?.data?.post;
 
   useEffect(() => {
     if (post) {
