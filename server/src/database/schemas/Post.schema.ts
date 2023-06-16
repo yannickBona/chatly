@@ -28,7 +28,9 @@ const PostSchema = new Schema<$PostSchemaInterface>(
     },
   },
   {
-    timestamps: true, // add createdAt and updatedAt fields and set them automatically
+    timestamps: {
+      currentTime: () => Date.now() + 2 * 60 * 60 * 1000,
+    }, // add createdAt and updatedAt fields and set them automatically
   }
 );
 
