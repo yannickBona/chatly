@@ -48,7 +48,6 @@ const Post: React.FC<IPostComponent> = ({
     : createdAt?.toString();
 
   useEffect(() => {
-    console.log(likes);
     if (likes?.length === 0 || !likes) return;
     setisLiked(likes.some((like: string) => like === userId));
     setCurrentLikes(likes.length);

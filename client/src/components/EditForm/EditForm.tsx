@@ -58,7 +58,6 @@ const EditForm: React.FC<IEditForm> = ({
 
       // If the comment is not found abort
       if (oldCommentIdx === -1) return setEditMode(false);
-      console.log("DS", comment._id === currentPost.comments[0]._id);
 
       // Update the comments context
       currentPost.comments[oldCommentIdx] = newComment;

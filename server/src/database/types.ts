@@ -9,7 +9,8 @@ export interface $PostSchemaInterface {
   likes: mongoose.Types.ObjectId[];
   comments: ObjectId[];
   createdAt: Date;
-  getPublicData: () => $PublicPost;
+  updatedAt: Date;
+  getPublicData: () => Promise<$PublicPost>;
 }
 export interface $LikeSchemaInterface {
   _id: ObjectId;

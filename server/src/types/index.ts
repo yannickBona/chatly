@@ -13,6 +13,8 @@ export interface $PublicPost {
   likes: mongoose.Types.ObjectId[];
   comments: $CommentSchemaInterface[];
   createdAt: Date;
+  updatedAt: Date;
+  owner: string;
 }
 export interface $PublicLike {
   userId: mongoose.Types.ObjectId;

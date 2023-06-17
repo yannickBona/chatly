@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import Comments from "./Comment.schema";
 import { logger } from "../../utils/helpers";
-import { Post, Comment, Like } from "../models";
+import { Post, Comment, Like, User } from "../models";
 
 import { $PostSchemaInterface } from "../types";
 
@@ -54,14 +54,18 @@ PostSchema.pre("findOneAndDelete", async function (next) {
   next();
 });
 
-PostSchema.methods.getPublicData = function (this: $PostSchemaInterface) {
+PostSchema.methods.getPublicData = async function (this: $PostSchemaInterface) {
+  const user = await User.findById(this.user);
+
   return {
+    _id: this._id,
     title: this.title,
     body: this.body,
-    user: this.user,
     likes: this.likes,
     comments: this.comments,
     createdAt: this.createdAt,
+    updatedAt: this.updatedAt,
+    owner: user ? user.username : null,
   };
 };
 

@@ -27,18 +27,24 @@ const Postlist: React.FC = () => {
   // if (loading) return <h1>Loading...</h1>;
   // if (error) return <h1>Error!</h1>;
 
+  console.log(postList);
+
   return (
     <styled.Container>
-      {postList?.map((post: IPost) => (
-        <Link key={post._id} className="post-card" to={`/post/${post._id}`}>
-          <Post
-            onDelete={handleDelete}
-            isHomePage={true}
-            key={post?._id}
-            {...post}
-          />
-        </Link>
-      ))}
+      {postList && postList.length > 0 ? (
+        postList?.map((post: IPost) => (
+          <Link key={post._id} className="post-card" to={`/post/${post._id}`}>
+            <Post
+              onDelete={handleDelete}
+              isHomePage={true}
+              key={post?._id}
+              {...post}
+            />
+          </Link>
+        ))
+      ) : (
+        <div>No posts found!</div>
+      )}
     </styled.Container>
   );
 };

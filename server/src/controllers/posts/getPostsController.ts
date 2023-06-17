@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { Post } from "../../database/models";
 import { HTTP_500_INTERNAL_SERVER_ERROR, HTTP_200_OK } from "../../utils/api";
+import { $PostSchemaInterface } from "../../database/types";
+import { $PublicPost } from "../../types";
 
 /**
  * Gets all the posts when the page first loads
@@ -12,9 +14,16 @@ import { HTTP_500_INTERNAL_SERVER_ERROR, HTTP_200_OK } from "../../utils/api";
 export const getPostsController = async (req: Request, res: Response) => {
   try {
     const posts = await Post.find().populate("comments");
+
+    const postList: $PublicPost[] = [];
+    for (let post of posts) {
+      const publicPost = await post.getPublicData();
+      postList.push(publicPost);
+    }
+
     return res
       .status(200)
-      .json({ ...HTTP_200_OK, data: { posts: posts.reverse() } });
+      .json({ ...HTTP_200_OK, data: { posts: postList.reverse() } });
   } catch (err) {
     return res
       .status(500)
