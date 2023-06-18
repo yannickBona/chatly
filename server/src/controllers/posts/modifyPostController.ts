@@ -10,20 +10,22 @@ import {
 export const modifyPostController = async (req: Request, res: Response) => {
   try {
     const { id: postId } = req.params;
+    const { content } = req.body;
 
     if (!postId)
       return res
         .status(400)
         .json({ ...HTTP_400_BAD_REQUEST, details: "No post ID was provided" });
 
-    const currentPost = await Post.findById(postId);
+    const currentPost = await Post.findByIdAndUpdate(postId, {
+      body: content,
+    });
     if (!currentPost)
       return res.status(400).json({
         ...HTTP_400_BAD_REQUEST,
         details: `Post ${postId} was not found`,
       });
 
-    currentPost.body = req.body.content;
     const updatedPost = await currentPost.save();
     return res
       .status(200)

@@ -34,7 +34,7 @@ export const createLikeOnPostController = async (
       userId: profile._id.toString(),
     });
 
-    const savedLike = await newLike.save();
+    const savedLike = await newLike.save({ timestamps: false });
 
     return res.status(200).json({ ...HTTP_200_OK, data: { like: savedLike } });
   } catch (err) {

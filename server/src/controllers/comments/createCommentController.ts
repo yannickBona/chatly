@@ -44,7 +44,7 @@ export const createCommentController = async (req: Request, res: Response) => {
         .status(404)
         .json({ ...HTTP_404_NOT_FOUND, details: "Post not found" });
     post.comments.push(newComment._id);
-    await post.save();
+    await post.save({ timestamps: false });
 
     return res
       .status(200)

@@ -30,13 +30,13 @@ LikeSchema.pre("save", async function (next) {
   if (this.postId) {
     const post = await Post.findById(this.postId);
     post?.likes.push(this.userId);
-    await post?.save();
+    await post?.save({ timestamps: false });
   }
 
   if (this.commentId) {
     const comment = await Comment.findById(this.commentId);
     comment?.likes.push(this.userId!);
-    await comment?.save();
+    await comment?.save({ timestamps: false });
   }
 
   next();
@@ -59,7 +59,7 @@ LikeSchema.pre(
       post.likes = post.likes.filter(
         (like) => like.toString() !== userId._id.toString()
       );
-      await post.save();
+      await post.save({ timestamps: false });
     }
 
     if (commentId) {
@@ -68,7 +68,7 @@ LikeSchema.pre(
       comment.likes = comment.likes.filter(
         (like) => like.toString() !== userId._id.toString()
       );
-      await comment.save();
+      await comment.save({ timestamps: false });
     }
 
     next();

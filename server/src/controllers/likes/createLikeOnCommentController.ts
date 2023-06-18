@@ -34,7 +34,7 @@ export const createLikeOnCommentController = async (
       userId: profile._id.toString(),
     });
 
-    const savedLike = await newLike.save();
+    const savedLike = await newLike.save({ timestamps: false });
 
     return res
       .status(200)
