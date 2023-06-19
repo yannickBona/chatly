@@ -108,7 +108,7 @@ const PostPage: React.FC = () => {
     setSelectedComment(id);
   };
 
-  return (
+  return currentPost ? (
     <styled.Container>
       <Link to="/" className="back-button">
         ⬅️
@@ -170,6 +170,8 @@ const PostPage: React.FC = () => {
           .reverse()}
       </styled.CommentsSection>
     </styled.Container>
+  ) : (
+    <div>Post not found</div>
   );
 };
 
