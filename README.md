@@ -9,8 +9,10 @@ Project description here
 - MongoDB (NoSQL)
 - REST APIs
 - React.ts (routing, context, authorized requests)
+- Schema methods & middlewares
 
 # Stack
+
 - React (Vite & Typescript)
 - Node Express (Typescript)
 - MongoDB
