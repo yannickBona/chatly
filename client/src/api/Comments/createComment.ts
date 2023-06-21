@@ -6,7 +6,7 @@ export const createComment = (
   parentId?: string
 ) => {
   return makeRequest({
-    url: `/createComment`,
+    url: `/comment`,
     data: { comment: comment, postId: postId, parentId: parentId },
     method: "POST",
   });

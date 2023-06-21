@@ -5,7 +5,7 @@ export const manageLikeOnComment = (
   method: "DELETE" | "POST" | "GET"
 ) => {
   return makeRequest({
-    url: `posts/${postId}/comments/${commentId}/like`,
+    url: `/like/post/${postId}/comment/${commentId}`,
     method: method,
   });
 };

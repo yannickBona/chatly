@@ -3,5 +3,5 @@ export const manageLikeOnPost = (
   postId: string,
   method: "DELETE" | "POST" | "GET"
 ) => {
-  return makeRequest({ url: `/post/${postId}/like`, method: method });
+  return makeRequest({ url: `/like/post/${postId}`, method: method });
 };
