@@ -3,7 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
-import User from "./database/schemas/User.schema";
+import database from "./database";
 
 // Controllers
 import { getPostsController } from "./controller/posts/getPostsController";
@@ -94,8 +94,8 @@ app.post("/user/token", generateTokenController);
 
 // MONGO
 logger.info("Connecting to the db...");
-mongoose
-  .connect(process.env.MONGO_URL!)
+database
+  .connect()
   .then(() => {
     logger.info("DB Ready");
     app.listen(process.env.PORT, () => {
