@@ -2,6 +2,7 @@ import User from "../../models/User";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { createAccessToken } from "../../utils";
 
 /**
  *
@@ -43,9 +44,11 @@ export const loginUserController = async (req: Request, res: Response) => {
       username: user.username,
     };
 
-    const token = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET!, {
-      expiresIn: "60s",
-    });
+    const token = createAccessToken(userData);
+    const refreshToken = jwt.sign(userData, process.env.REFRESH_TOKEN_SECRET!);
+
+    user.refreshToken = refreshToken;
+    user.save();
 
     return res.status(200).json({
       status: 200,

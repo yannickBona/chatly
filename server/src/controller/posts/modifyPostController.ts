@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { logger } from "../../utils/general";
+import { logger } from "../../utils";
 import Post from "../../models/Post";
 
 export const modifyPostController = async (req: Request, res: Response) => {

@@ -1,7 +1,7 @@
 import Comment from "../../models/Comment";
 import Post from "../../models/Post";
 import { Request, Response } from "express";
-import { logger } from "../../utils/general";
+import { logger } from "../../utils";
 
 /**
  *

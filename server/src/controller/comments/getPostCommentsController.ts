@@ -1,7 +1,7 @@
 import Post from "../../models/Post";
 import Comment from "../../models/Comment";
 import { Request, Response } from "express";
-import { logger } from "../../utils/general";
+import { logger } from "../../utils";
 import Comments from "../../models/Comment";
 import { isValidObjectId } from "mongoose";
 

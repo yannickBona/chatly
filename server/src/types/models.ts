@@ -30,6 +30,7 @@ export interface $UserSchemaInterface {
   lastname: string;
   username: string;
   password: string;
+  refreshToken: string;
   getPublicData: () => { username: string };
 }
 

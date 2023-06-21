@@ -1,5 +1,5 @@
 import Post from "../../models/Post";
-import { logger } from "../../utils/general";
+import { logger } from "../../utils";
 import { Request, Response } from "express";
 
 /**

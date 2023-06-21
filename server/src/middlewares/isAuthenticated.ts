@@ -29,6 +29,8 @@ export const isAuthenticated = async (
       process.env.ACCESS_TOKEN_SECRET!,
       async (err, userDecoded: JwtPayload | string | undefined) => {
         if (err || !userDecoded || typeof userDecoded === "string") {
+          console.log(err, userDecoded);
+
           return res.status(403).json({
             status: "Forbidden",
             details: "Token is not valid or has expired",

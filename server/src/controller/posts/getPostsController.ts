@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import Posts from "../../models/Post";
-import { logger } from "../../utils/general";
+import { logger } from "../../utils";
 
 /**
  * Gets all the posts when the page first loads

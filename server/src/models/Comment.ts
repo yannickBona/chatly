@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import Like from "./Like";
-import { logger } from "../utils/general";
+import { logger } from "../utils";
 
 const { Schema } = mongoose;
 

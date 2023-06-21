@@ -1,4 +1,4 @@
-import { logger } from "../../utils/general";
+import { logger } from "../../utils";
 import Like from "../../models/Like";
 import { Response, Request } from "express";
 

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import Comments from "./Comment";
-import { logger } from "../utils/general";
+import { logger } from "../utils";
 import Like from "./Like";
 
 const { Schema } = mongoose;

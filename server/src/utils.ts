@@ -1,3 +1,10 @@
+/**
+ * This file contains util functions
+ */
+
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { $JwtBody } from "./types";
+
 export const logger = {
   info: (message: string, ...args: any) => {
     console.log(`[INFO ${formatDateTime()}] ${message} ${args}`);
@@ -22,4 +29,10 @@ function formatDateTime() {
     .replace("T", " ")
     .substring(0, 19);
   return formattedDate;
+}
+
+export function createAccessToken(user: JwtPayload) {
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET!, {
+    expiresIn: "20s",
+  });
 }

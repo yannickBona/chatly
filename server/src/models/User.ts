@@ -9,6 +9,7 @@ const UserSchema = new Schema(
     lastName: String,
     username: String,
     password: String,
+    refreshToken: String,
   },
   {
     timestamps: true, // add createdAt and updatedAt fields and sxet them automatically
@@ -16,7 +17,12 @@ const UserSchema = new Schema(
 );
 
 UserSchema.methods.getPublicData = function (this: $UserSchemaInterface) {
-  return { username: this.username, name: this.name, lastName: this.lastname };
+  return {
+    username: this.username,
+    name: this.name,
+    lastName: this.lastname,
+    refreshToken: this.refreshToken,
+  };
 };
 
 const userModel = mongoose.model<$UserSchemaInterface>("User", UserSchema);

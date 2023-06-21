@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Post from "../../models/Post";
 import { IPost } from "../../types/models";
-import { logger } from "../../utils/general";
+import { logger } from "../../utils";
 
 /**
  * Deletes a post given its id

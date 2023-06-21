@@ -16,7 +16,7 @@ import { createLikeOnPostController } from "./controller/likes/createLikeOnPostC
 import { removeLikeOnPostController } from "./controller/likes/removeLikeOnPostController";
 import { createLikeOnCommentController } from "./controller/likes/createLikeOnCommentController";
 import { removeLikeOnCommentController } from "./controller/likes/removeLikeOnCommentController";
-import { logger } from "./utils/general";
+import { logger } from "./utils";
 import { modifyPostController } from "./controller/posts/modifyPostController";
 import { deleteCommentController } from "./controller/comments/deleteCommentController";
 import { editCommentController } from "./controller/comments/editCommentController";
@@ -24,6 +24,7 @@ import { createUserController } from "./controller/users/createUserController";
 import { loginUserController } from "./controller/users/loginUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
 import { sessionController } from "./controller/users/sessionController";
+import { generateTokenController } from "./controller/users/generateTokenController";
 
 dotenv.config();
 
@@ -66,7 +67,7 @@ app.use(
 mongoose.set("strictQuery", false);
 
 // Endpoints
-app.get("/posts", getPostsController);
+app.get("/posts", isAuthenticated, getPostsController);
 app.get("/posts/:id", getSinglePostController);
 app.put("/posts/:id", modifyPostController);
 app.delete("/posts", deletePostController);
@@ -89,6 +90,7 @@ app.put("/comment", editCommentController);
 app.post("/user/create", createUserController);
 app.post("/user/login", loginUserController);
 app.get("/user/session", isAuthenticated, sessionController);
+app.post("/user/token", generateTokenController);
 
 // MONGO
 logger.info("Connecting to the db...");
