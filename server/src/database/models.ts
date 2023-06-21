@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import UserSchema from "./schemas/User";
-import PostSchema from "./schemas/Post";
-import CommentSchema from "./schemas/Comment";
-import LikeSchema from "./schemas/Like";
+import UserSchema from "./schemas/User.schema";
+import PostSchema from "./schemas/Post.schema";
+import CommentSchema from "./schemas/Comment.schema";
+import LikeSchema from "./schemas/Like.schema";
 import {
   $CommentSchemaInterface,
   $LikeSchemaInterface,

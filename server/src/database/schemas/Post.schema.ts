@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Comments from "./Comment";
+import Comments from "./Comment.schema";
 import { logger } from "../../utils";
 import { Post, Comment, Like } from "../models";
 
