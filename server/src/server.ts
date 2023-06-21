@@ -1,30 +1,43 @@
-import express, { Request, Response } from "express";
-import cors from "cors";
-import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import dotenv from "dotenv";
+import express from "express";
+import mongoose from "mongoose";
 import database from "./database";
+import { logger } from "./utils";
 
 // Controllers
-import { getPostsController } from "./controller/posts/getPostsController";
-import { createPostController } from "./controller/posts/createPostController";
-import { getSinglePostController } from "./controller/posts/getSinglePostController";
-import { deletePostController } from "./controller/posts/deletePostController";
-import { createCommentController } from "./controller/comments/createCommentController";
-import { getPostCommentsController } from "./controller/comments/getPostCommentsController";
-import { createLikeOnPostController } from "./controller/likes/createLikeOnPostController";
-import { removeLikeOnPostController } from "./controller/likes/removeLikeOnPostController";
-import { createLikeOnCommentController } from "./controller/likes/createLikeOnCommentController";
-import { removeLikeOnCommentController } from "./controller/likes/removeLikeOnCommentController";
-import { logger } from "./utils";
-import { modifyPostController } from "./controller/posts/modifyPostController";
-import { deleteCommentController } from "./controller/comments/deleteCommentController";
-import { editCommentController } from "./controller/comments/editCommentController";
-import { createUserController } from "./controller/users/createUserController";
-import { loginUserController } from "./controller/users/loginUserController";
+import {
+  createCommentController,
+  deleteCommentController,
+  editCommentController,
+  getPostCommentsController,
+} from "./controllers/comments";
+
+import {
+  createLikeOnCommentController,
+  createLikeOnPostController,
+  removeLikeOnPostController,
+  removeLikeOnCommentController,
+} from "./controllers/likes";
+
+import {
+  createPostController,
+  deletePostController,
+  getPostsController,
+  modifyPostController,
+  getSinglePostController,
+} from "./controllers/posts";
+
+import {
+  createUserController,
+  loginUserController,
+  sessionController,
+  generateTokenController,
+} from "./controllers/users";
+
+// Middlewares
 import { isAuthenticated } from "./middlewares/isAuthenticated";
-import { sessionController } from "./controller/users/sessionController";
-import { generateTokenController } from "./controller/users/generateTokenController";
 
 dotenv.config();
 
@@ -38,31 +51,6 @@ app.use(
     credentials: true,
   })
 );
-
-/**
- * Cookie middleware, forces the cookie to the selected user before any request
- * This "fakes" an auth system
- */
-// let CURRENT_USER_ID: string;
-// (async () => {
-//   const response = await User.findOne({ username: "gio" });
-//   CURRENT_USER_ID = response?._id.toString() ?? "1";
-// })();
-
-// app.use((req, res, next) => {
-//   logger.info("LOGGED AS ", CURRENT_USER_ID);
-//   if (req.cookies.userId !== CURRENT_USER_ID) {
-//     req.cookies.userId = CURRENT_USER_ID;
-//     logger.info(`Auth cookie set to ${CURRENT_USER_ID}`);
-//     res.cookie("userId", CURRENT_USER_ID, {
-//       maxAge: 3600000000,
-//       sameSite: "none",
-//       secure: true,
-//     });
-//   }
-
-//   next();
-// });
 
 mongoose.set("strictQuery", false);
 
