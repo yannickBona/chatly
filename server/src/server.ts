@@ -3,7 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
-import User from "./models/User";
+import User from "./database/schemas/User";
 
 // Controllers
 import { getPostsController } from "./controller/posts/getPostsController";

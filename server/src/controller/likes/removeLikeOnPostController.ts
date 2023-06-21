@@ -1,5 +1,5 @@
 import { logger } from "../../utils";
-import Like from "../../models/Like";
+import { Like } from "../../database/models";
 import { Response, Request } from "express";
 
 /**

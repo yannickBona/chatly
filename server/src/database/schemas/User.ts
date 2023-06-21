@@ -1,9 +1,7 @@
-import mongoose from "mongoose";
-import { $UserSchemaInterface } from "../types/models";
+import mongoose, { Schema } from "mongoose";
+import { $UserSchemaInterface } from "../types";
 
-const { Schema } = mongoose;
-
-const UserSchema = new Schema(
+const UserSchema = new Schema<$UserSchemaInterface>(
   {
     name: String,
     lastName: String,
@@ -20,11 +18,9 @@ UserSchema.methods.getPublicData = function (this: $UserSchemaInterface) {
   return {
     username: this.username,
     name: this.name,
-    lastName: this.lastname,
+    lastName: this.lastName,
     refreshToken: this.refreshToken,
   };
 };
 
-const userModel = mongoose.model<$UserSchemaInterface>("User", UserSchema);
-
-export default userModel;
+export default UserSchema;

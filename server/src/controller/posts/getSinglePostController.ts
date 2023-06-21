@@ -1,4 +1,4 @@
-import Post from "../../models/Post";
+import { Post } from "../../database/models";
 import { logger } from "../../utils";
 import { Request, Response } from "express";
 

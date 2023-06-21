@@ -1,6 +1,5 @@
-import User from "../../models/User";
+import { User } from "../../database/models";
 import { Request, Response } from "express";
-import bcrypt from "bcrypt";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { createAccessToken } from "../../utils";
 import { $JwtBody } from "../../types";

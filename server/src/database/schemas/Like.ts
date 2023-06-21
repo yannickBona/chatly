@@ -1,12 +1,9 @@
-import mongoose, { Error } from "mongoose";
-import Post from "./Post";
-import Comment from "./Comment";
-import { FilterQuery, ObjectId } from "mongoose";
-import { ILike } from "../types/models";
+import mongoose, { Error, Schema } from "mongoose";
+import { FilterQuery } from "mongoose";
+import { $LikeSchemaInterface } from "../types";
+import { Post, Comment } from "../models";
 
-const { Schema } = mongoose;
-
-const LikeSchema = new Schema({
+const LikeSchema = new Schema<$LikeSchemaInterface>({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -32,7 +29,7 @@ LikeSchema.pre("save", async function (next) {
 
   if (this.postId) {
     const post = await Post.findById(this.postId);
-    post?.likes.push(this.userId!);
+    post?.likes.push(this.userId);
     await post?.save();
   }
 
@@ -51,7 +48,7 @@ LikeSchema.pre("save", async function (next) {
  */
 LikeSchema.pre(
   "findOneAndRemove",
-  async function (this: FilterQuery<ILike>, next) {
+  async function (this: FilterQuery<$LikeSchemaInterface>, next) {
     const { userId, postId } = this._conditions;
     const commentId = this.getQuery()["commentId"];
 
@@ -76,6 +73,4 @@ LikeSchema.pre(
   }
 );
 
-const likeModel = mongoose.model("Like", LikeSchema);
-
-export default likeModel;
+export default LikeSchema;

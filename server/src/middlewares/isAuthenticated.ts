@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { $JwtBody } from "../types";
-import User from "../models/User";
-import { $UserSchemaInterface } from "../types/models";
+import { User } from "../database/models";
+import { $UserSchemaInterface } from "../database/types";
 
 /**
  * Handles JWT Token authentication

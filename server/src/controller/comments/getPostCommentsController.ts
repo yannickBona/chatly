@@ -1,8 +1,6 @@
-import Post from "../../models/Post";
-import Comment from "../../models/Comment";
+import { Comment } from "../../database/models";
 import { Request, Response } from "express";
 import { logger } from "../../utils";
-import Comments from "../../models/Comment";
 import { isValidObjectId } from "mongoose";
 
 export const getPostCommentsController = async (
@@ -12,7 +10,7 @@ export const getPostCommentsController = async (
   logger.info(`/posts/${req.params.id}/comments`);
   try {
     const postId = req.params.id;
-    const comments = await Comments.find({ postId: postId });
+    const comments = await Comment.find({ postId: postId });
     return res.json(comments);
   } catch (err) {
     logger.error(err as string);

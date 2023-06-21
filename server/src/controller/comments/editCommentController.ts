@@ -1,5 +1,4 @@
-import Comment from "../../models/Comment";
-import Post from "../../models/Post";
+import { Comment } from "../../database/models";
 import { Request, Response } from "express";
 import { logger } from "../../utils";
 

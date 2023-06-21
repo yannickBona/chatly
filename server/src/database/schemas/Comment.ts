@@ -1,11 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
-import Like from "./Like";
-import { logger } from "../utils";
+import { Like } from "../models";
+import { logger } from "../../utils";
+import { $CommentSchemaInterface } from "../types";
 
 const { Schema } = mongoose;
 
-const CommentSchema = new Schema(
+const CommentSchema = new Schema<$CommentSchemaInterface>(
   {
     content: String,
     userId: {
@@ -65,6 +66,4 @@ CommentSchema.pre("deleteOne", async function (next) {
   next();
 });
 
-const commentModel = mongoose.model("Comment", CommentSchema);
-
-export default commentModel;
+export default CommentSchema;

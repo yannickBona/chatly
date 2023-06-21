@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 import Comments from "./Comment";
-import { logger } from "../utils";
-import Like from "./Like";
+import { logger } from "../../utils";
+import { Post, Comment, Like } from "../models";
+
+import { $PostSchemaInterface } from "../types";
 
 const { Schema } = mongoose;
 
@@ -29,7 +31,7 @@ const PostSchema = new Schema(
 PostSchema.pre("findOneAndDelete", async function (next) {
   try {
     const postId = this.getQuery()["_id"];
-    const postComments = await Comments.deleteMany({ postId });
+    const postComments = await Comment.deleteMany({ postId });
     const postLikes = await Like.deleteMany({ postId });
 
     logger.info(
@@ -45,6 +47,4 @@ PostSchema.pre("findOneAndDelete", async function (next) {
   next();
 });
 
-const postModel = mongoose.model("Post", PostSchema);
-
-export default postModel;
+export default PostSchema;
