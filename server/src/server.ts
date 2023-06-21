@@ -23,6 +23,7 @@ import { editCommentController } from "./controller/comments/editCommentControll
 import { createUserController } from "./controller/users/createUserController";
 import { loginUserController } from "./controller/users/loginUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
+import { sessionController } from "./controller/users/sessionController";
 
 dotenv.config();
 
@@ -41,31 +42,31 @@ app.use(
  * Cookie middleware, forces the cookie to the selected user before any request
  * This "fakes" an auth system
  */
-let CURRENT_USER_ID: string;
-(async () => {
-  const response = await User.findOne({ username: "gio" });
-  CURRENT_USER_ID = response?._id.toString() ?? "1";
-})();
+// let CURRENT_USER_ID: string;
+// (async () => {
+//   const response = await User.findOne({ username: "gio" });
+//   CURRENT_USER_ID = response?._id.toString() ?? "1";
+// })();
 
-app.use((req, res, next) => {
-  logger.info("LOGGED AS ", CURRENT_USER_ID);
-  if (req.cookies.userId !== CURRENT_USER_ID) {
-    req.cookies.userId = CURRENT_USER_ID;
-    logger.info(`Auth cookie set to ${CURRENT_USER_ID}`);
-    res.cookie("userId", CURRENT_USER_ID, {
-      maxAge: 3600000000,
-      sameSite: "none",
-      secure: true,
-    });
-  }
+// app.use((req, res, next) => {
+//   logger.info("LOGGED AS ", CURRENT_USER_ID);
+//   if (req.cookies.userId !== CURRENT_USER_ID) {
+//     req.cookies.userId = CURRENT_USER_ID;
+//     logger.info(`Auth cookie set to ${CURRENT_USER_ID}`);
+//     res.cookie("userId", CURRENT_USER_ID, {
+//       maxAge: 3600000000,
+//       sameSite: "none",
+//       secure: true,
+//     });
+//   }
 
-  next();
-});
+//   next();
+// });
 
 mongoose.set("strictQuery", false);
 
 // Endpoints
-app.get("/posts", isAuthenticated, getPostsController);
+app.get("/posts", getPostsController);
 app.get("/posts/:id", getSinglePostController);
 app.put("/posts/:id", modifyPostController);
 app.delete("/posts", deletePostController);
@@ -87,6 +88,7 @@ app.put("/comment", editCommentController);
 
 app.post("/user/create", createUserController);
 app.post("/user/login", loginUserController);
+app.get("/user/session", isAuthenticated, sessionController);
 
 // MONGO
 logger.info("Connecting to the db...");

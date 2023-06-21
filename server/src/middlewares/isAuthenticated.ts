@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { $JwtBody } from "../types";
+import User from "../models/User";
+import { $UserSchemaInterface } from "../types/models";
 
 /**
  * Handles JWT Token authentication
@@ -22,17 +24,22 @@ export const isAuthenticated = async (
         .status(401)
         .json({ status: "Unauthorized", details: "Missing token or expired" });
 
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!, (err, user) => {
-      if (err) {
-        return res.status(403).json({
-          status: "Forbidden",
-          details: "Token is not valid or has expired",
-        });
-      }
-      console.log(user);
+    jwt.verify(
+      token,
+      process.env.ACCESS_TOKEN_SECRET!,
+      async (err, userDecoded: JwtPayload | string | undefined) => {
+        if (err || !userDecoded || typeof userDecoded === "string") {
+          return res.status(403).json({
+            status: "Forbidden",
+            details: "Token is not valid or has expired",
+          });
+        }
 
-      req.profile = user as $JwtBody;
-      next();
-    });
+        const user = await User.findOne({ username: userDecoded.username });
+
+        req.profile = user as $UserSchemaInterface;
+        next();
+      }
+    );
   } catch (error) {}
 };

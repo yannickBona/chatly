@@ -11,7 +11,7 @@ import { logger } from "../../utils/general";
 
 export const getPostsController = async (req: Request, res: Response) => {
   logger.info("/posts");
-  console.log("PROFILE", req.profile);
+  // console.log("PROFILE", req.profile);
   const posts = await Posts.find().populate("comments", "likes");
   return res.json(posts.reverse());
 };
