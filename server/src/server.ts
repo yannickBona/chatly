@@ -6,42 +6,15 @@ import mongoose from "mongoose";
 import database from "./database";
 import { logger } from "./utils";
 
-// Controllers
-import {
-  createCommentController,
-  deleteCommentController,
-  editCommentController,
-  getPostCommentsController,
-} from "./controllers/comments";
-
-import {
-  createLikeOnCommentController,
-  createLikeOnPostController,
-  removeLikeOnPostController,
-  removeLikeOnCommentController,
-} from "./controllers/likes";
-
-import {
-  createPostController,
-  deletePostController,
-  getPostsController,
-  modifyPostController,
-  getSinglePostController,
-} from "./controllers/posts";
-
-import {
-  createUserController,
-  loginUserController,
-  sessionController,
-  generateTokenController,
-} from "./controllers/users";
-
-// Middlewares
-import { isAuthenticated } from "./middlewares/isAuthenticated";
+// Routes
+import { userRoutes } from "./routes/user.routes";
+import { commentRoutes } from "./routes/comment.routes";
+import { postRoutes } from "./routes/post.routes";
 
 dotenv.config();
+mongoose.set("strictQuery", false);
 
-// Server setup
+// App middlewares
 const app = express();
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -52,33 +25,11 @@ app.use(
   })
 );
 
-mongoose.set("strictQuery", false);
-
-// Endpoints
-app.get("/posts", isAuthenticated, getPostsController);
-app.get("/posts/:id", getSinglePostController);
-app.put("/posts/:id", modifyPostController);
-app.delete("/posts", deletePostController);
-app.post("/createPost", createPostController);
-app.post("/createComment", createCommentController);
-app.get("/posts/:id/comments", getPostCommentsController);
-app.post("/post/:id/like", createLikeOnPostController);
-app.delete("/post/:id/like", removeLikeOnPostController);
-app.post(
-  "/posts/:postId/comments/:commentId/like",
-  createLikeOnCommentController
-);
-app.delete(
-  "/posts/:postId/comments/:commentId/like",
-  removeLikeOnCommentController
-);
-app.delete("/comment", deleteCommentController);
-app.put("/comment", editCommentController);
-
-app.post("/user/create", createUserController);
-app.post("/user/login", loginUserController);
-app.get("/user/session", isAuthenticated, sessionController);
-app.post("/user/token", generateTokenController);
+// Routes
+app.use("/comment", commentRoutes);
+app.use("/user", userRoutes);
+app.use("/post", postRoutes);
+app.use("/like", postRoutes);
 
 // MONGO
 logger.info("Connecting to the db...");
