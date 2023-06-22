@@ -110,6 +110,7 @@ const LoginForm: React.FC = () => {
             }
             value={formData.lastName}
             placeholder="Last name"
+            autoComplete="Last Name"
           />
         </>
       )}
@@ -124,10 +125,12 @@ const LoginForm: React.FC = () => {
           })
         }
         value={formData.username}
+        autoComplete="username"
         placeholder="username"
       />
       <input
         onFocus={() => setError("")}
+        autoComplete="current-password"
         placeholder="password"
         type="password"
         value={formData.password}

@@ -32,7 +32,5 @@ function formatDateTime() {
 }
 
 export function createAccessToken(user: JwtPayload) {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET!, {
-    expiresIn: "20s",
-  });
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET!);
 }

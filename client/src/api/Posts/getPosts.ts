@@ -1,5 +1,5 @@
 import { IPost } from "../../types";
-import { makeRequest } from "../makeRequest";
+import { makeAuthorizedRequest, makeRequest } from "../makeRequest";
 
 export const getPosts = (): Promise<IPost[]> =>
-  makeRequest({ url: "/post/all" });
+  makeAuthorizedRequest({ url: "/post/all" });

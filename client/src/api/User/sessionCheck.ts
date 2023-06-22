@@ -1,10 +1,7 @@
-import { makeRequest } from "../makeRequest";
+import { makeAuthorizedRequest, makeRequest } from "../makeRequest";
 
-export const checkSession = async (token: string) => {
-  return makeRequest({
+export const checkSession = async () => {
+  return makeAuthorizedRequest({
     url: "/user/session",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
   });
 };

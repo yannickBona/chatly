@@ -18,7 +18,6 @@ const Postlist: React.FC = () => {
   ) => {
     e.preventDefault();
     const response = await deletePost(id);
-    console.log(response);
     const newPosts = postList?.filter((post) => post._id !== response._id);
     setPosts(newPosts);
   };
