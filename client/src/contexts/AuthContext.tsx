@@ -22,12 +22,12 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       (async () => {
         if (!user && token) {
           const sessionResponse = await checkSession();
-          if (sessionResponse.status !== "ok") {
+          if (sessionResponse.status !== 200) {
             setUser(null);
             return;
           }
 
-          setUser(sessionResponse.user);
+          setUser(sessionResponse.data.user);
           navigate("/");
         }
       })();

@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import database from "./database";
-import { logger } from "./utils";
+import { logger } from "./utils/helpers";
 
 // Routes
 import { userRoutes } from "./routes/user.routes";

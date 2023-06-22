@@ -1,6 +1,8 @@
 import { User } from "../../database/models";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
+import { HTTP_200_OK, createAccessToken } from "../../utils/api";
+import jwt from "jsonwebtoken";
 
 /**
  *
@@ -33,20 +35,25 @@ export const createUserController = async (req: Request, res: Response) => {
     // Hash user's password
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    // Creates a new JWT token given a SECRET
+    const userData = { username };
+
+    const token = createAccessToken(userData);
+    const refreshToken = jwt.sign(userData, process.env.REFRESH_TOKEN_SECRET!);
+
     // Create a new user
     const newUser = new User({
-      username: username,
+      username,
       password: hashedPassword,
-      name: name,
-      lastName: lastName,
+      name,
+      lastName,
+      refreshToken,
     });
     const savedUser = await newUser.save();
 
-    return res.status(200).json({
-      status: 200,
-      statusText: "Success",
-      user: savedUser.getPublicData(),
-    });
+    const responseBody = { user: { ...savedUser.getPublicData() }, token };
+
+    return res.status(200).json({ ...HTTP_200_OK, data: responseBody });
   } catch (err) {
     return res.status(500).json({ status: "Unhandled Error", details: err });
   }

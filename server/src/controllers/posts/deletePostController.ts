@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Post } from "../../database/models";
-import { logger } from "../../utils";
+import { logger } from "../../utils/helpers";
 
 /**
  * Deletes a post given its id

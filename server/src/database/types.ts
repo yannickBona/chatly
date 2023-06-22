@@ -1,4 +1,4 @@
-import mongoose, { Date, ObjectId } from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
 export interface $PostSchemaInterface {
   _id: ObjectId;
@@ -32,8 +32,13 @@ export interface $UserSchemaInterface {
   lastName: string;
   username: string;
   password: string;
-  refreshToken: string;
-  getPublicData: () => { username: string };
+  refreshToken: string | null;
+  getPublicData: () => {
+    username: string;
+    refreshToken: string;
+    lastName: string;
+    name: string;
+  };
 }
 
 /**

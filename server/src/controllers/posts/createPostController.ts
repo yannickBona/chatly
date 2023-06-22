@@ -1,6 +1,6 @@
 import { Post } from "../../database/models";
 import { Request, Response } from "express";
-import { logger } from "../../utils";
+import { logger } from "../../utils/helpers";
 
 /**
  *

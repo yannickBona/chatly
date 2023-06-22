@@ -19,6 +19,8 @@ const LoginForm: React.FC = () => {
   const { setUser } = useContext<IAuthContext>(AuthContext);
   const [formData, setFormData] = useState<IFormData>({
     username: "",
+    lastName: "",
+    name: "",
     password: "",
     isLogin: true,
   });
@@ -35,13 +37,15 @@ const LoginForm: React.FC = () => {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (formData.isLogin) {
-      const response = await loginUserFn(formData.username, formData.password);
+    const { username, name, lastName, password, isLogin } = formData;
+
+    if (isLogin) {
+      const response = await loginUserFn(username, password);
 
       switch (response.status) {
         case 200:
-          setUser(response.user);
-          localStorage.setItem("token", response.user.token);
+          setUser(response.data.user);
+          localStorage.setItem("token", response.data.token);
 
           setFormData({ username: "", password: "", isLogin: true });
           navigate("/");
@@ -58,16 +62,13 @@ const LoginForm: React.FC = () => {
           break;
       }
     } else {
-      const response = await createUserFn(
-        formData.name,
-        formData.lastName,
-        formData.username,
-        formData.password
-      );
+      const response = await createUserFn(name, lastName, username, password);
 
       switch (response.status) {
         case 200:
           setFormData({ username: "", password: "", isLogin: true });
+          setUser(response.data.user);
+          localStorage.setItem("token", response.data.token);
           navigate("/");
           break;
         case 400:
@@ -75,7 +76,7 @@ const LoginForm: React.FC = () => {
           break;
 
         default:
-          setError("An error occurred");
+          setError("An Unknown error occurred");
           break;
       }
     }

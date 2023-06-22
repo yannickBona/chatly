@@ -1,4 +1,4 @@
-import { logger } from "../../utils";
+import { logger } from "../../utils/helpers";
 import { Like } from "../../database/models";
 import { Response, Request } from "express";
 

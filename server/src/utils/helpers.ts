@@ -1,9 +1,6 @@
 /**
- * This file contains util functions
+ * This file contains helpers functions
  */
-
-import jwt, { JwtPayload } from "jsonwebtoken";
-import { $JwtBody } from "./types";
 
 export const logger = {
   info: (message: string, ...args: any) => {
@@ -29,8 +26,4 @@ function formatDateTime() {
     .replace("T", " ")
     .substring(0, 19);
   return formattedDate;
-}
-
-export function createAccessToken(user: JwtPayload) {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET!);
 }

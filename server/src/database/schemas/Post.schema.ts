@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import Comments from "./Comment.schema";
-import { logger } from "../../utils";
+import { logger } from "../../utils/helpers";
 import { Post, Comment, Like } from "../models";
 
 import { $PostSchemaInterface } from "../types";

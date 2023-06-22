@@ -7,7 +7,7 @@ const UserSchema = new Schema<$UserSchemaInterface>(
     lastName: String,
     username: String,
     password: String,
-    refreshToken: String,
+    refreshToken: String || null,
   },
   {
     timestamps: true, // add createdAt and updatedAt fields and sxet them automatically

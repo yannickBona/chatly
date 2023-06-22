@@ -2,7 +2,11 @@ import { User } from "../../database/models";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { createAccessToken } from "../../utils";
+import {
+  HTTP_200_OK,
+  HTTP_500_INTERNAL_SERVER_ERROR,
+  createAccessToken,
+} from "../../utils/api";
 
 /**
  *
@@ -50,13 +54,16 @@ export const loginUserController = async (req: Request, res: Response) => {
     user.refreshToken = refreshToken;
     user.save();
 
+    const responseBody = { user: { ...user.getPublicData() }, token };
+
     return res.status(200).json({
-      status: 200,
-      statusText: "Success",
-      user: { ...user.getPublicData(), token: token },
+      ...HTTP_200_OK,
+      data: responseBody,
     });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ status: "Unhandled Error", details: err });
+    return res
+      .status(500)
+      .json({ ...HTTP_500_INTERNAL_SERVER_ERROR, details: err });
   }
 };
