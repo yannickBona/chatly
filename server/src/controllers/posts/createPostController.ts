@@ -1,6 +1,10 @@
 import { Post } from "../../database/models";
 import { Request, Response } from "express";
-import { logger } from "../../utils/helpers";
+import {
+  HTTP_200_OK,
+  HTTP_500_INTERNAL_SERVER_ERROR,
+  HTTP_400_BAD_REQUEST,
+} from "../../utils/api";
 
 /**
  *
@@ -9,15 +13,28 @@ import { logger } from "../../utils/helpers";
  * @returns the new deck
  */
 export const createPostController = async (req: Request, res: Response) => {
-  logger.info("creating new Post...");
-  // Creating new Post
-  const newPost = new Post({
-    title: req.body.title,
-    body: req.body.body,
-  });
+  try {
+    const user = req.profile;
+    const { body, title } = req.body;
 
-  const savedPost = await newPost.save();
-  logger.info("post created.");
+    if (!title)
+      return res.status(400).json({
+        ...HTTP_400_BAD_REQUEST,
+        details: "A title for the post must be provided",
+      });
 
-  return res.json(savedPost);
+    const newPost = new Post({
+      title,
+      body,
+      user,
+    });
+
+    const savedPost = await newPost.save();
+
+    return res.status(200).json({ ...HTTP_200_OK, data: { post: savedPost } });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ ...HTTP_500_INTERNAL_SERVER_ERROR, details: err });
+  }
 };

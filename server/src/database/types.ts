@@ -4,6 +4,7 @@ export interface $PostSchemaInterface {
   _id: ObjectId;
   title: string;
   body: string;
+  user: mongoose.Types.ObjectId;
   likes: mongoose.Types.ObjectId[];
   comments: ObjectId[];
 }
@@ -40,15 +41,3 @@ export interface $UserSchemaInterface {
     name: string;
   };
 }
-
-/**
- * createdAt: NativeDate;
-    updatedAt: NativeDate;
-} & {
-    children: string[];
-    like: Types.ObjectId[];
-    content?: string | undefined;
-    parentId?: string | undefined;
-    userId?: Types.ObjectId | undefined;
-    postId?: Types.ObjectId | undefined;
- */

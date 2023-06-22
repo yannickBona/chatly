@@ -5,7 +5,7 @@ import { getPosts } from "../../api/Posts/getPosts";
 import { PostListContext } from "../../contexts/PostListContext";
 import { IPostListContext } from "../../contexts/types";
 import { useAsync } from "../../hooks/useAsync";
-import { IPost } from "../../types";
+import { $ResponseData, IPost } from "../../types";
 import Post from "../Post/Post";
 import styled from "./styled";
 
@@ -18,7 +18,11 @@ const Postlist: React.FC = () => {
   ) => {
     e.preventDefault();
     const response = await deletePost(id);
-    const newPosts = postList?.filter((post) => post._id !== response._id);
+    if (response.status !== 200) return;
+
+    const newPosts = postList?.filter(
+      (post) => post._id !== response.data.post._id
+    );
     setPosts(newPosts);
   };
 

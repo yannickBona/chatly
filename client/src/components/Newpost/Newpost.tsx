@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { IPost } from "../../types";
+import { $ResponseData, IPost } from "../../types";
 import styled from "./styled";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { createPost } from "../../api/Posts/createPosts";
@@ -17,8 +17,10 @@ const Newpost: React.FC = () => {
    */
   const handleCreatePost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newPost: IPost = await createNewPostFn(formData);
-    postList?.push(newPost);
+    const response: $ResponseData = await createNewPostFn(formData);
+    if (response.status !== 200) return;
+
+    postList?.push(response.data.post);
     setPosts(postList);
 
     setFormData({ title: "", body: "" });

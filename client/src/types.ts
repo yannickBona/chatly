@@ -35,3 +35,13 @@ export interface IPostComponent extends IPost {
 }
 
 export type ReqMethods = "GET" | "POST" | "PUT" | "DELETE";
+
+/**
+ * APIs
+ */
+export type $ResponseData<T = any> = {
+  status: number;
+  statusText: string;
+  data?: T;
+  details?: string;
+};

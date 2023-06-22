@@ -7,10 +7,15 @@ import { $PostSchemaInterface } from "../types";
 
 const { Schema } = mongoose;
 
-const PostSchema = new Schema(
+const PostSchema = new Schema<$PostSchemaInterface>(
   {
     title: String,
     body: String,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
     likes: {
       type: [mongoose.Schema.Types.ObjectId],
       default: [],
