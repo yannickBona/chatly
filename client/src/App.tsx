@@ -1,5 +1,11 @@
 import "./Globals.css";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Outlet,
+  RouterProvider,
+} from "react-router-dom";
 import Error404 from "./pages/Error/Error404";
 import Home from "./pages/Home/Home";
 import Post from "./components/Post/Post";
@@ -10,47 +16,37 @@ import Login from "./pages/Login/Login";
 import { AuthContextProvider } from "./contexts/AuthContext";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <AuthContextProvider>
-        <PostListProvider>
-          <h1>Chatly</h1>
-          <RequireAuth />
-        </PostListProvider>
-      </AuthContextProvider>
-    ),
-    errorElement: <Error404 />,
-    children: [
-      {
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: "/post/:id",
-        element: (
-          <PostProvider>
-            <PostPage />
-          </PostProvider>
-        ),
-      },
-    ],
-  },
-  {
-    path: "/login",
-    element: (
-      <AuthContextProvider>
-        <Login />
-      </AuthContextProvider>
-    ),
-  },
-]);
-
 function App() {
   return (
     <div className="App">
-      <RouterProvider router={router} />
+      <AuthContextProvider>
+        <PostListProvider>
+          <BrowserRouter>
+            <Routes>
+              {/* Auhtorized Routes */}
+              <Route element={<RequireAuth />}>
+                <Route path="/" element={<Home />} />
+
+                <Route
+                  path="/post/:id"
+                  element={
+                    <PostProvider>
+                      <PostPage />
+                    </PostProvider>
+                  }
+                />
+              </Route>
+
+              {/* Public Routes */}
+              <Route path="/login" element={<Login />} />
+
+              {/* Catch Routes */}
+              <Route path="*" element={<Error404 />} />
+              <Route path="/unauthorized" element={<div>Unauthorized!</div>} />
+            </Routes>
+          </BrowserRouter>
+        </PostListProvider>
+      </AuthContextProvider>
     </div>
   );
 }

@@ -13,9 +13,11 @@ import { postRoutes } from "./routes/post.routes";
 
 dotenv.config();
 mongoose.set("strictQuery", false);
-
-// App middlewares
 const app = express();
+
+/**
+ * Middlewares
+ */
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
@@ -25,7 +27,6 @@ app.use(
   })
 );
 
-// Routes
 app.use("/comment", commentRoutes);
 app.use("/user", userRoutes);
 app.use("/post", postRoutes);

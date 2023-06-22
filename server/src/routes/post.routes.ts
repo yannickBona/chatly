@@ -12,7 +12,7 @@ const postRoutes = Router();
 
 postRoutes.delete("/", deletePostController);
 postRoutes.post("/", createPostController);
-postRoutes.get("/all", isAuthenticated, getPostsController);
+postRoutes.get("/all", getPostsController);
 postRoutes.get("/:id", getSinglePostController);
 postRoutes.put("/:id", modifyPostController);
 
