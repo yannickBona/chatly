@@ -1,5 +1,5 @@
 import { IPost } from "../../types";
-import { makeRequest } from "../makeRequest";
+import { makeAuthorizedRequest } from "../makeRequest";
 
 export const deletePost = (id: string): Promise<IPost> =>
-  makeRequest({ url: `/post`, method: "DELETE", data: { id: id } });
+  makeAuthorizedRequest({ url: `/post`, method: "DELETE", data: { id: id } });

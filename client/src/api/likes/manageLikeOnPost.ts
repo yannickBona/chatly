@@ -1,7 +1,7 @@
-import { makeRequest } from "../makeRequest";
+import { makeAuthorizedRequest } from "../makeRequest";
 export const manageLikeOnPost = (
   postId: string,
   method: "DELETE" | "POST" | "GET"
 ) => {
-  return makeRequest({ url: `/like/post/${postId}`, method: method });
+  return makeAuthorizedRequest({ url: `/like/post/${postId}`, method: method });
 };

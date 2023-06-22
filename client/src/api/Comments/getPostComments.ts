@@ -1,5 +1,5 @@
-import { makeRequest } from "../makeRequest";
+import { makeAuthorizedRequest } from "../makeRequest";
 
 export const getPostComments = (postId: string) => {
-  return makeRequest({ url: `/comment/post/${postId}` });
+  return makeAuthorizedRequest({ url: `/comment/post/${postId}` });
 };

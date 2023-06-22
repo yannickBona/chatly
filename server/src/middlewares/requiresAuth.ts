@@ -10,7 +10,7 @@ import { $UserSchemaInterface } from "../database/types";
  * @param next
  * @returns
  */
-export const isAuthenticated = async (
+export const requiresAuth = async (
   req: Request,
   res: Response,
   next: NextFunction

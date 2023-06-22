@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { isAuthenticated } from "../middlewares/isAuthenticated";
+import { requiresAuth } from "../middlewares/requiresAuth";
 import {
   createLikeOnCommentController,
   createLikeOnPostController,
@@ -8,6 +8,8 @@ import {
 } from "../controllers/likes";
 
 const likeRoutes = Router();
+
+likeRoutes.use(requiresAuth);
 
 likeRoutes.post(
   "/post/:postId/comment/:commentId/",

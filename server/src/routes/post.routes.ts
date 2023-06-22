@@ -6,13 +6,15 @@ import {
   deletePostController,
   createPostController,
 } from "../controllers/posts";
-import { isAuthenticated } from "../middlewares/isAuthenticated";
+import { requiresAuth } from "../middlewares/requiresAuth";
 
 const postRoutes = Router();
 
+postRoutes.use(requiresAuth);
+
 postRoutes.delete("/", deletePostController);
 postRoutes.post("/", createPostController);
-postRoutes.get("/all", isAuthenticated, getPostsController);
+postRoutes.get("/all", getPostsController);
 postRoutes.get("/:id", getSinglePostController);
 postRoutes.put("/:id", modifyPostController);
 

@@ -1,7 +1,7 @@
-import { makeRequest } from "../makeRequest";
+import { makeAuthorizedRequest } from "../makeRequest";
 
 export const deleteComment = (commentId: string) => {
-  return makeRequest({
+  return makeAuthorizedRequest({
     url: `/comment`,
     data: { commentId: commentId },
     method: "DELETE",

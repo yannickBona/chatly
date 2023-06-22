@@ -1,7 +1,7 @@
-import { makeRequest } from "../makeRequest";
+import { makeAuthorizedRequest } from "../makeRequest";
 
 export const editComment = (id: string, content: string) => {
-  return makeRequest({
+  return makeAuthorizedRequest({
     url: "/comment",
     method: "PUT",
     data: { id, content },

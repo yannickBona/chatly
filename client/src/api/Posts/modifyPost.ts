@@ -1,8 +1,8 @@
 import { IPost } from "../../types";
-import { makeRequest } from "../makeRequest";
+import { makeAuthorizedRequest } from "../makeRequest";
 
 export const modifyPost = (postId: string, content: string): Promise<IPost> => {
-  return makeRequest({
+  return makeAuthorizedRequest({
     url: `post/${postId}`,
     data: { content },
     method: "PUT",

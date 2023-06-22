@@ -1,4 +1,4 @@
-import { makeAuthorizedRequest, makeRequest } from "../makeRequest";
+import { makeAuthorizedRequest } from "../makeRequest";
 
 export const checkSession = async () => {
   return makeAuthorizedRequest({
