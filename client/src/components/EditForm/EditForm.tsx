@@ -11,9 +11,15 @@ interface IEditForm {
   body: string;
   setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
   comment?: IComment;
+  postId?: string;
 }
 
-const EditForm: React.FC<IEditForm> = ({ body, setEditMode, comment }) => {
+const EditForm: React.FC<IEditForm> = ({
+  body,
+  setEditMode,
+  comment,
+  postId,
+}) => {
   const [content, setContent] = useState(body);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { currentPost, setCurrentPost } = useContext<IPostContext>(PostContext);
@@ -37,15 +43,22 @@ const EditForm: React.FC<IEditForm> = ({ body, setEditMode, comment }) => {
 
     if (comment && currentPost.comments) {
       // Modify the comment
-      const newComment = await modifyCommentFn(comment._id, content);
+      const response: $ResponseData = await modifyCommentFn(
+        comment._id,
+        content
+      );
+
+      if (response.status !== 200) return;
+      const newComment = response.data.comment;
 
       // Get index of old comment
-      const oldCommentIdx = currentPost.comments?.findIndex(
+      const oldCommentIdx = currentPost.comments.findIndex(
         (c) => c._id === comment._id
       );
 
       // If the comment is not found abort
-      if (!oldCommentIdx) return setEditMode(false);
+      if (oldCommentIdx === -1) return setEditMode(false);
+      console.log("DS", comment._id === currentPost.comments[0]._id);
 
       // Update the comments context
       currentPost.comments[oldCommentIdx] = newComment;
@@ -61,10 +74,8 @@ const EditForm: React.FC<IEditForm> = ({ body, setEditMode, comment }) => {
     }
 
     if (!comment) {
-      const response: $ResponseData = await modifyPostFn(
-        currentPost._id,
-        content
-      );
+      const response: $ResponseData = await modifyPostFn(postId, content);
+      console.log("DA", response, currentPost);
       if (response.status !== 200) return;
 
       const updatedPost = response.data.post;

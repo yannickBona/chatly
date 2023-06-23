@@ -11,13 +11,14 @@ import { $ResponseData, ILike, IPostComponent } from "../../types";
 import styled from "./styled";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { manageLikeOnPost } from "../../api/likes/manageLikeOnPost";
-import { IPostContext } from "../../contexts/types";
+import { IPostContext, IPostListContext } from "../../contexts/types";
 import { PostContext } from "../../contexts/PostContext";
 import { useUser } from "../../hooks/useUser";
 import { formatDate } from "../../helpers/dateFormat";
 import Newpost from "../Newpost/Newpost";
 import EditForm from "../EditForm/EditForm";
 import { useLocation, useParams } from "react-router-dom";
+import { PostListContext } from "../../contexts/PostListContext";
 
 const Post: React.FC<IPostComponent> = ({
   body,
@@ -33,18 +34,21 @@ const Post: React.FC<IPostComponent> = ({
    * Creates a like on the post
    */
   const { currentPost } = useContext<IPostContext>(PostContext);
+  const { setPosts } = useContext<IPostListContext>(PostListContext);
   const [isLiked, setisLiked] = useState(false);
   const [currentLikes, setCurrentLikes] = useState(likes?.length ?? 0);
   const [editMode, setEditMode] = useState(false);
   const { execute: manageLikeFn } = useAsyncFn(manageLikeOnPost);
 
   const { id: postIdParam } = useParams();
+  const postId = currentPost?._id ?? _id ?? postIdParam;
   const { id: userId } = useUser();
   const postedDate = currentPost?.createdAt
     ? currentPost?.createdAt.toString()
     : createdAt?.toString();
 
   useEffect(() => {
+    console.log(likes);
     if (likes?.length === 0 || !likes) return;
     setisLiked(likes.some((like: string) => like === userId));
     setCurrentLikes(likes.length);
@@ -59,15 +63,13 @@ const Post: React.FC<IPostComponent> = ({
     e: React.MouseEvent<SVGElement, MouseEvent>
   ) => {
     e.preventDefault();
-    console.log(location);
-
-    const postId = currentPost?._id ?? postIdParam;
 
     if (!postId) return;
 
     if (!isLiked) {
       const response: $ResponseData = await manageLikeFn(postId, "POST");
       if (response.status !== 200) return;
+      setPosts([]);
 
       setCurrentLikes((prevLikes) => prevLikes + 1);
       setisLiked(true);
@@ -77,6 +79,8 @@ const Post: React.FC<IPostComponent> = ({
     if (isLiked) {
       const response: $ResponseData = await manageLikeFn(postId, "DELETE");
       if (response.status !== 200) return;
+
+      setPosts([]);
 
       setCurrentLikes((prevLikes) => prevLikes - 1);
       setisLiked(false);
@@ -103,7 +107,7 @@ const Post: React.FC<IPostComponent> = ({
       <h1>{title}</h1>
 
       {editMode ? (
-        <EditForm setEditMode={setEditMode} body={body!} />
+        <EditForm postId={postId} setEditMode={setEditMode} body={body!} />
       ) : (
         <p>{body}</p>
       )}

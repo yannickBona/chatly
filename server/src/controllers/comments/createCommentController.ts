@@ -2,6 +2,12 @@ import { Post, Comment } from "../../database/models";
 
 import { Request, Response } from "express";
 import { logger } from "../../utils/helpers";
+import {
+  HTTP_200_OK,
+  HTTP_400_BAD_REQUEST,
+  HTTP_404_NOT_FOUND,
+  HTTP_500_INTERNAL_SERVER_ERROR,
+} from "../../utils/api";
 
 /**
  *
@@ -11,16 +17,21 @@ import { logger } from "../../utils/helpers";
  */
 
 export const createCommentController = async (req: Request, res: Response) => {
-  logger.info("/createComment");
   try {
-    const postId: string = req.body.postId;
+    const { postId, comment, parentId } = req.body;
+    const profile = req.profile;
+
+    if (!postId)
+      return res
+        .status(400)
+        .json({ ...HTTP_400_BAD_REQUEST, details: "No post ID provided" });
 
     // Creating new Post
     const newComment = new Comment({
-      content: req.body.comment,
-      parentId: req.body.parentId,
-      userId: req.cookies.userId,
-      postId: postId,
+      content: comment,
+      parentId,
+      userId: profile._id.toString(),
+      postId,
     });
 
     // saving comment
@@ -28,12 +39,19 @@ export const createCommentController = async (req: Request, res: Response) => {
 
     // Adding comment reference in post
     const post = await Post.findById(postId);
-    post?.comments.push(newComment._id);
-    await post?.save();
+    if (!post)
+      return res
+        .status(404)
+        .json({ ...HTTP_404_NOT_FOUND, details: "Post not found" });
+    post.comments.push(newComment._id);
+    await post.save();
 
-    return res.json(savedComment);
+    return res
+      .status(200)
+      .json({ ...HTTP_200_OK, data: { comment: savedComment } });
   } catch (err) {
-    logger.error(err as string);
-    return res.status(400).send({ status: "Error", details: err });
+    return res
+      .status(500)
+      .json({ ...HTTP_500_INTERNAL_SERVER_ERROR, details: err });
   }
 };

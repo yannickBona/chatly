@@ -38,7 +38,8 @@ const PostPage: React.FC = () => {
   const handleCommentDelete = async (id: string) => {
     if (!id) return;
 
-    const deletedComment = await deleteCommentFn(id);
+    const response: $ResponseData = await deleteCommentFn(id);
+    if (response.status !== 200) return;
 
     setCurrentPost((prevPost) => ({
       ...prevPost,

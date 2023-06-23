@@ -5,7 +5,7 @@ import { createComment } from "../../api/Comments/createComment";
 import { useParams } from "react-router-dom";
 import { PostContext } from "../../contexts/PostContext";
 import { IPostContext } from "../../contexts/types";
-import { IPost } from "../../types";
+import { $ResponseData, IPost } from "../../types";
 
 const CommentForm = () => {
   const [comment, setComment] = useState("");
@@ -19,7 +19,10 @@ const CommentForm = () => {
    */
   const handleCommentCreate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newComment = await createCommentFn(comment, postId);
+    const response: $ResponseData = await createCommentFn(comment, postId);
+    if (response.status !== 200) return;
+
+    const newComment = response.data.comment;
 
     const newComments = [...(currentPost?.comments ?? []), newComment];
 
