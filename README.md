@@ -11,7 +11,6 @@ Project description here
 - React.ts (routing, context, authorized requests)
 
 # Stack
-
 - React (Vite & Typescript)
 - Node Express (Typescript)
 - MongoDB
