@@ -7,14 +7,13 @@ import {
   AiOutlineComment,
   AiOutlineUser,
 } from "react-icons/ai";
-import { ILike, IPost, IPostComponent } from "../../types";
+import { $ResponseData, ILike, IPostComponent } from "../../types";
 import styled from "./styled";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { manageLikeOnPost } from "../../api/likes/manageLikeOnPost";
-import { IPostContext, IPostListContext } from "../../contexts/types";
+import { IPostContext } from "../../contexts/types";
 import { PostContext } from "../../contexts/PostContext";
 import { useUser } from "../../hooks/useUser";
-import { PostListContext } from "../../contexts/PostListContext";
 import { formatDate } from "../../helpers/dateFormat";
 import Newpost from "../Newpost/Newpost";
 import EditForm from "../EditForm/EditForm";
@@ -33,8 +32,7 @@ const Post: React.FC<IPostComponent> = ({
   /**
    * Creates a like on the post
    */
-  const { currentPost, setCurrentPost } = useContext<IPostContext>(PostContext);
-  const { postList, setPosts } = useContext<IPostListContext>(PostListContext);
+  const { currentPost } = useContext<IPostContext>(PostContext);
   const [isLiked, setisLiked] = useState(false);
   const [currentLikes, setCurrentLikes] = useState(likes?.length ?? 0);
   const [editMode, setEditMode] = useState(false);
@@ -46,7 +44,7 @@ const Post: React.FC<IPostComponent> = ({
 
   useEffect(() => {
     if (likes?.length === 0 || !likes) return;
-    setisLiked(likes.some((like: ILike) => like.userid === userId));
+    setisLiked(likes.some((like: string) => like === userId));
   }, []);
 
   /**
@@ -63,13 +61,18 @@ const Post: React.FC<IPostComponent> = ({
     if (!postId) return;
 
     if (!isLiked) {
-      await manageLikeFn(postId, "POST");
+      const response: $ResponseData = await manageLikeFn(postId, "POST");
+      if (response.status !== 200) return;
+
       setCurrentLikes((prevLikes) => prevLikes + 1);
       setisLiked(true);
+      return;
     }
 
     if (isLiked) {
-      await manageLikeFn(postId, "DELETE");
+      const response: $ResponseData = await manageLikeFn(postId, "DELETE");
+      if (response.status !== 200) return;
+
       setCurrentLikes((prevLikes) => prevLikes - 1);
       setisLiked(false);
     }

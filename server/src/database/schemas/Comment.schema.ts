@@ -12,7 +12,6 @@ const CommentSchema = new Schema<$CommentSchemaInterface>(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      default: null,
     },
     postId: {
       type: mongoose.Schema.Types.ObjectId,

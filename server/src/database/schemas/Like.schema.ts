@@ -56,7 +56,9 @@ LikeSchema.pre(
       const post = await Post.findById(postId);
       if (!post) return next(); // Check if post exists
 
-      post.likes = post.likes.filter((like) => like.toString() !== userId);
+      post.likes = post.likes.filter(
+        (like) => like.toString() !== userId._id.toString()
+      );
       await post.save();
     }
 

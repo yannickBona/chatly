@@ -3,7 +3,7 @@ export interface IPost {
   title?: string;
   body?: string;
   comments?: IComment[] | [];
-  likes?: ILike[] | [];
+  likes?: string[] | [];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -15,7 +15,7 @@ export interface IComment {
   postId: string;
   parentId: string;
   children: string[];
-  likes: ILike[];
+  likes: string[];
   createdAt: Date;
   updatedAt: Date;
 }

@@ -10,6 +10,7 @@ import { logger } from "./utils/helpers";
 import { userRoutes } from "./routes/user.routes";
 import { commentRoutes } from "./routes/comment.routes";
 import { postRoutes } from "./routes/post.routes";
+import { likeRoutes } from "./routes/like.routes";
 
 dotenv.config();
 mongoose.set("strictQuery", false);
@@ -30,7 +31,7 @@ app.use(
 app.use("/comment", commentRoutes);
 app.use("/user", userRoutes);
 app.use("/post", postRoutes);
-app.use("/like", postRoutes);
+app.use("/like", likeRoutes);
 
 // MONGO
 logger.info("Connecting to the db...");

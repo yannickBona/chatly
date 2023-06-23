@@ -4,7 +4,7 @@ import { useAsyncFn } from "../../hooks/useAsync";
 import { modifyPost } from "../../api/Posts/modifyPost";
 import { PostContext } from "../../contexts/PostContext";
 import { IPostContext } from "../../contexts/types";
-import { IComment, IPost } from "../../types";
+import { $ResponseData, IComment, IPost } from "../../types";
 import { editComment } from "../../api/Comments/editComment";
 
 interface IEditForm {
@@ -61,7 +61,14 @@ const EditForm: React.FC<IEditForm> = ({ body, setEditMode, comment }) => {
     }
 
     if (!comment) {
-      const updatedPost: IPost = await modifyPostFn(currentPost._id, content);
+      const response: $ResponseData = await modifyPostFn(
+        currentPost._id,
+        content
+      );
+      if (response.status !== 200) return;
+
+      const updatedPost = response.data.post;
+
       setCurrentPost((prevPost: IPost | undefined) => {
         return {
           ...prevPost,

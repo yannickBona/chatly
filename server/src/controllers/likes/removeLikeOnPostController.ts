@@ -1,6 +1,12 @@
 import { logger } from "../../utils/helpers";
 import { Like } from "../../database/models";
 import { Response, Request } from "express";
+import {
+  HTTP_500_INTERNAL_SERVER_ERROR,
+  HTTP_200_OK,
+  HTTP_400_BAD_REQUEST,
+  HTTP_404_NOT_FOUND,
+} from "../../utils/api";
 
 /**
  * This sets a like on a post
@@ -12,16 +18,32 @@ export const removeLikeOnPostController = async (
   res: Response
 ) => {
   try {
-    const userId = req.cookies.userId;
-    const deletedLike = await Like.findOneAndRemove({
-      userId: userId,
-      postId: req.params.id,
-    });
-    logger.info(`Removed like on post ${req.params.id}`);
+    const profile = req.profile;
+    const { id: postId } = req.params;
 
-    return res.json(deletedLike);
+    if (!postId)
+      return res.status(400).json({
+        ...HTTP_400_BAD_REQUEST,
+        details: `Post ID not provided`,
+      });
+
+    const deletedLike = await Like.findOneAndRemove({
+      userId: profile,
+      postId,
+    });
+
+    if (!deletedLike)
+      return res.status(400).json({
+        ...HTTP_404_NOT_FOUND,
+        details: `Post ${postId} not found`,
+      });
+
+    return res
+      .status(200)
+      .json({ ...HTTP_200_OK, data: { like: deletedLike } });
   } catch (err) {
-    logger.error(err as string);
-    return res.status(400).send({ status: "Error", details: err });
+    return res
+      .status(500)
+      .json({ ...HTTP_500_INTERNAL_SERVER_ERROR, details: err });
   }
 };

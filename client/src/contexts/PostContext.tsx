@@ -23,8 +23,6 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
     value: response,
   } = useAsync(() => getPost(id!), [id]);
 
-  console.log(response);
-
   const post: IPost | undefined = response?.data?.post;
 
   useEffect(() => {
