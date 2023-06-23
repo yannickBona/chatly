@@ -38,7 +38,7 @@ const Post: React.FC<IPostComponent> = ({
   const [editMode, setEditMode] = useState(false);
   const { execute: manageLikeFn } = useAsyncFn(manageLikeOnPost);
 
-  const { id: urlPostId } = useParams();
+  const { id: postIdParam } = useParams();
   const { id: userId } = useUser();
   const postedDate = currentPost?.createdAt
     ? currentPost?.createdAt.toString()
@@ -61,7 +61,7 @@ const Post: React.FC<IPostComponent> = ({
     e.preventDefault();
     console.log(location);
 
-    const postId = currentPost?._id ?? urlPostId;
+    const postId = currentPost?._id ?? postIdParam;
 
     if (!postId) return;
 
