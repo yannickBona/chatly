@@ -31,7 +31,7 @@ export const createLikeOnPostController = async (
 
     const newLike = new Like({
       postId,
-      userId: profile,
+      userId: profile._id.toString(),
     });
 
     const savedLike = await newLike.save();

@@ -19,6 +19,7 @@ export const removeLikeOnPostController = async (
 ) => {
   try {
     const profile = req.profile;
+
     const { id: postId } = req.params;
 
     if (!postId)
@@ -28,20 +29,21 @@ export const removeLikeOnPostController = async (
       });
 
     const deletedLike = await Like.findOneAndRemove({
-      userId: profile,
+      userId: profile._id,
       postId,
     });
 
     if (!deletedLike)
       return res.status(400).json({
         ...HTTP_404_NOT_FOUND,
-        details: `Post ${postId} not found`,
+        details: `Like on post ${postId} not found`,
       });
 
     return res
       .status(200)
       .json({ ...HTTP_200_OK, data: { like: deletedLike } });
   } catch (err) {
+    console.log(err);
     return res
       .status(500)
       .json({ ...HTTP_500_INTERNAL_SERVER_ERROR, details: err });

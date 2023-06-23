@@ -7,7 +7,7 @@ import { IPostContext } from "../../contexts/types";
 import { manageLikeOnComment } from "../../api/likes/manageLikeOnComment";
 
 import styled from "./styled";
-import { IComment, ILike, IPost } from "../../types";
+import { $ResponseData, IComment, ILike, IPost } from "../../types";
 import { formatDate } from "../../helpers/dateFormat";
 import {
   AiOutlineDelete,
@@ -52,13 +52,19 @@ const PostPage: React.FC = () => {
       (comm) => comm._id === comment._id
     );
 
-    if (!comment.likes.some((like: ILike) => like.postId === userId)) {
-      const newLike: ILike = await manageCommentFn(
+    const isLiked = comment.likes.some((like) => like === userId);
+
+    if (!isLiked) {
+      const response: $ResponseData = await manageCommentFn(
         comment._id,
         currentPost._id,
         "POST"
       );
-      const newLikes = [...(comment.likes ?? []), newLike];
+
+      if (response.status !== 200) return;
+
+      const newLike: ILike = response.data.like;
+      const newLikes = [...(comment.likes ?? []), newLike.userId];
 
       const updatedComments = [...currentPost?.comments];
       updatedComments[idx] = { ...updatedComments[idx], likes: newLikes };
@@ -71,14 +77,17 @@ const PostPage: React.FC = () => {
       });
     }
 
-    if (comment.likes.some((like: ILike) => like.postId === userId)) {
-      const removedLike: ILike = await manageCommentFn(
+    if (isLiked) {
+      const response: $ResponseData = await manageCommentFn(
         comment._id,
         currentPost._id,
         "DELETE"
       );
+
+      if (response.status !== 200) return;
+      const removedLike: ILike = response.data.like;
       const newLikes = comment.likes?.filter(
-        (like: ILike) => like.userid !== removedLike.userid
+        (like: string) => like !== removedLike.userId
       );
 
       const updatedComments = [...currentPost?.comments];
@@ -134,7 +143,7 @@ const PostPage: React.FC = () => {
 
               <styled.commentActionsContainer>
                 <span className="likes">
-                  {comment.likes.some((like) => like.userid === userId) ? (
+                  {comment.likes.some((like) => like === userId) ? (
                     <AiFillHeart
                       className="filled"
                       onClick={() => handleLikeOnComment(comment)}

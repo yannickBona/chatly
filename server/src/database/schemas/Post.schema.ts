@@ -52,4 +52,15 @@ PostSchema.pre("findOneAndDelete", async function (next) {
   next();
 });
 
+PostSchema.methods.getPublicData = function (this: $PostSchemaInterface) {
+  return {
+    title: this.title,
+    body: this.body,
+    user: this.user,
+    likes: this.likes,
+    comments: this.comments,
+    createdAt: this.createdAt,
+  };
+};
+
 export default PostSchema;

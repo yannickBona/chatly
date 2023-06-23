@@ -15,7 +15,7 @@ export const getSinglePostController = async (req: Request, res: Response) => {
     const singlePost = await Post.findById(id).populate("comments");
     return res.status(200).json({
       ...HTTP_200_OK,
-      data: { post: singlePost },
+      data: { post: singlePost?.getPublicData() },
     });
   } catch (err) {
     return res

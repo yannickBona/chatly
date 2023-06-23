@@ -1,4 +1,5 @@
 import mongoose, { ObjectId } from "mongoose";
+import { $PublicLike, $PublicPost, $PublicUser } from "../types";
 
 export interface $PostSchemaInterface {
   _id: ObjectId;
@@ -7,12 +8,16 @@ export interface $PostSchemaInterface {
   user: mongoose.Types.ObjectId;
   likes: mongoose.Types.ObjectId[];
   comments: ObjectId[];
+  createdAt: Date;
+  getPublicData: () => $PublicPost;
 }
 export interface $LikeSchemaInterface {
   _id: ObjectId;
   userId: mongoose.Types.ObjectId;
   postId?: mongoose.Types.ObjectId;
   commentId?: string;
+
+  getPublicData: () => $PublicLike;
 }
 
 export interface $CommentSchemaInterface {
@@ -34,10 +39,5 @@ export interface $UserSchemaInterface {
   username: string;
   password: string;
   refreshToken: string | null;
-  getPublicData: () => {
-    username: string;
-    refreshToken: string;
-    lastName: string;
-    name: string;
-  };
+  getPublicData: () => $PublicUser;
 }

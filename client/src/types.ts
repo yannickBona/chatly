@@ -21,7 +21,7 @@ export interface IComment {
 }
 
 export interface ILike {
-  userid: string;
+  userId: string;
   postId?: string;
   commentId: string;
 }

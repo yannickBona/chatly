@@ -17,6 +17,7 @@ import { useUser } from "../../hooks/useUser";
 import { formatDate } from "../../helpers/dateFormat";
 import Newpost from "../Newpost/Newpost";
 import EditForm from "../EditForm/EditForm";
+import { useLocation, useParams } from "react-router-dom";
 
 const Post: React.FC<IPostComponent> = ({
   body,
@@ -25,7 +26,6 @@ const Post: React.FC<IPostComponent> = ({
   likes,
   comments,
   createdAt,
-  updatedAt,
   isHomePage,
   onDelete,
 }) => {
@@ -37,6 +37,8 @@ const Post: React.FC<IPostComponent> = ({
   const [currentLikes, setCurrentLikes] = useState(likes?.length ?? 0);
   const [editMode, setEditMode] = useState(false);
   const { execute: manageLikeFn } = useAsyncFn(manageLikeOnPost);
+
+  const { id: urlPostId } = useParams();
   const { id: userId } = useUser();
   const postedDate = currentPost?.createdAt
     ? currentPost?.createdAt.toString()
@@ -45,7 +47,8 @@ const Post: React.FC<IPostComponent> = ({
   useEffect(() => {
     if (likes?.length === 0 || !likes) return;
     setisLiked(likes.some((like: string) => like === userId));
-  }, []);
+    setCurrentLikes(likes.length);
+  }, [likes]);
 
   /**
    * Manages likes on post
@@ -56,8 +59,10 @@ const Post: React.FC<IPostComponent> = ({
     e: React.MouseEvent<SVGElement, MouseEvent>
   ) => {
     e.preventDefault();
+    console.log(location);
 
-    const postId = currentPost?._id ?? _id;
+    const postId = currentPost?._id ?? urlPostId;
+
     if (!postId) return;
 
     if (!isLiked) {

@@ -1,7 +1,7 @@
 import mongoose, { Error, Schema } from "mongoose";
 import { FilterQuery } from "mongoose";
 import { $LikeSchemaInterface } from "../types";
-import { Post, Comment } from "../models";
+import { Post, Comment, Like } from "../models";
 
 const LikeSchema = new Schema<$LikeSchemaInterface>({
   userId: {
@@ -66,7 +66,7 @@ LikeSchema.pre(
       const comment = await Comment.findById(commentId);
       if (!comment) return next(); // Check if comment exists
       comment.likes = comment.likes.filter(
-        (like) => like.toString() !== userId
+        (like) => like.toString() !== userId._id.toString()
       );
       await comment.save();
     }
@@ -74,5 +74,13 @@ LikeSchema.pre(
     next();
   }
 );
+
+LikeSchema.methods.getPublicData = function (this: $LikeSchemaInterface) {
+  return {
+    userId: this.userId,
+    commentId: this.commentId,
+    postId: this.postId,
+  };
+};
 
 export default LikeSchema;
