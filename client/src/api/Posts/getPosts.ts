@@ -1,5 +1,5 @@
-import { IPost } from "../../types";
+import { $ResponseData } from "../../types";
 import { makeAuthorizedRequest } from "../makeRequest";
 
-export const getPosts = (): Promise<IPost[]> =>
+export const getPosts = (): Promise<$ResponseData> =>
   makeAuthorizedRequest({ url: "/post/all" });

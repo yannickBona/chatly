@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Post } from "../../database/models";
-import { logger } from "../../utils/helpers";
+import { HTTP_500_INTERNAL_SERVER_ERROR, HTTP_200_OK } from "../../utils/api";
 
 /**
  * Gets all the posts when the page first loads
@@ -10,6 +10,14 @@ import { logger } from "../../utils/helpers";
  */
 
 export const getPostsController = async (req: Request, res: Response) => {
-  const posts = await Post.find().populate("comments", "likes");
-  return res.json(posts.reverse());
+  try {
+    const posts = await Post.find().populate("comments", "likes");
+    return res
+      .status(200)
+      .json({ ...HTTP_200_OK, data: { posts: posts.reverse() } });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ ...HTTP_500_INTERNAL_SERVER_ERROR, details: err });
+  }
 };

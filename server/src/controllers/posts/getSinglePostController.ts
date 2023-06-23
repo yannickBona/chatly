@@ -1,5 +1,5 @@
 import { Post } from "../../database/models";
-import { logger } from "../../utils/helpers";
+import { HTTP_500_INTERNAL_SERVER_ERROR, HTTP_200_OK } from "../../utils/api";
 import { Request, Response } from "express";
 
 /**
@@ -10,14 +10,16 @@ import { Request, Response } from "express";
  */
 
 export const getSinglePostController = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  logger.info("Getting post with id", id);
-
   try {
+    const { id } = req.params;
     const singlePost = await Post.findById(id).populate("comments");
-    return res.json(singlePost);
+    return res.status(200).json({
+      ...HTTP_200_OK,
+      data: { post: singlePost },
+    });
   } catch (err) {
-    logger.error(`No post found for id ${id}`);
-    return res.status(400).send({ status: "Error", details: err });
+    return res
+      .status(500)
+      .json({ ...HTTP_500_INTERNAL_SERVER_ERROR, details: err });
   }
 };

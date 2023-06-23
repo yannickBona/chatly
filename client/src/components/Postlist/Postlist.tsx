@@ -1,11 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { deletePost } from "../../api/Posts/deletePost";
-import { getPosts } from "../../api/Posts/getPosts";
 import { PostListContext } from "../../contexts/PostListContext";
 import { IPostListContext } from "../../contexts/types";
-import { useAsync } from "../../hooks/useAsync";
-import { $ResponseData, IPost } from "../../types";
+import { IPost } from "../../types";
 import Post from "../Post/Post";
 import styled from "./styled";
 

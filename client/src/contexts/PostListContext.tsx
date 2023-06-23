@@ -8,8 +8,8 @@ export const PostListContext = createContext<any>({});
 
 export function PostListProvider({ children }: { children: ReactNode }) {
   const [posts, setPosts] = useState<IPost[] | undefined>();
-  const { error, loading, value } = useAsync(getPosts, [posts]);
-  const postList: IPost[] | undefined = value;
+  const { error, loading, value: response } = useAsync(getPosts, [posts]);
+  const postList: IPost[] | undefined = response?.data?.posts;
 
   const data: IPostListContext = { postList, setPosts };
 

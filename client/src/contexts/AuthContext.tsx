@@ -11,6 +11,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const contextData: IAuthContext = { user, setUser };
   const navigate = useNavigate();
   const location = useLocation();
+  const redirectTo = location?.state?.from.pathname;
 
   const token = localStorage.getItem("token");
 
@@ -18,20 +19,19 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
    * Token check
    */
   useEffect(() => {
-    if (location.pathname !== "/login")
-      (async () => {
-        if (!user && token) {
-          const sessionResponse = await checkSession();
-          if (sessionResponse.status !== 200) {
-            setUser(null);
-            return;
-          }
-
-          setUser(sessionResponse.data.user);
-          navigate("/");
+    (async () => {
+      if (!user && token) {
+        const sessionResponse = await checkSession();
+        if (sessionResponse.status !== 200) {
+          setUser(null);
+          return;
         }
-      })();
-  }, [user]);
+
+        setUser(sessionResponse.data.user);
+        navigate(redirectTo);
+      }
+    })();
+  }, []);
 
   return (
     <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>
