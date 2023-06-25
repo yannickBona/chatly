@@ -1,6 +1,6 @@
 # About
 
-Project description here
+This is a full stack web application that uses some basic & advanced topics that i wanted to master.
 
 # Concepts
 
