@@ -144,7 +144,9 @@ const PostPage: React.FC = () => {
                 </span>
                 <b>
                   {comment.owner ?? "Anonymous User"}{" "}
-                  {comment.owner === currentPost.owner && "(Owner)"}
+                  {comment.owner === user.username
+                    ? " (you)"
+                    : comment.owner === currentPost.owner && "(Owner)"}
                 </b>{" "}
                 ·{" "}
                 <span className="comment__date">
@@ -178,10 +180,18 @@ const PostPage: React.FC = () => {
                   {comment?.likes.length}
                 </span>
 
-                <AiOutlineEdit onClick={() => handleCommentEdit(comment._id)} />
-                <AiOutlineDelete
-                  onClick={() => handleCommentDelete(comment._id.toString())}
-                />
+                {comment.owner === user.username && (
+                  <>
+                    <AiOutlineEdit
+                      onClick={() => handleCommentEdit(comment._id)}
+                    />
+                    <AiOutlineDelete
+                      onClick={() =>
+                        handleCommentDelete(comment._id.toString())
+                      }
+                    />
+                  </>
+                )}
 
                 <AiOutlineComment onClick={() => null} />
               </styled.commentActionsContainer>
