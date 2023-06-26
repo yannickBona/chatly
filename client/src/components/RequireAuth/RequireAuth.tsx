@@ -15,6 +15,7 @@ const RequireAuth = () => {
 
   return isAuthorized ? (
     <PostListProvider>
+      <h1>Chatly</h1>
       <Outlet />
       <LogoutButton />
     </PostListProvider>

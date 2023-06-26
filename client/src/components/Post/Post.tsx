@@ -111,6 +111,7 @@ const Post: React.FC<IPostComponent> = ({
         </span>
         <i>
           Posted By <b>{owner ?? "Anonymous User"}</b>
+          {isOwner && " (you)"}
         </i>
         · <span className="post-date">{formatDate(postedDate)}</span>
       </div>
