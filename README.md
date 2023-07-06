@@ -28,7 +28,7 @@ To run the project locally, follow the steps below:
 - Install the required dependencies:
     - For the client, navigate to the /client directory and run `npm install`;
     - For the server, navigate to the /server directory and run `npm install`;
-- Configure the environment variables: Create a .env file in the /backend directory and set the necessary variables as displayed in the **.env.sample** file.
+- Configure the environment variables: Create a .env file in both /server & /client directories and set the necessary variables as displayed in the **.env.sample** file.
 
 - Start the development server:
     - For the frontend, navigate to the /client directory and run npm run dev.
