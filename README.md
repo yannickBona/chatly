@@ -1,5 +1,5 @@
 # Chatly
-The project's name is _Chatly_. A simple Web Application where you can interact with anyone in real time. 
+The project's name is _Chatly_. A simple Web Application where you can share your thoughts and interact with anyone in real time. 
 
 ## About
 This repository contains a full-stack web application built from scratch using React.js and Node.js with TypeScript. The application incorporates several important concepts and technologies to deliver a robust and secure user experience.
