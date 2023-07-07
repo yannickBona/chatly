@@ -76,6 +76,7 @@ const Post: React.FC<IPostComponent> = ({
 
     if (!isLiked) {
       const response: $ResponseData = await manageLikeFn(postId, "POST");
+
       if (response.status !== 200) return;
       setPosts([]);
 

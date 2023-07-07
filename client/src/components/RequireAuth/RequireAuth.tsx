@@ -6,6 +6,7 @@ import { useAsyncFn } from "../../hooks/useAsync";
 import { checkSession } from "../../api/User/sessionCheck";
 import { PostListProvider } from "../../contexts/PostListContext";
 import LogoutButton from "../LogoutButton/LogoutButton";
+import Navbar from "../Navbar/Navbar";
 
 const RequireAuth = () => {
   const { user } = useContext<IAuthContext>(AuthContext);
@@ -15,7 +16,7 @@ const RequireAuth = () => {
 
   return isAuthorized ? (
     <PostListProvider>
-      <h1>Chatly</h1>
+      <Navbar />
       <Outlet />
       <LogoutButton />
     </PostListProvider>
