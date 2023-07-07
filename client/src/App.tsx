@@ -7,6 +7,8 @@ import PostPage from "./pages/PostPage/PostPage";
 import Login from "./pages/Login/Login";
 import { AuthContextProvider } from "./contexts/AuthContext";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
+import Explore from "./pages/Explore/Explore";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
                   </PostProvider>
                 }
               />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/explore" element={<Explore />} />
             </Route>
 
             {/* Public Routes */}

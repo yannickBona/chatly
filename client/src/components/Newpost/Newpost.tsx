@@ -7,7 +7,11 @@ import { IPostContext, IPostListContext } from "../../contexts/types";
 import { PostListContext } from "../../contexts/PostListContext";
 
 const Newpost: React.FC = () => {
-  const [formData, setFormData] = useState<IPost>({ title: "", body: "" });
+  const [formData, setFormData] = useState<{ title: string; body: string }>({
+    title: "",
+    body: "",
+  });
+  const [showForm, setShowForm] = useState(false);
   const { postList, setPosts } = useContext<IPostListContext>(PostListContext);
   const { execute: createNewPostFn } = useAsyncFn(createPost);
 
@@ -27,8 +31,8 @@ const Newpost: React.FC = () => {
   };
 
   return (
-    <styled.Container onSubmit={handleCreatePost}>
-      <h2>Create Post</h2>
+    <styled.Container showForm={showForm} onSubmit={handleCreatePost}>
+      <h2>Share your thoughts!</h2>
       <input
         type="text"
         placeholder="Title"
@@ -46,6 +50,9 @@ const Newpost: React.FC = () => {
       />
       <button disabled={formData.title === ""}>Post</button>
     </styled.Container>
+
+    // <styled.showFormButton onClick={() => setShowForm((prev) => !prev)}>
+    // </styled.showFormButton>
   );
 };
 

@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import { colors } from "../../themes/tokens";
 
-const Container = styled.form`
+const Container = styled.form<{ showForm: boolean }>`
+  // transform: ${({ showForm }) => (showForm ? "scale(1)" : "scale(0)")};
+  transition: all 100ms ease-in-out;
   width: 70%;
   align-self: center;
+  // display: ${({ showForm }) => (showForm ? "flex" : "none")};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -63,4 +66,23 @@ const Container = styled.form`
   }
 `;
 
-export default { Container };
+const showFormButton = styled.span`
+background: ${colors.neutral};
+border-radius 50%;
+width: 4rem;
+height: 4rem;
+border: 2px solid white;
+display: grid;
+font-size: 1.5rem;
+color: ${colors.white};
+place-items: center;
+cursor: pointer;
+transition: all 200ms ease-in-out;
+
+
+:active{
+  transform: scale(0.8);
+}
+`;
+
+export default { Container, showFormButton };
