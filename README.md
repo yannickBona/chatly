@@ -1,6 +1,6 @@
 # Chatly
 
-_Chatly_. is a simple Web Application where you can share your thoughts and interact with anyone in real time.
+_Chatly_ is a simple Web Application where you can share your thoughts and interact with anyone in real time.
 
 ## About
 
