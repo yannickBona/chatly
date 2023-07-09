@@ -46,5 +46,5 @@ export interface $UserSchemaInterface {
   username: string;
   password: string;
   refreshToken: string | null;
-  getPublicData: () => $PublicUser;
+  getPublicData: () => Promise<$PublicUser>;
 }

@@ -14,7 +14,7 @@ import {
  * @param res Response of the view
  * @returns the user
  */
-export const loginUserController = async (req: Request, res: Response) => {
+export const loginUser = async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;
 

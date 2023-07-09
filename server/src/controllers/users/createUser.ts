@@ -10,7 +10,7 @@ import jwt from "jsonwebtoken";
  * @param res Response of the view
  * @returns the new user
  */
-export const createUserController = async (req: Request, res: Response) => {
+export const createUser = async (req: Request, res: Response) => {
   try {
     const { username, password, name, lastName } = req.body;
 

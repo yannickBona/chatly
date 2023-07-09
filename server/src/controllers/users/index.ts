@@ -1,13 +1,15 @@
-import { createUserController } from "./createUserController";
-import { loginUserController } from "./loginUserController";
-import { sessionController } from "./sessionController";
-import { generateTokenController } from "./generateTokenController";
-import { logoutUserController } from "./logoutUserController";
+import { createUser } from "./createUser";
+import { loginUser } from "./loginUser";
+import { session } from "./session";
+import { generateToken } from "./generateToken";
+import { getSuggestedUsers } from "./getSuggestedUsers";
+import { logoutUser } from "./logoutUser";
 
-export {
-  createUserController,
-  loginUserController,
-  sessionController,
-  logoutUserController,
-  generateTokenController,
+export default {
+  createUser,
+  loginUser,
+  session,
+  logoutUser,
+  generateToken,
+  getSuggestedUsers,
 };

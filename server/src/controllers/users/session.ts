@@ -7,7 +7,7 @@ import { HTTP_200_OK, HTTP_500_INTERNAL_SERVER_ERROR } from "../../utils/api";
  * @param res Response of the view
  * @returns the user
  */
-export const sessionController = async (req: Request, res: Response) => {
+export const session = async (req: Request, res: Response) => {
   try {
     const user = req.profile.getPublicData();
     return res.status(200).json({ ...HTTP_200_OK, data: { user } });

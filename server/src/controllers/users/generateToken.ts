@@ -13,7 +13,7 @@ import {
 /**
  * Refreshes the user session by creating a new access token whenever the old one has expired
  */
-export const generateTokenController = async (req: Request, res: Response) => {
+export const generateToken = async (req: Request, res: Response) => {
   try {
     const { refreshToken } = req.body;
 
