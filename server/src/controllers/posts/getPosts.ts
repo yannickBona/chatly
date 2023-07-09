@@ -11,7 +11,7 @@ import { $PublicComment, $PublicPost } from "../../types";
  * @returns the list of all posts
  */
 
-export const getPostsController = async (req: Request, res: Response) => {
+export const getPosts = async (req: Request, res: Response) => {
   try {
     const posts = await Post.find().populate("comments");
 

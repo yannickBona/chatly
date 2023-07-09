@@ -12,7 +12,7 @@ import {
  * @param res Response of the view
  * @returns the new deck
  */
-export const createPostController = async (req: Request, res: Response) => {
+export const createPost = async (req: Request, res: Response) => {
   try {
     const user = req.profile;
     const { body, title } = req.body;

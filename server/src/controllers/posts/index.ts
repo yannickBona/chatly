@@ -1,13 +1,15 @@
-import { createPostController } from "./createPostController";
-import { deletePostController } from "./deletePostController";
-import { getSinglePostController } from "./getSinglePostController";
-import { getPostsController } from "./getPostsController";
-import { modifyPostController } from "./modifyPostController";
+import { createPost } from "./createPost";
+import { deletePost } from "./deletePost";
+import { getSinglePost } from "./getSinglePost";
+import { getPosts } from "./getPosts";
+import { modifyPost } from "./modifyPostController";
+import { getRandomPosts } from "./getRandomPosts";
 
-export {
-  createPostController,
-  deletePostController,
-  getSinglePostController,
-  getPostsController,
-  modifyPostController,
+export default {
+  createPost,
+  deletePost,
+  getSinglePost,
+  getPosts,
+  modifyPost,
+  getRandomPosts,
 };

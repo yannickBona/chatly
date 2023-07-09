@@ -7,7 +7,7 @@ import {
   HTTP_200_OK,
 } from "../../utils/api";
 
-export const modifyPostController = async (req: Request, res: Response) => {
+export const modifyPost = async (req: Request, res: Response) => {
   try {
     const { id: postId } = req.params;
     const { content } = req.body;

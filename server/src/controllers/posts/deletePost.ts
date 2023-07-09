@@ -14,7 +14,7 @@ import {
  * @returns the list of all posts
  */
 
-export const deletePostController = async (req: Request, res: Response) => {
+export const deletePost = async (req: Request, res: Response) => {
   try {
     const { id } = req.body;
     const deletedPost = await Post.findByIdAndDelete(id);

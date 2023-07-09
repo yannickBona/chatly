@@ -5,8 +5,10 @@ import {
   HTTP_500_INTERNAL_SERVER_ERROR,
   HTTP_200_OK,
   HTTP_404_NOT_FOUND,
+  HTTP_400_BAD_REQUEST,
 } from "../../utils/api";
 import { Request, Response } from "express";
+import { isValidObjectId } from "mongoose";
 
 /**
  * Gets the details for a single post
@@ -15,9 +17,14 @@ import { Request, Response } from "express";
  * @returns IPost
  */
 
-export const getSinglePostController = async (req: Request, res: Response) => {
+export const getSinglePost = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    if (!isValidObjectId(id))
+      return res.status(400).json({
+        ...HTTP_400_BAD_REQUEST,
+        details: "An object id must be provided",
+      });
     const singlePost = await Post.findById(id).populate("comments");
 
     if (!singlePost)
