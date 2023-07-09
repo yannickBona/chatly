@@ -13,7 +13,6 @@ export const getRandomPosts = async (req: Request, res: Response) => {
   try {
     const profile = req.profile;
     const posts = await Post.find({ user: { $ne: profile } });
-
     if (!posts.length)
       return res
         .status(400)
@@ -32,6 +31,7 @@ export const getRandomPosts = async (req: Request, res: Response) => {
         usedIndices.add(randomIndex);
       }
     }
+
     return res.status(200).json({ ...HTTP_200_OK, data: randomPosts });
   } catch (err) {
     return res

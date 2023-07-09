@@ -30,6 +30,10 @@ const Container = styled.div`
       gap: 1rem;
     }
 
+    &.posts a {
+      text-decoration: none;
+    }
+
     h3 {
       padding: 1rem 0;
     }

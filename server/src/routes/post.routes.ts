@@ -4,7 +4,7 @@ import { requiresAuth } from "../middlewares/requiresAuth";
 
 const postRoutes = Router();
 
-// postRoutes.use(requiresAuth);
+postRoutes.use(requiresAuth);
 
 postRoutes.get("/all", controller.getPosts);
 postRoutes.get("/all/random", controller.getRandomPosts);

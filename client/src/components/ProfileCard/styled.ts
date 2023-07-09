@@ -65,6 +65,11 @@ const Container = styled.div`
     width: 100%;
     padding: 0.2rem 0;
     color. ${colors.neutral};
+    transition: all .2s;
+
+    :hover{
+      background:rgba(0,0,0,0.1);
+    }
   }
 `;
 export default { Container };
