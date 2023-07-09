@@ -21,6 +21,11 @@ const Container = styled.nav`
     font-family: "Bangers", cursive;
     letter-spacing: 0.25rem;
     text-decoration: none;
+    transition: all ease-in-out 300ms;
+
+    :hover {
+      color: ${colors.black};
+    }
   }
 
   .nav-options {
