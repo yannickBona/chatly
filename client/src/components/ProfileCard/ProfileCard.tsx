@@ -2,13 +2,13 @@ import React from "react";
 import styled from "./styled";
 import { AiOutlineUser } from "react-icons/ai";
 
-const ProfileCard = () => {
+const ProfileCard: React.FC<{ username: string }> = ({ username }) => {
   return (
     <styled.Container>
       <span className="avatar">
         <AiOutlineUser />
       </span>
-      <p>yannickbona</p>
+      <p>{username}</p>
       <button>+ Follow </button>
     </styled.Container>
   );

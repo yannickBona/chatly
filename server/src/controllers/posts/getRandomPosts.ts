@@ -22,7 +22,7 @@ export const getRandomPosts = async (req: Request, res: Response) => {
     const randomPosts: $PublicPost[] = [];
     const usedIndices = new Set();
 
-    while (randomPosts.length < 5 && usedIndices.size < count) {
+    while (randomPosts.length < 15 && usedIndices.size < count) {
       const randomIndex = Math.floor(Math.random() * count);
 
       if (!usedIndices.has(randomIndex)) {

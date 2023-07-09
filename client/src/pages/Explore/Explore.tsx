@@ -6,17 +6,31 @@ import { useAsyncFn } from "../../hooks/useAsync";
 import { getRandomPosts } from "../../api/Posts/getRandomPosts";
 import { $ResponseData, IPost } from "../../types";
 import { Link } from "react-router-dom";
+import { getSuggestedUsers } from "../../api/User/getSuggestedUsers";
 
 const Explore = () => {
   const [postList, setPostList] = useState<IPost[]>([]);
+  const [users, setUsers] = useState<string[]>([]);
   const { execute: getSuggestedPostsFn } = useAsyncFn(getRandomPosts);
+  const { execute: getSuggestedUsersFn } = useAsyncFn(getSuggestedUsers);
+
   useEffect(() => {
     (async () => {
-      const response: $ResponseData = await getSuggestedPostsFn();
-      if (response.status !== 200) return;
-      setPostList(response.data);
+      const [suggestedUsersResponse, suggestedPostsResponse] =
+        await Promise.all([getSuggestedUsersFn(), getSuggestedPostsFn()]);
+
+      if (suggestedUsersResponse.status === 200) {
+        setUsers(suggestedUsersResponse.data);
+        console.log(suggestedUsersResponse);
+      }
+
+      if (suggestedPostsResponse.status === 200) {
+        setPostList(suggestedPostsResponse.data);
+      }
     })();
   }, []);
+
+  console.log(users, postList);
   return (
     <styled.Container>
       <h1>Explore</h1>
@@ -24,10 +38,9 @@ const Explore = () => {
       <div className="container profiles">
         <h3>Suggested profiles</h3>
         <div className="profiles-list">
-          <ProfileCard />
-          <ProfileCard />
-          <ProfileCard />
-          <ProfileCard />
+          {users.map((user, idx) => (
+            <ProfileCard username={user} key={`${user}-${idx}`} />
+          ))}
         </div>
       </div>
 

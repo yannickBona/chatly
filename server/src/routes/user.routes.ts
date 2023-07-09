@@ -23,6 +23,6 @@ userRoutes.get("/session", requiresAuth, controller.session);
 userRoutes.post("/token", requiresAuth, controller.generateToken);
 
 // Gets a list of suggested users to follow
-userRoutes.get("/suggested", controller.getSuggestedUsers);
+userRoutes.get("/suggested", requiresAuth, controller.getSuggestedUsers);
 
 export { userRoutes };
