@@ -62,5 +62,3 @@ For any inquiries or suggestions, please reach out to _yannick.bonavoglia13@gmai
 For any inquiries or suggestions, please reach out to _yannick.bonavoglia13@gmail.com_.
 
 **_Feel free to provide feedback or suggestions!_**
-
-> > > > > > > origin/main
