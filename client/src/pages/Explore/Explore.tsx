@@ -21,7 +21,6 @@ const Explore = () => {
 
       if (suggestedUsersResponse.status === 200) {
         setUsers(suggestedUsersResponse.data);
-        console.log(suggestedUsersResponse);
       }
 
       if (suggestedPostsResponse.status === 200) {
@@ -30,7 +29,6 @@ const Explore = () => {
     })();
   }, []);
 
-  console.log(users, postList);
   return (
     <styled.Container>
       <h1>Explore</h1>
@@ -48,8 +46,8 @@ const Explore = () => {
         <h3>Posts you might like</h3>
         <article className="posts-list">
           {postList.map((post) => (
-            <Link to={`/post/${post._id}`}>
-              <Post onDelete={() => null} {...post} key={post._id} />
+            <Link to={`/post/${post._id}`} key={post._id}>
+              <Post onDelete={() => null} {...post} />
             </Link>
           ))}
         </article>
