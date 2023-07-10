@@ -13,6 +13,7 @@ The project includes the following key features:
 - _JWT Authentication_: Implements a secure authentication system using JSON Web Tokens (JWT) with session token refresh functionality;
 - _Node.js_: Utilizes various Node.js features such as routing, middlewares, Mongoose, Express, and TypeScript for server-side development;
 - _NoSQL Databases_: Integrates NoSQL databases, specifically MongoDB, to handle data storage and retrieval efficiently;
+- _DB Schemas Migrations_: handling MongoDB schema migrations to keep all documents up to date;
 - _RESTful API_: Implements a RESTful API architecture for seamless communication between the frontend and backend;
 - _React.js_: Utilizes React.js with Vite and TypeScript for building the user interface, incorporating routing, context management, JWT authentication, and state management.
 

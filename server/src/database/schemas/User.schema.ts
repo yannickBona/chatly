@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { ObjectId, Schema } from "mongoose";
 import { $UserSchemaInterface } from "../types";
 
 const UserSchema = new Schema<$UserSchemaInterface>(
@@ -8,6 +8,8 @@ const UserSchema = new Schema<$UserSchemaInterface>(
     username: String,
     password: String,
     refreshToken: String || null,
+    followers: Array<ObjectId>,
+    followed: Array<ObjectId>,
   },
   {
     timestamps: true, // add createdAt and updatedAt fields and sxet them automatically

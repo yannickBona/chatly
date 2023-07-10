@@ -45,6 +45,8 @@ export interface $UserSchemaInterface {
   lastName: string;
   username: string;
   password: string;
+  followers: mongoose.Types.ObjectId[];
+  followed: mongoose.Types.ObjectId[];
   refreshToken: string | null;
   getPublicData: () => Promise<$PublicUser>;
 }
