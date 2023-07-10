@@ -14,7 +14,8 @@ const Container = styled.div`
     left: 3rem;
     text-decoration: none;
     font-size: 1.5rem;
-    top: 3rem;
+    top: 10rem;
+    cursor: pointer;
   }
 `;
 

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CommentForm from "../../components/CommentForm/CommentForm";
 import Post from "../../components/Post/Post";
 import { PostContext } from "../../contexts/PostContext";
@@ -31,6 +31,7 @@ const PostPage: React.FC = () => {
   const [editMode, setEditMode] = useState(false);
   const [selectedComment, setSelectedComment] = useState("");
   const username = useUser();
+  const navigate = useNavigate();
 
   /**
    * Deletes a comment given its ID
@@ -126,9 +127,6 @@ const PostPage: React.FC = () => {
 
   return currentPost ? (
     <styled.Container>
-      <Link to="/" className="back-button">
-        ⬅️
-      </Link>
       <Post onDelete={() => null} {...currentPost} key={currentPost?._id} />
       <styled.CommentsSection>
         <CommentForm />
@@ -199,6 +197,9 @@ const PostPage: React.FC = () => {
           ))
           .reverse()}
       </styled.CommentsSection>
+      <span onClick={() => navigate(-1)} className="back-button">
+        ⬅️
+      </span>
     </styled.Container>
   ) : (
     <div>Post not found</div>
