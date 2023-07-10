@@ -11,6 +11,7 @@ const Container = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 99999;
 
   .logo {
     display: flex;

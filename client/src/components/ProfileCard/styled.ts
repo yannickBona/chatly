@@ -59,16 +59,15 @@ const Container = styled.div`
     background-color: ${colors.background};
     cursor: pointer;
     font-family: inherit;
-    transition: background-color 200ms ease-in-out;
     outline: 2px solid ${colors.white};
     border: 2px solid ${colors.borderColorDark};
     width: 100%;
     padding: 0.2rem 0;
-    color. ${colors.neutral};
-    transition: all .2s;
+    color: ${colors.neutral};
+    transition: all 0.2s;
 
-    :hover{
-      background:rgba(0,0,0,0.1);
+    :hover {
+      background: rgba(0, 0, 0, 0.1);
     }
   }
 `;

@@ -18,7 +18,6 @@ const RequireAuth = () => {
     <PostListProvider>
       <Navbar />
       <Outlet />
-      <LogoutButton />
     </PostListProvider>
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />

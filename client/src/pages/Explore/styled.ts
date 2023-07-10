@@ -11,7 +11,7 @@ const Container = styled.div`
   margin: 3rem 0;
   flex-direction: column;
   gap: 1rem;
-  width: fit-content;
+  width: 70%;
   font-size: 18px;
   line-height: 1.5rem;
   text-decoration: none;
