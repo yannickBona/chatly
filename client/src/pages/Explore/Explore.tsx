@@ -36,20 +36,28 @@ const Explore = () => {
       <div className="container profiles">
         <h3>Suggested profiles</h3>
         <div className="profiles-list">
-          {users.map((user, idx) => (
-            <ProfileCard username={user} key={`${user}-${idx}`} />
-          ))}
+          {users.length ? (
+            users.map((user, idx) => (
+              <ProfileCard username={user} key={`${user}-${idx}`} />
+            ))
+          ) : (
+            <p>No suggested users for today... come back later!</p>
+          )}
         </div>
       </div>
 
       <div className="container posts">
         <h3>Posts you might like</h3>
         <article className="posts-list">
-          {postList.map((post) => (
-            <Link to={`/post/${post._id}`} key={post._id}>
-              <Post onDelete={() => null} {...post} />
-            </Link>
-          ))}
+          {postList.length ? (
+            postList.map((post) => (
+              <Link to={`/post/${post._id}`} key={post._id}>
+                <Post onDelete={() => null} {...post} />
+              </Link>
+            ))
+          ) : (
+            <p>No suggested posts for today...</p>
+          )}
         </article>
       </div>
     </styled.Container>

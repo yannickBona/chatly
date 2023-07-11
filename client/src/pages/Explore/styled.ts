@@ -18,7 +18,7 @@ const Container = styled.div`
   color: ${colors.black};
   position: relative;
 
-  > p {
+  p {
     color: ${colors.neutral};
   }
 

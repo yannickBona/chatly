@@ -16,7 +16,10 @@ export const getSuggestedUsers = async (req: Request, res: Response) => {
   try {
     const profile = req.profile;
 
-    const users = await User.find({ _id: { $ne: profile } });
+    const users = await User.find({
+      _id: { $ne: profile },
+      followers: { $nin: profile.username },
+    });
     if (!users.length)
       return res.status(400).json({
         ...HTTP_400_BAD_REQUEST,
