@@ -5,14 +5,24 @@ import {
   HTTP_400_BAD_REQUEST,
   HTTP_500_INTERNAL_SERVER_ERROR,
 } from "../../utils/api";
-import { Post } from "../../database/models";
+import { Post, User } from "../../database/models";
 import { $PublicPost } from "../../types";
 import { $PostSchemaInterface } from "../../database/types";
 
 export const getRandomPosts = async (req: Request, res: Response) => {
   try {
     const profile = req.profile;
-    const posts = await Post.find({ user: { $ne: profile } });
+    const followedAccounts = [];
+
+    for (const username of profile.followed) {
+      const user = await User.findOne({ username });
+      followedAccounts.push(user?._id);
+    }
+
+    const posts = await Post.find({
+      $and: [{ user: { $ne: profile } }, { user: { $nin: followedAccounts } }],
+    }).populate("comments");
+
     if (!posts.length)
       return res
         .status(400)
