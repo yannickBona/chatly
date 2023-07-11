@@ -26,7 +26,7 @@ const Navbar = () => {
         </Link>
         <Link
           className={isSelected("profile") ? "selected" : ""}
-          to={`/profile/${user.username}`}
+          to={`/profile/${user?.username}`}
         >
           Profile
         </Link>

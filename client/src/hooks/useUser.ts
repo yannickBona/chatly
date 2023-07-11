@@ -4,7 +4,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export function useUser() {
-  const { user } = useContext<IAuthContext>(AuthContext);
+  const { user, setUser } = useContext<IAuthContext>(AuthContext);
 
-  return user.username;
+  return { user, setUser };
 }

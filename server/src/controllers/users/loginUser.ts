@@ -54,7 +54,9 @@ export const loginUser = async (req: Request, res: Response) => {
     user.refreshToken = refreshToken;
     user.save();
 
-    const responseBody = { user: { ...user.getPublicData() }, token };
+    const publicUser = await user.getPublicData();
+
+    const responseBody = { user: { ...publicUser }, token };
 
     return res.status(200).json({
       ...HTTP_200_OK,

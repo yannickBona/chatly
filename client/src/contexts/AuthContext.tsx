@@ -33,6 +33,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     })();
   }, []);
 
+  console.log(user);
+
   return (
     <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>
   );

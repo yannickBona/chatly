@@ -41,12 +41,11 @@ const Post: React.FC<IPostComponent> = ({
    */
   const { currentPost } = useContext<IPostContext>(PostContext);
   const { setPosts } = useContext<IPostListContext>(PostListContext);
-  const { user } = useContext<IAuthContext>(AuthContext);
   const [isLiked, setisLiked] = useState(false);
   const [currentLikes, setCurrentLikes] = useState(likes?.length ?? 0);
   const [editMode, setEditMode] = useState(false);
   const { execute: manageLikeFn } = useAsyncFn(manageLikeOnPost);
-  const username = useUser();
+  const { user } = useUser();
 
   const isOwner = user?.username === owner;
 
@@ -58,7 +57,7 @@ const Post: React.FC<IPostComponent> = ({
 
   useEffect(() => {
     if (likes?.length === 0 || !likes) return;
-    setisLiked(likes.some((like: string) => like === username));
+    setisLiked(likes.some((like: string) => like === user?.username));
     setCurrentLikes(likes.length);
   }, [likes]);
 

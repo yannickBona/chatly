@@ -1,5 +1,6 @@
 import mongoose, { ObjectId, Schema } from "mongoose";
 import { $UserSchemaInterface } from "../types";
+import { Post } from "../models";
 
 const UserSchema = new Schema<$UserSchemaInterface>(
   {
@@ -16,12 +17,16 @@ const UserSchema = new Schema<$UserSchemaInterface>(
   }
 );
 
-UserSchema.methods.getPublicData = function (this: $UserSchemaInterface) {
+UserSchema.methods.getPublicData = async function (this: $UserSchemaInterface) {
+  const userPostsCount = await Post.find({ user: this._id }).count();
   return {
     username: this.username,
     name: this.name,
     lastName: this.lastName,
     refreshToken: this.refreshToken,
+    followed: this.followed,
+    followers: this.followers,
+    postsUploaded: userPostsCount,
   };
 };
 

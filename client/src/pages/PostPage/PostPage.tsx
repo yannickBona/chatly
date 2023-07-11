@@ -30,7 +30,6 @@ const PostPage: React.FC = () => {
   const { execute: deleteCommentFn } = useAsyncFn(deleteComment);
   const [editMode, setEditMode] = useState(false);
   const [selectedComment, setSelectedComment] = useState("");
-  const username = useUser();
   const navigate = useNavigate();
 
   /**
@@ -62,7 +61,7 @@ const PostPage: React.FC = () => {
       (comm) => comm._id === comment._id
     );
 
-    const isLiked = comment.likes.some((like) => like === username);
+    const isLiked = comment.likes.some((like) => like === user?.username);
     if (!isLiked) {
       const response: $ResponseData = await manageCommentFn(
         comment._id,
@@ -72,7 +71,7 @@ const PostPage: React.FC = () => {
 
       if (response.status !== 200) return;
 
-      const newLikes = [...(comment.likes ?? []), username];
+      const newLikes = [...(comment.likes ?? []), user?.username] as string[];
 
       const updatedComments = [...currentPost?.comments];
       updatedComments[idx] = {
@@ -100,7 +99,7 @@ const PostPage: React.FC = () => {
       if (response.status !== 200) return;
       const removedLike: ILike = response.data.like;
       const newLikes = comment.likes?.filter(
-        (like: string) => like !== username
+        (like: string) => like !== user?.username
       );
 
       const updatedComments = [...currentPost?.comments];
@@ -142,7 +141,7 @@ const PostPage: React.FC = () => {
                 </span>
                 <b>
                   {comment.owner ?? "Anonymous User"}{" "}
-                  {comment.owner === user.username
+                  {comment.owner === user?.username
                     ? " (you)"
                     : comment.owner === currentPost.owner && "(Owner)"}
                 </b>{" "}
@@ -164,7 +163,7 @@ const PostPage: React.FC = () => {
 
               <styled.commentActionsContainer>
                 <span className="likes">
-                  {comment.likes.some((like) => like === username) ? (
+                  {comment.likes.some((like) => like === user?.username) ? (
                     <AiFillHeart
                       className="filled"
                       onClick={() => handleLikeOnComment(comment)}
@@ -178,7 +177,7 @@ const PostPage: React.FC = () => {
                   {comment?.likes.length}
                 </span>
 
-                {comment.owner === user.username && (
+                {comment.owner === user?.username && (
                   <>
                     <AiOutlineEdit
                       onClick={() => handleCommentEdit(comment._id)}

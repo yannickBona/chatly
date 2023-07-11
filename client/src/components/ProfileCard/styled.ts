@@ -67,7 +67,11 @@ const Container = styled.div`
     transition: all 0.2s;
 
     :hover {
-      background: rgba(0, 0, 0, 0.1);
+      font-weight: bold;
+    }
+
+    &.filled {
+      font-style: italic;
     }
   }
 `;

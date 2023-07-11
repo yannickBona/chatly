@@ -25,4 +25,8 @@ userRoutes.post("/token", requiresAuth, controller.generateToken);
 // Gets a list of suggested users to follow
 userRoutes.get("/suggested", requiresAuth, controller.getSuggestedUsers);
 
+// Follow / Unfollow a user
+userRoutes.post("/follow", requiresAuth, controller.follow);
+userRoutes.delete("/follow", requiresAuth, controller.unfollow);
+
 export { userRoutes };

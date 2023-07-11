@@ -16,7 +16,9 @@ const Profile = () => {
   const [ownerPosts, setOwnerPosts] = useState<IPost[]>([]);
 
   useEffect(() => {
-    const ownerPosts = postList?.filter((post) => post.owner === user.username);
+    const ownerPosts = postList?.filter(
+      (post) => post.owner === user?.username
+    );
     setOwnerPosts(ownerPosts ?? []);
   }, []);
 
@@ -36,24 +38,24 @@ const Profile = () => {
 
   return (
     <styled.Container>
-      <h1>Profile Overview | {user.username}</h1>
+      <h1>Profile Overview | {user?.username}</h1>
       <div className="profile-info">
         <span className="avatar">
           <AiOutlineUser />
         </span>
-        <h2>@{user.username}</h2>
+        <h2>@{user?.username}</h2>
         <section className="profile-details">
           <h3>
-            <span>0</span>
+            <span>{user?.postsUploaded}</span>
             <br />
             Posts
           </h3>
           <h3>
-            <span>0</span> <br />
+            <span>{user?.followers.length}</span> <br />
             Followers
           </h3>
           <h3>
-            <span>0</span>
+            <span>{user?.followed.length}</span>
             <br />
             Followed
           </h3>

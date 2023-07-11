@@ -27,6 +27,9 @@ export interface $PublicUser {
   refreshToken: string;
   lastName: string;
   name: string;
+  followers: string[];
+  followed: string[];
+  postsUploaded: number;
 }
 
 export interface $PublicComment {

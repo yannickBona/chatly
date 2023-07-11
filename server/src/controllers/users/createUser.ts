@@ -50,8 +50,9 @@ export const createUser = async (req: Request, res: Response) => {
       refreshToken,
     });
     const savedUser = await newUser.save();
+    const publicUserData = await savedUser.getPublicData();
 
-    const responseBody = { user: { ...savedUser.getPublicData() }, token };
+    const responseBody = { user: { ...publicUserData }, token };
 
     return res.status(200).json({ ...HTTP_200_OK, data: responseBody });
   } catch (err) {

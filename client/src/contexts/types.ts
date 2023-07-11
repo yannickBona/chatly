@@ -15,8 +15,12 @@ export type TUser = {
   name?: string;
   lastName?: string;
   refreshToken: string;
-};
+  followed: string[];
+  followers: string[];
+  postsUploaded: number;
+} | null;
+
 export interface IAuthContext {
   user: TUser;
-  setUser: React.Dispatch<React.SetStateAction<TUser | null>>;
+  setUser: React.Dispatch<React.SetStateAction<TUser>>;
 }

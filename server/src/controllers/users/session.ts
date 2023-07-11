@@ -9,7 +9,7 @@ import { HTTP_200_OK, HTTP_500_INTERNAL_SERVER_ERROR } from "../../utils/api";
  */
 export const session = async (req: Request, res: Response) => {
   try {
-    const user = req.profile.getPublicData();
+    const user = await req.profile.getPublicData();
     return res.status(200).json({ ...HTTP_200_OK, data: { user } });
   } catch (err) {
     console.log(err);
