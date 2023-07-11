@@ -30,6 +30,12 @@ const Container = styled.div`
       gap: 1rem;
     }
 
+    .posts-list {
+      display: flex;
+      gap: 1rem;
+      flex-direction: column;
+    }
+
     &.posts a {
       text-decoration: none;
     }
