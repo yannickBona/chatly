@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Post } from "../../database/models";
+import { Post, User } from "../../database/models";
 import { HTTP_500_INTERNAL_SERVER_ERROR, HTTP_200_OK } from "../../utils/api";
 import { $CommentSchemaInterface } from "../../database/types";
 import { $PublicComment, $PublicPost } from "../../types";
@@ -13,7 +13,17 @@ import { $PublicComment, $PublicPost } from "../../types";
 
 export const getPosts = async (req: Request, res: Response) => {
   try {
-    const posts = await Post.find().populate("comments");
+    const profile = req.profile;
+    const followedAccounts = [];
+
+    for (const username of profile.followed) {
+      const user = await User.findOne({ username });
+      followedAccounts.push(user?._id);
+    }
+
+    const posts = await Post.find({
+      $or: [{ user: profile }, { user: { $in: followedAccounts } }],
+    }).populate("comments");
 
     const postList: $PublicPost[] = await Promise.all(
       posts.map(async (post) => {

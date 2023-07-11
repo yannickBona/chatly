@@ -5,6 +5,7 @@ import { useAsyncFn } from "../../hooks/useAsync";
 import { createPost } from "../../api/Posts/createPosts";
 import { IPostContext, IPostListContext } from "../../contexts/types";
 import { PostListContext } from "../../contexts/PostListContext";
+import { useUser } from "../../hooks/useUser";
 
 const Newpost: React.FC = () => {
   const [formData, setFormData] = useState<{ title: string; body: string }>({
@@ -14,6 +15,7 @@ const Newpost: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const { postList, setPosts } = useContext<IPostListContext>(PostListContext);
   const { execute: createNewPostFn } = useAsyncFn(createPost);
+  const { setUser } = useUser();
 
   /**
    * This creates a new post
@@ -26,6 +28,10 @@ const Newpost: React.FC = () => {
 
     postList?.push(response.data.post);
     setPosts(postList);
+    setUser((prevUser) => {
+      if (!prevUser) return null;
+      return { ...prevUser, postsUploaded: prevUser?.postsUploaded + 1 };
+    });
 
     setFormData({ title: "", body: "" });
   };

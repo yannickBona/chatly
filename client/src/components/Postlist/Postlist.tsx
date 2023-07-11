@@ -6,9 +6,11 @@ import { IPostListContext } from "../../contexts/types";
 import { IPost } from "../../types";
 import Post from "../Post/Post";
 import styled from "./styled";
+import { useUser } from "../../hooks/useUser";
 
 const Postlist: React.FC = () => {
   const { postList, setPosts } = useContext<IPostListContext>(PostListContext);
+  const { setUser } = useUser();
 
   const handleDelete = async (
     e: React.MouseEvent<SVGElement, MouseEvent>,
@@ -17,6 +19,11 @@ const Postlist: React.FC = () => {
     e.preventDefault();
     const response = await deletePost(id);
     if (response.status !== 200) return;
+
+    setUser((prevUser) => {
+      if (!prevUser) return null;
+      return { ...prevUser, postsUploaded: prevUser?.postsUploaded - 1 };
+    });
 
     const newPosts = postList?.filter(
       (post) => post._id !== response.data.post._id

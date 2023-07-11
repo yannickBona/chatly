@@ -9,11 +9,13 @@ import { Link } from "react-router-dom";
 import Post from "../../components/Post/Post";
 import { deletePost } from "../../api/Posts/deletePost";
 import LogoutButton from "../../components/LogoutButton/LogoutButton";
+import { useUser } from "../../hooks/useUser";
 
 const Profile = () => {
   const { user } = useContext<IAuthContext>(AuthContext);
   const { postList } = useContext<IPostListContext>(PostListContext);
   const [ownerPosts, setOwnerPosts] = useState<IPost[]>([]);
+  const { setUser } = useUser();
 
   useEffect(() => {
     const ownerPosts = postList?.filter(
@@ -29,6 +31,11 @@ const Profile = () => {
     e.preventDefault();
     const response = await deletePost(id);
     if (response.status !== 200) return;
+
+    setUser((prevUser) => {
+      if (!prevUser) return null;
+      return { ...prevUser, postsUploaded: prevUser?.postsUploaded - 1 };
+    });
 
     const newPosts = ownerPosts?.filter(
       (post) => post._id !== response.data.post._id
@@ -66,7 +73,9 @@ const Profile = () => {
         </section>
       </div>
 
-      <h3>Your posts</h3>
+      <h3>
+        Your posts [<Link to="/">+New post</Link>]
+      </h3>
       <div className="post-list">
         {ownerPosts.map((post) => (
           <Link to={`/post/${post._id}`} key={post._id}>
