@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../themes/tokens";
+import { breakpoints, colors } from "../../themes/tokens";
 
 const Container = styled.div`
   background: ${colors.background};
@@ -57,6 +57,41 @@ const Container = styled.div`
     }
     .title h1 {
       margin-bottom: 1rem;
+    }
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 100%;
+    margin: 2rem 0 5rem 0;
+    // padding: 2rem 1rem;
+    padding: 2rem 0;
+
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      padding-inline: 1rem;
+    }
+
+    .container {
+      h3 {
+        padding: 0 0 1rem 1rem;
+      }
+
+      .profiles-list {
+        overflow-x: scroll;
+        padding: 1rem;
+
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      .posts-list {
+        padding: 1rem;
+      }
     }
   }
 `;

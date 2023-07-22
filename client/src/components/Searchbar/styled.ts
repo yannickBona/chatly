@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors, shadows } from "../../themes/tokens";
+import { breakpoints, colors, shadows } from "../../themes/tokens";
 
 export const StyledSearchbar = styled.div`
   display: flex;
@@ -41,6 +41,14 @@ export const StyledSearchbar = styled.div`
       height: 100%;
       display: flex;
       align-items: center;
+    }
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 100%;
+    margin-top: 2rem;
+    input[type="search"] {
+      width: 100%;
     }
   }
 `;
