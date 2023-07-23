@@ -42,9 +42,7 @@ export const StyledContainer = styled.main`
     font-size: 1.5rem;
     cursor: pointer;
 
-    &:active{
-      transform: scale(0.95);
-    }
+  
 
     @media(max-width: ${breakpoints.mobile}){
       left:1rem;
