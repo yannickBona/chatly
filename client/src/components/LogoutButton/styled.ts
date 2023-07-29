@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../themes/tokens";
+import { breakpoints, colors } from "../../themes/tokens";
 
 const Button = styled.button`
   align-self: flex-end;
@@ -27,6 +27,10 @@ const Button = styled.button`
 
   :active:not([disabled]) {
     transform: scale(0.95);
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    display: none;
   }
 `;
 

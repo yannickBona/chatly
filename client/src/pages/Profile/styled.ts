@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { colors } from "../../themes/tokens";
+import { breakpoints, colors } from "../../themes/tokens";
 
 const Container = styled.div`
   background: ${colors.background};
@@ -134,6 +134,26 @@ const Container = styled.div`
     top: 1, 5rem;
     font-size: 1.5rem;
     cursor: pointer;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    margin: 3rem 0 5rem 0;
+    width: 100%;
+    padding: 1rem;
+
+    h1 {
+      font-size: 2rem;
+      line-height: 3rem;
+      margin-bottom: 1.5rem;
+
+      .username {
+        display: none;
+      }
+    }
+
+    .profile-info {
+      padding: 0;
+    }
   }
 `;
 

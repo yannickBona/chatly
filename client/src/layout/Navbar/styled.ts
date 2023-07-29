@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { breakpoints, colors, shadows } from "../../themes/tokens";
 
-const Container = styled.nav`
+const Container = styled.nav<{ showBoxShadow: boolean; showNavbar: boolean }>`
   background: ${colors.white};
   position: sticky;
   top: 0;
@@ -62,10 +62,19 @@ const Container = styled.nav`
     }
   }
 
+  .logout-button {
+    display: none;
+  }
+
   @media (max-width: ${breakpoints.mobile}) {
     padding: 1rem;
     z-index: 10;
     background: ${colors.white};
+    position: fixed;
+    transition: all 200ms ease-out;
+
+    top: ${(p) => (p.showNavbar ? "0" : "-100px")};
+    box-shadow: ${(p) => (p.showBoxShadow ? shadows.xl : shadows.md)};
 
     .nav-options {
       position: absolute;
@@ -92,6 +101,11 @@ const Container = styled.nav`
           display: block;
         }
       }
+    }
+
+    .logout-button {
+      display: block;
+      color: red !important;
     }
   }
 `;

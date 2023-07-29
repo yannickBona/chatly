@@ -117,9 +117,13 @@ const Profile = () => {
     }
   };
 
+  const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
   return profile ? (
     <styled.Container>
-      <h1>Profile Overview | {profile.username}</h1>
+      <h1>
+        Profile Overview <span className="username">| {profile.username}</span>
+      </h1>
       <div className="profile-info">
         <span className="avatar">
           <AiOutlineUser />
@@ -131,11 +135,21 @@ const Profile = () => {
             <br />
             Posts
           </h3>
-          <h3 onClick={() => navigate(`/profile/${username}/followers`)}>
+          <h3
+            onClick={() => {
+              scrollTop();
+              navigate(`/profile/${username}/followers`);
+            }}
+          >
             <span>{profile?.followers.length}</span> <br />
             Followers
           </h3>
-          <h3 onClick={() => navigate(`/profile/${username}/followed`)}>
+          <h3
+            onClick={() => {
+              scrollTop();
+              navigate(`/profile/${username}/followed`);
+            }}
+          >
             <span>{profile.followed.length}</span>
             <br />
             Followed
@@ -143,7 +157,9 @@ const Profile = () => {
         </section>
         {isProfileOwner ? (
           <section className="profile-actions">
-            <Link to="/explore">Add friends</Link>
+            <Link onClick={scrollTop} to="/explore">
+              Add friends
+            </Link>
           </section>
         ) : (
           <section className="profile-actions">
@@ -160,7 +176,10 @@ const Profile = () => {
       <h3>
         {isProfileOwner ? (
           <>
-            Your posts | <Link to="/">+New post</Link>
+            Your posts |{" "}
+            <Link onClick={scrollTop} to="/">
+              +New post
+            </Link>
           </>
         ) : (
           `@${username}'s posts`
