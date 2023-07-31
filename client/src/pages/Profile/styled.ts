@@ -144,7 +144,7 @@ const Container = styled.div`
   }
 
   @media (max-width: ${breakpoints.mobile}) {
-    margin: 3rem 0 5rem 0;
+    margin: 7rem 0 5rem 0;
     width: 100%;
     padding: 1rem;
 

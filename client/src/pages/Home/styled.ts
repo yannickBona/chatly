@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { breakpoints } from "../../themes/tokens";
 
 const Container = styled.div`
   width: 100%;
@@ -7,5 +8,9 @@ const Container = styled.div`
   align-items: center;
   gap: 2rem;
   margin-block: 2rem;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    margin-top: 7rem;
+  }
 `;
 export default { Container };

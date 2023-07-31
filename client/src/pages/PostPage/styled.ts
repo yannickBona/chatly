@@ -22,8 +22,7 @@ const Container = styled.div`
   @media (max-width: ${breakpoints.mobile}) {
     width: 100%;
     padding: 0;
-    margin-block: 2rem;
-    margin-bottom: 8rem;
+    margin-block: 8rem;
 
     .back-button {
       top: unset;

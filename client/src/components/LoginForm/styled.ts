@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { colors } from "../../themes/tokens";
+import { breakpoints, colors } from "../../themes/tokens";
 
 const LoginForm = styled.form`
-  width: 20%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,6 +10,7 @@ const LoginForm = styled.form`
   background: ${colors.white};
   border-radius: 0.5rem;
   border: 1px solid ${colors.borderColor};
+  width: 60%;
 
   h1 {
     text-align: center;
@@ -53,6 +53,10 @@ const LoginForm = styled.form`
     :active:not([disabled]) {
       transform: scale(0.95);
     }
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 100%;
   }
 `;
 

@@ -4,7 +4,7 @@ import { StyledFooter } from "./styled";
 const Footer = () => {
   return (
     <StyledFooter>
-      This web application is maintained and developed by{" "}
+      This application is maintained and developed by{" "}
       <a href="https://github.com/yannickBona" target="_blank">
         @yannickBona
       </a>{" "}
