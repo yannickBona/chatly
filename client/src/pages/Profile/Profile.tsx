@@ -59,8 +59,6 @@ const Profile = () => {
   const ownerPosts =
     profilePosts.filter((post) => post.owner === username) ?? [];
 
-  console.log(profile);
-
   return profile ? (
     <styled.Container>
       <h1>Profile Overview | {profile.username}</h1>

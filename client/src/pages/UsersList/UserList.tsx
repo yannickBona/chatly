@@ -34,8 +34,6 @@ const UserList = ({ section }: { section: "followed" | "followers" }) => {
   const isFollowed = section === "followed";
   const usersList = isFollowed ? profile?.followed : profile?.followers;
 
-  console.log(usersList);
-
   return (
     <StyledContainer>
       <h1>
