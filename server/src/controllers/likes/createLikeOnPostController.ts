@@ -16,18 +16,10 @@ export const createLikeOnPostController = async (
     const { id: postId } = req.params;
     const profile = req.profile;
 
-    if (!postId)
-      return res.status(400).json({
-        ...HTTP_400_BAD_REQUEST,
-        details: `Post ID not provided`,
-      });
+    if (!postId) return HTTP_400_BAD_REQUEST(res, "Post ID not provided");
 
     const existLike = await Like.findOne({ postId, userId: profile });
-    if (!!existLike)
-      return res.status(400).json({
-        ...HTTP_400_BAD_REQUEST,
-        details: `Post already liked!`,
-      });
+    if (!!existLike) return HTTP_400_BAD_REQUEST(res, "Post already liked!");
 
     const newLike = new Like({
       postId,
@@ -39,6 +31,6 @@ export const createLikeOnPostController = async (
     return res.status(200).json({ ...HTTP_200_OK, data: { like: savedLike } });
   } catch (err) {
     logger.error(err as string);
-    return res.status(400).send({ status: "Error", details: err });
+    return res.status(500).send({ status: "Error", details: err });
   }
 };
