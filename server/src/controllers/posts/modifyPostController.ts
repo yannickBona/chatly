@@ -12,10 +12,7 @@ export const modifyPost = async (req: Request, res: Response) => {
     const { id: postId } = req.params;
     const { content } = req.body;
 
-    if (!postId)
-      return res
-        .status(400)
-        .json({ ...HTTP_400_BAD_REQUEST, details: "No post ID was provided" });
+    if (!postId) return HTTP_400_BAD_REQUEST(res, "No post ID was provided");
 
     const currentPost = await Post.findByIdAndUpdate(
       postId,
@@ -26,10 +23,7 @@ export const modifyPost = async (req: Request, res: Response) => {
     );
 
     if (!currentPost)
-      return res.status(400).json({
-        ...HTTP_400_BAD_REQUEST,
-        details: `Post ${postId} was not found`,
-      });
+      return HTTP_400_BAD_REQUEST(res, `Post ${postId} was not found`);
 
     const publicPost = await currentPost.getPublicData();
     return res.status(200).json({ ...HTTP_200_OK, data: { post: publicPost } });

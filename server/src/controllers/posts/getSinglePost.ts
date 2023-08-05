@@ -21,10 +21,8 @@ export const getSinglePost = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     if (!isValidObjectId(id))
-      return res.status(400).json({
-        ...HTTP_400_BAD_REQUEST,
-        details: "An object id must be provided",
-      });
+      return HTTP_400_BAD_REQUEST(res, "An object id must be provided");
+
     const singlePost = await Post.findById(id).populate("comments");
 
     if (!singlePost)

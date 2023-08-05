@@ -18,9 +18,7 @@ export const generateToken = async (req: Request, res: Response) => {
     const { refreshToken } = req.body;
 
     if (!refreshToken)
-      return res
-        .status(400)
-        .json({ ...HTTP_400_BAD_REQUEST, details: "Missing refresh token" });
+      return HTTP_400_BAD_REQUEST(res, "Missing refresh token");
 
     const tokenUser = await User.find({ refreshToken });
 

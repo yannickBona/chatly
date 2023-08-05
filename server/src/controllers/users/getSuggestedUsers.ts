@@ -5,12 +5,8 @@ import {
   HTTP_400_BAD_REQUEST,
   HTTP_500_INTERNAL_SERVER_ERROR,
 } from "../../utils/api";
-import { Post, User } from "../../database/models";
-import { $PublicPost, $PublicUser } from "../../types";
-import {
-  $PostSchemaInterface,
-  $UserSchemaInterface,
-} from "../../database/types";
+import { User } from "../../database/models";
+import { $UserSchemaInterface } from "../../database/types";
 
 export const getSuggestedUsers = async (req: Request, res: Response) => {
   try {
@@ -21,10 +17,10 @@ export const getSuggestedUsers = async (req: Request, res: Response) => {
       followers: { $nin: profile.username },
     });
     if (!users.length)
-      return res.status(400).json({
-        ...HTTP_400_BAD_REQUEST,
-        details: "No suggested users to get, already following all users",
-      });
+      return HTTP_400_BAD_REQUEST(
+        res,
+        "No suggested users to get, already following all users"
+      );
 
     const count = users.length;
     const randomUsers: string[] = [];
