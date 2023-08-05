@@ -21,11 +21,7 @@ export const removeLikeOnCommentController = async (
     const profile = req.profile;
     const { id: commentId } = req.params;
 
-    if (!commentId)
-      return res.status(400).json({
-        ...HTTP_400_BAD_REQUEST,
-        details: `Post ID not provided`,
-      });
+    if (!commentId) return HTTP_400_BAD_REQUEST(res, "Post ID not provided");
 
     const deletedLike = await Like.findOneAndRemove({
       userId: profile._id,

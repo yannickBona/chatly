@@ -18,10 +18,7 @@ export const createPost = async (req: Request, res: Response) => {
     const { body, title } = req.body;
 
     if (!title)
-      return res.status(400).json({
-        ...HTTP_400_BAD_REQUEST,
-        details: "A title for the post must be provided",
-      });
+      return HTTP_400_BAD_REQUEST(res, "A title for the post must be provided");
 
     const newPost = new Post({
       title,

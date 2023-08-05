@@ -24,9 +24,7 @@ export const getRandomPosts = async (req: Request, res: Response) => {
     }).populate("comments");
 
     if (!posts.length)
-      return res
-        .status(400)
-        .json({ ...HTTP_400_BAD_REQUEST, details: "No random posts to get" });
+      return HTTP_400_BAD_REQUEST(res, "No random posts to get");
 
     const count = posts.length;
     const randomPosts: $PublicPost[] = [];
