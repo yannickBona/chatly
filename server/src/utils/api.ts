@@ -1,3 +1,4 @@
+import { Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 /**
@@ -24,6 +25,10 @@ export const HTTP_400_BAD_REQUEST = {
   statusText: "Bad request",
   details: null,
 };
+
+export const HTTP_400_BAD_REQUEST = (res: Response, message: string){
+res.status(400).json({status: 400, statusText: "Bad request", details: message})
+}
 
 export const HTTP_401_UNAUHORIZED = {
   status: 401,

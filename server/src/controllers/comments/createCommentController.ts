@@ -21,10 +21,7 @@ export const createCommentController = async (req: Request, res: Response) => {
     const { postId, comment, parentId } = req.body;
     const profile = req.profile;
 
-    if (!postId)
-      return res
-        .status(400)
-        .json({ ...HTTP_400_BAD_REQUEST, details: "No post ID provided" });
+    if (!postId) return HTTP_400_BAD_REQUEST(res, "No post ID provided");
 
     // Creating new Post
     const newComment = new Comment({
@@ -46,12 +43,10 @@ export const createCommentController = async (req: Request, res: Response) => {
     post.comments.push(newComment._id);
     await post.save({ timestamps: false });
 
-    return res
-      .status(200)
-      .json({
-        ...HTTP_200_OK,
-        data: { comment: await savedComment.getPublicData() },
-      });
+    return res.status(200).json({
+      ...HTTP_200_OK,
+      data: { comment: await savedComment.getPublicData() },
+    });
   } catch (err) {
     return res
       .status(500)

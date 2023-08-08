@@ -16,11 +16,7 @@ export const createLikeOnCommentController = async (
     const { id: commentId } = req.params;
     const profile = req.profile;
 
-    if (!commentId)
-      return res.status(400).json({
-        ...HTTP_400_BAD_REQUEST,
-        details: `Comment ID not provided`,
-      });
+    if (!commentId) return HTTP_400_BAD_REQUEST(res, "Comment ID not provided");
 
     const existLike = await Like.findOne({ commentId, userId: profile });
     if (!!existLike)
