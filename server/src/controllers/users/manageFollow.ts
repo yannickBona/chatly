@@ -12,17 +12,10 @@ export const follow = async (req: Request, res: Response) => {
     const profile = req.profile;
     const { username } = req.body;
 
-    if (!username)
-      return res.status(400).json({
-        ...HTTP_400_BAD_REQUEST,
-        details: "Username not provided",
-      });
+    if (!username) return HTTP_400_BAD_REQUEST(res, "Username not provided");
 
     if (req.profile.username === username)
-      return res.status(400).json({
-        ...HTTP_400_BAD_REQUEST,
-        details: "Can't follow yourself!",
-      });
+      return HTTP_400_BAD_REQUEST(res, "Can't follow yourself!");
 
     // Add the new follower to given username
     const followedUser = await User.findOne({ username });
@@ -35,10 +28,10 @@ export const follow = async (req: Request, res: Response) => {
     if (
       followedUser.followers.some((follower) => follower === profile.username)
     )
-      return res.status(400).json({
-        ...HTTP_400_BAD_REQUEST,
-        details: `Already following ${followedUser.username}`,
-      });
+      return HTTP_400_BAD_REQUEST(
+        res,
+        `Already following ${followedUser.username}`
+      );
 
     followedUser.followers.push(profile.username);
     await followedUser.save();
@@ -69,17 +62,10 @@ export const unfollow = async (req: Request, res: Response) => {
     const profile = req.profile;
     const { username } = req.body;
 
-    if (!username)
-      return res.status(400).json({
-        ...HTTP_400_BAD_REQUEST,
-        details: "Username not provided",
-      });
+    if (!username) return HTTP_400_BAD_REQUEST(res, "Username not provided");
 
     if (req.profile.username === username)
-      return res.status(400).json({
-        ...HTTP_400_BAD_REQUEST,
-        details: "Can't unfollow yourself!",
-      });
+      return HTTP_400_BAD_REQUEST(res, "Can't unfollow yourself!");
 
     // Add the new follower to given username
     const unfollowedUser = await User.findOne({ username });
@@ -94,10 +80,10 @@ export const unfollow = async (req: Request, res: Response) => {
         (follower) => follower === profile.username
       )
     )
-      return res.status(400).json({
-        ...HTTP_400_BAD_REQUEST,
-        details: `Already not following ${unfollowedUser.username}`,
-      });
+      return HTTP_400_BAD_REQUEST(
+        res,
+        "Already not following ${unfollowedUser.username}"
+      );
 
     await User.updateOne(
       { username },
