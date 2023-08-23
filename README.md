@@ -32,7 +32,6 @@ To run the project locally, follow the steps below:
 - Clone the repository: `git clone https://github.com/yannickBona/chatly.git`
 
 - Install the required dependencies:
-  <<<<<<< HEAD
   - For the client, navigate to the /client directory and run `npm install`;
   - For the server, navigate to the /server directory and run `npm install`;
 - Configure the environment variables: Create a .env file in both /server & /client directories and set the necessary variables as displayed in the **.env.sample** file.
@@ -46,4 +45,4 @@ To run the project locally, follow the steps below:
 
 For any inquiries or suggestions, please reach out to _yannick.bonavoglia13@gmail.com_.
 
-# **_Feel free to provide feedback or suggestions!_**
+**_Feel free to provide feedback or suggestions!_**
