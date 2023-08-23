@@ -47,9 +47,3 @@ To run the project locally, follow the steps below:
 For any inquiries or suggestions, please reach out to _yannick.bonavoglia13@gmail.com_.
 
 # **_Feel free to provide feedback or suggestions!_**
-
-## Contact
-
-For any inquiries or suggestions, please reach out to _yannick.bonavoglia13@gmail.com_.
-
-**_Feel free to provide feedback or suggestions!_**
