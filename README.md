@@ -48,16 +48,6 @@ For any inquiries or suggestions, please reach out to _yannick.bonavoglia13@gmai
 
 # **_Feel free to provide feedback or suggestions!_**
 
-    - For the client, navigate to the /client directory and run `npm install`;
-    - For the server, navigate to the /server directory and run `npm install`;
-
-- Configure the environment variables: Create a .env file in both /server & /client directories and set the necessary variables as displayed in the **.env.sample** file.
-
-- Start the development server:
-  - For the frontend, navigate to the /client directory and run npm run dev.
-  - For the backend, navigate to the /server directory and run npm run dev.
-- Access the application by opening http://localhost:<your_port> in your web browser.
-
 ## Contact
 
 For any inquiries or suggestions, please reach out to _yannick.bonavoglia13@gmail.com_.
