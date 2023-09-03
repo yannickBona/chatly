@@ -2,7 +2,6 @@ import { toast, ToastOptions, TypeOptions } from "react-toastify";
 
 const notify = (type: TypeOptions, message: string) => {
   // Default toast options
-  console.log("HERE");
   const options: ToastOptions = {
     position: toast.POSITION.BOTTOM_CENTER,
     hideProgressBar: true,

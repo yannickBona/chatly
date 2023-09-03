@@ -3,13 +3,16 @@ import {
   ReactNode,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 import { getPosts } from "../api/Posts/getPosts";
-import { IPost } from "../types";
-import { IAuthContext, IMainContext, ModalTypes } from "./types";
+import { $ResponseData, IComment, IPost } from "../types";
+import { IAuthContext, IMainContext, IPostContext, ModalTypes } from "./types";
 import { deletePost } from "../api/Posts/deletePost";
 import { AuthContext } from "./AuthContext";
+import { deleteComment } from "../api/Comments/deleteComment";
+import { PostContext } from "./PostContext";
 
 export const MainContext = createContext<any>({});
 
@@ -17,8 +20,10 @@ export function MainContextProvider({ children }: { children: ReactNode }) {
   const [posts, setPosts] = useState<IPost[] | undefined>();
   const [openModal, setOpenModal] = useState<ModalTypes | null>(null);
   const [selectedPost, setSelectedPost] = useState<IPost | null>(null);
+  const [selectedComment, setSelectedComment] = useState<IComment | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const { currentPost, setCurrentPost } = useContext<IPostContext>(PostContext);
   const { setUser } = useContext<IAuthContext>(AuthContext);
 
   useEffect(() => {
@@ -44,6 +49,7 @@ export function MainContextProvider({ children }: { children: ReactNode }) {
     const response = await deletePost(id);
     if (response.status !== 200) return;
 
+    // Decrease users posts number
     setUser((prevUser) => {
       if (!prevUser) return null;
       return { ...prevUser, postsUploaded: prevUser?.postsUploaded - 1 };
@@ -55,15 +61,44 @@ export function MainContextProvider({ children }: { children: ReactNode }) {
     setPosts(newPosts);
   };
 
-  const data: IMainContext = {
-    postList: posts,
-    setPosts,
-    openModal,
-    setOpenModal,
-    selectedPost,
-    setSelectedPost,
-    handlePostDelete,
+  /**
+   * Deletes a comment given its ID
+   * @param id commentId
+   * @returns
+   */
+  const handleCommentDelete = async (id: string) => {
+    if (!id) return;
+
+    const response: $ResponseData = await deleteComment(id);
+    if (response.status !== 200) return;
+
+    setCurrentPost((prevPost) =>
+      prevPost
+        ? {
+            ...prevPost,
+            comments: prevPost.comments.filter(
+              (comment) => response.data.comment._id !== comment._id
+            ),
+          }
+        : null
+    );
   };
+
+  const data: IMainContext = useMemo(
+    () => ({
+      postList: posts,
+      selectedComment,
+      selectedPost,
+      openModal,
+      setPosts,
+      setOpenModal,
+      setSelectedPost,
+      handlePostDelete,
+      handleCommentDelete,
+      setSelectedComment,
+    }),
+    [openModal, posts, selectedPost, selectedComment]
+  );
 
   return (
     <MainContext.Provider value={data}>

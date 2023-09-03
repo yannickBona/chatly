@@ -22,39 +22,18 @@ import { deleteComment } from "../../api/Comments/deleteComment";
 import EditForm from "../../components/EditForm/EditForm";
 import { AuthContext } from "../../contexts/AuthContext";
 import { MainContext } from "../../contexts/MainContext";
+import DeleteCommentModal from "../../components/DeleteCommentModal";
 
 const PostPage: React.FC = () => {
   const { currentPost, setCurrentPost } = useContext<IPostContext>(PostContext);
   const { user } = useContext<IAuthContext>(AuthContext);
-  const { setOpenModal } = useContext<IMainContext>(MainContext);
+  const { setOpenModal, setSelectedComment } =
+    useContext<IMainContext>(MainContext);
   const { execute: manageCommentFn } = useAsyncFn(manageLikeOnComment);
   const { execute: deleteCommentFn } = useAsyncFn(deleteComment);
   const [editMode, setEditMode] = useState(false);
-  const [selectedComment, setSelectedComment] = useState("");
+  const [editingComment, setEditingComment] = useState("");
   const navigate = useNavigate();
-
-  /**
-   * Deletes a comment given its ID
-   * @param id commentId
-   * @returns
-   */
-  const handleCommentDelete = async (id: string) => {
-    if (!id) return;
-
-    const response: $ResponseData = await deleteCommentFn(id);
-    if (response.status !== 200) return;
-
-    setCurrentPost((prevPost) => {
-      return prevPost
-        ? {
-            ...prevPost,
-            comments: prevPost.comments.filter(
-              (comment) => response.data.comment._id !== comment._id
-            ),
-          }
-        : null;
-    });
-  };
 
   const handleLikeOnComment = async (comment: IComment) => {
     if (!comment || !currentPost?.comments) return;
@@ -122,12 +101,12 @@ const PostPage: React.FC = () => {
 
   const handleCommentEdit = (id: string) => {
     setEditMode((prev) => !prev);
-    setSelectedComment(id);
+    setEditingComment(id);
   };
 
   return currentPost ? (
     <styled.Container>
-      <Post onDelete={() => null} {...currentPost} key={currentPost?._id} />
+      <Post {...currentPost} key={currentPost?._id} />
       <styled.CommentsSection>
         <CommentForm />
         {currentPost.comments.length === 0 && (
@@ -152,7 +131,7 @@ const PostPage: React.FC = () => {
                 </span>
               </div>
 
-              {editMode && selectedComment === comment._id ? (
+              {editMode && editingComment === comment._id ? (
                 <EditForm
                   body={comment.content}
                   setEditMode={setEditMode}
@@ -184,9 +163,10 @@ const PostPage: React.FC = () => {
                       onClick={() => handleCommentEdit(comment._id)}
                     />
                     <AiOutlineDelete
-                      onClick={() =>
-                        handleCommentDelete(comment._id.toString())
-                      }
+                      onClick={() => {
+                        setSelectedComment(comment);
+                        setOpenModal("delete-comment");
+                      }}
                     />
                   </>
                 )}
@@ -200,6 +180,7 @@ const PostPage: React.FC = () => {
       <span onClick={() => navigate(-1)} className="back-button">
         ⬅️
       </span>
+      <DeleteCommentModal />
     </styled.Container>
   ) : (
     <div>Post not found</div>
