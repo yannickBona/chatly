@@ -6,6 +6,7 @@ import {
   HTTP_200_OK,
   HTTP_500_INTERNAL_SERVER_ERROR,
   createAccessToken,
+  setRefreshTokenCookie,
 } from "../../utils/api";
 
 /**
@@ -57,6 +58,8 @@ export const loginUser = async (req: Request, res: Response) => {
     const publicUser = await user.getPublicData();
 
     const responseBody = { user: { ...publicUser }, token };
+
+    setRefreshTokenCookie(res, refreshToken);
 
     return res.status(200).json({
       ...HTTP_200_OK,

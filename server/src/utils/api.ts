@@ -7,7 +7,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
  * @returns the token
  */
 export function createAccessToken(user: JwtPayload) {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET!);
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET!, { expiresIn: "7d" });
 }
 
 /**
@@ -49,3 +49,14 @@ export const HTTP_500_INTERNAL_SERVER_ERROR = {
   statusText: "Internal server error",
   details: null,
 };
+
+const _30_DAYS_MLS = 30 * 24 * 60 * 60 * 1000;
+
+export const setRefreshTokenCookie = (res: Response, refreshToken: string) =>
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    maxAge: _30_DAYS_MLS,
+    secure: true,
+    sameSite: "none", // Change in production  using .env
+    // domain: ".app.localhost", // to change in production using .env
+  });

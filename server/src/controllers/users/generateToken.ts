@@ -15,7 +15,7 @@ import {
  */
 export const generateToken = async (req: Request, res: Response) => {
   try {
-    const { refreshToken } = req.body;
+    const { refreshToken } = req.cookies;
 
     if (!refreshToken)
       return HTTP_400_BAD_REQUEST(res, "Missing refresh token");

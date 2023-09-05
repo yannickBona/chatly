@@ -1,7 +1,11 @@
 import { User } from "../../database/models";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import { HTTP_200_OK, createAccessToken } from "../../utils/api";
+import {
+  HTTP_200_OK,
+  createAccessToken,
+  setRefreshTokenCookie,
+} from "../../utils/api";
 import jwt from "jsonwebtoken";
 
 /**
@@ -40,6 +44,8 @@ export const createUser = async (req: Request, res: Response) => {
 
     const token = createAccessToken(userData);
     const refreshToken = jwt.sign(userData, process.env.REFRESH_TOKEN_SECRET!);
+
+    setRefreshTokenCookie(res, refreshToken);
 
     // Create a new user
     const newUser = new User({

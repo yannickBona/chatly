@@ -68,6 +68,7 @@ const LoginForm: React.FC = () => {
           setFormData({ username: "", password: "", isLogin: true });
           setUser(response.data.user);
           localStorage.setItem("token", response.data.token);
+
           navigate("/");
           break;
         case 400:

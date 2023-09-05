@@ -27,7 +27,7 @@ userRoutes.post("/create", controller.createUser);
 userRoutes.post("/login", controller.loginUser);
 
 // Creates a new token from a refresh token
-userRoutes.post("/token", requiresAuth, controller.generateToken);
+userRoutes.post("/token", controller.generateToken);
 
 // Follow / Unfollow a user
 userRoutes.post("/follow", requiresAuth, controller.follow);
