@@ -18,7 +18,6 @@ import {
   AiFillHeart,
 } from "react-icons/ai";
 import { useAsyncFn } from "../../hooks/useAsync";
-import { useUser } from "../../hooks/useUser";
 import { deleteComment } from "../../api/Comments/deleteComment";
 import EditForm from "../../components/EditForm/EditForm";
 import { AuthContext } from "../../contexts/AuthContext";

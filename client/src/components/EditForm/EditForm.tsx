@@ -79,6 +79,7 @@ const EditForm: React.FC<IEditForm> = ({
       if (response.status !== 200) return;
 
       const updatedPost = response.data.post;
+      console.log(updatedPost, response);
 
       setCurrentPost((prevPost) => {
         return prevPost
@@ -96,6 +97,7 @@ const EditForm: React.FC<IEditForm> = ({
   return (
     <styled.EditForm onSubmit={handleSubmit} isComment>
       <textarea
+        autoFocus
         placeholder="Text (optional)"
         ref={textareaRef}
         onChange={(e) => setContent(e.currentTarget.value)}

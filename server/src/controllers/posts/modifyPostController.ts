@@ -17,20 +17,24 @@ export const modifyPost = async (req: Request, res: Response) => {
         .status(400)
         .json({ ...HTTP_400_BAD_REQUEST, details: "No post ID was provided" });
 
-    const currentPost = await Post.findByIdAndUpdate(postId, {
-      body: content,
-    });
+    const currentPost = await Post.findByIdAndUpdate(
+      postId,
+      {
+        body: content,
+      },
+      { new: true }
+    );
+
     if (!currentPost)
       return res.status(400).json({
         ...HTTP_400_BAD_REQUEST,
         details: `Post ${postId} was not found`,
       });
 
-    const updatedPost = await currentPost.save();
-    return res
-      .status(200)
-      .json({ ...HTTP_200_OK, data: { post: updatedPost } });
+    const publicPost = await currentPost.getPublicData();
+    return res.status(200).json({ ...HTTP_200_OK, data: { post: publicPost } });
   } catch (err) {
+    console.log(err);
     return res
       .status(500)
       .json({ ...HTTP_500_INTERNAL_SERVER_ERROR, details: err });
