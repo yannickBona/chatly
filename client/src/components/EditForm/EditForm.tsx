@@ -32,6 +32,8 @@ const EditForm: React.FC<IEditForm> = ({
     const { current: textArea } = textareaRef;
     textArea.style.height = "auto";
     textArea.style.height = `${textArea.scrollHeight}px`;
+    textArea.focus();
+    textArea.value = content; // this makes the cursor go to the end of the line
   }, [content]);
 
   /**
@@ -97,11 +99,9 @@ const EditForm: React.FC<IEditForm> = ({
   return (
     <styled.EditForm onSubmit={handleSubmit} isComment>
       <textarea
-        autoFocus
         placeholder="Text (optional)"
         ref={textareaRef}
         onChange={(e) => setContent(e.currentTarget.value)}
-        value={content}
       />
 
       <div className="button-container">
