@@ -64,14 +64,14 @@ const EditForm: React.FC<IEditForm> = ({
       // Update the comments context
       currentPost.comments[oldCommentIdx] = newComment;
       const updatedComments = currentPost.comments;
-      setCurrentPost((prevPost) => {
-        return prevPost
+      setCurrentPost((prevPost) =>
+        prevPost
           ? {
               ...prevPost,
               comments: updatedComments,
             }
-          : null;
-      });
+          : null
+      );
       setEditMode(false);
       return;
     }
@@ -81,7 +81,6 @@ const EditForm: React.FC<IEditForm> = ({
       if (response.status !== 200) return;
 
       const updatedPost = response.data.post;
-      console.log(updatedPost, response);
 
       setCurrentPost((prevPost) => {
         return prevPost

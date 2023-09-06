@@ -20,17 +20,25 @@ export const editCommentController = async (req: Request, res: Response) => {
     const { id, content } = req.body;
 
     // modifing comment
-    const comment = await Comment.findById(id);
+    const comment = await Comment.findByIdAndUpdate(
+      id,
+      {
+        content: content,
+      },
+      { new: true }
+    );
+
     if (!comment)
       return res.status(404).json({
         ...HTTP_404_NOT_FOUND,
         details: "Comment not found",
       });
 
-    comment.content = content;
-    await comment.save();
+    const publicComment = await comment.getPublicData();
 
-    return res.status(200).json({ ...HTTP_200_OK, data: { comment } });
+    return res
+      .status(200)
+      .json({ ...HTTP_200_OK, data: { comment: publicComment } });
   } catch (err) {
     return res
       .status(500)
