@@ -10,6 +10,7 @@ const RequireAuth = () => {
   const location = useLocation();
 
   const isAuthorized = !!user;
+  console.log(isAuthorized);
 
   return isAuthorized ? (
     <PostListContextProvider>

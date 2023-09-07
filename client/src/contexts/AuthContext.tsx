@@ -7,6 +7,7 @@ export const AuthContext = createContext<any>({});
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<TUser | null>(null);
+  const [loadingUser, setLoadingUser] = useState(false);
 
   const contextData: IAuthContext = { user, setUser };
   const navigate = useNavigate();
@@ -21,7 +22,10 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     (async () => {
       if (!user && token) {
+        setLoadingUser(true);
         const sessionResponse = await checkSession();
+        setLoadingUser(false);
+
         if (sessionResponse.status !== 200) {
           setUser(null);
           return;
@@ -34,6 +38,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={contextData}>
+      {loadingUser ? <h1>Loading</h1> : children}
+    </AuthContext.Provider>
   );
 };
