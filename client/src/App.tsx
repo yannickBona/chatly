@@ -9,6 +9,7 @@ import { AuthContextProvider } from "./contexts/AuthContext";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
 import Explore from "./pages/Explore/Explore";
 import Profile from "./pages/Profile/Profile";
+import Modal from "./components/Modal";
 
 function App() {
   return (
