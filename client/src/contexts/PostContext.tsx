@@ -21,7 +21,13 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
     loading,
     error,
     value: response,
-  } = useAsync(() => getPost(id!), [id]);
+  } = useAsync(() => {
+    if (!id) {
+      // Return a resolved promise with no data if 'id' is undefined
+      return Promise.resolve({ data: null });
+    }
+    return getPost(id);
+  }, [id]);
 
   const post: IPost | null = response?.data?.post;
 

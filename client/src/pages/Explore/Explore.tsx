@@ -55,7 +55,6 @@ const Explore = () => {
                 <Post
                   setSuggestedPosts={setPostList}
                   suggestedPosts={postList}
-                  onDelete={() => null}
                   {...post}
                 />
               </Link>

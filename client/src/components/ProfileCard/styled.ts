@@ -66,8 +66,8 @@ const Container = styled.div`
     color: ${colors.neutral};
     transition: all 0.2s;
 
-    :hover {
-      font-weight: bold;
+    &:hover {
+      color: ${colors.black};
     }
 
     &.filled {

@@ -5,7 +5,6 @@ import { useUser } from "../../hooks/useUser";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { follow, unfollow } from "../../api/User/manageFollow";
 import { $ResponseData } from "../../types";
-import { TUser } from "../../contexts/types";
 
 const ProfileCard: React.FC<{ username: string }> = ({ username }) => {
   const { execute: manageFollow } = useAsyncFn(follow);
@@ -43,6 +42,7 @@ const ProfileCard: React.FC<{ username: string }> = ({ username }) => {
         const updatedFollowed = prevUser.followed.filter(
           (user) => user !== username
         );
+
         return {
           ...prevUser,
           followed: updatedFollowed,
