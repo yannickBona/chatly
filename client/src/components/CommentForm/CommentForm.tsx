@@ -3,7 +3,7 @@ import styled from "./styled";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { createComment } from "../../api/Comments/createComment";
 import { useParams } from "react-router-dom";
-import { PostContext } from "../../contexts/PostContext";
+import { SinglePostContext } from "../../contexts/SinglePostContext";
 import { IPostContext, IMainContext } from "../../contexts/types";
 import { $ResponseData, IPost } from "../../types";
 import { MainContext } from "../../contexts/MainContext";
@@ -12,7 +12,8 @@ const CommentForm = () => {
   const [comment, setComment] = useState("");
   const { execute: createCommentFn } = useAsyncFn(createComment);
   const { id: postId } = useParams();
-  const { setCurrentPost, currentPost } = useContext<IPostContext>(PostContext);
+  const { setCurrentPost, currentPost } =
+    useContext<IPostContext>(SinglePostContext);
   const { postList, setPosts } = useContext<IMainContext>(MainContext);
 
   /**

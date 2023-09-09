@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommentForm from "../../components/CommentForm/CommentForm";
 import Post from "../../components/Post/Post";
-import { PostContext } from "../../contexts/PostContext";
+import { SinglePostContext } from "../../contexts/SinglePostContext";
 import { IAuthContext, IMainContext, IPostContext } from "../../contexts/types";
 import { manageLikeOnComment } from "../../api/likes/manageLikeOnComment";
 
@@ -25,7 +25,8 @@ import { MainContext } from "../../contexts/MainContext";
 import DeleteCommentModal from "../../components/DeleteCommentModal";
 
 const PostPage: React.FC = () => {
-  const { currentPost, setCurrentPost } = useContext<IPostContext>(PostContext);
+  const { currentPost, setCurrentPost } =
+    useContext<IPostContext>(SinglePostContext);
   const { user } = useContext<IAuthContext>(AuthContext);
   const { setOpenModal, setSelectedComment } =
     useContext<IMainContext>(MainContext);

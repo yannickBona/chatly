@@ -12,7 +12,7 @@ import styled from "./styled";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { manageLikeOnPost } from "../../api/likes/manageLikeOnPost";
 import { IPostContext, IMainContext } from "../../contexts/types";
-import { PostContext } from "../../contexts/PostContext";
+import { SinglePostContext } from "../../contexts/SinglePostContext";
 import { useUser } from "../../hooks/useUser";
 import { formatDate } from "../../utils/dateFormat";
 import EditForm from "../EditForm/EditForm";
@@ -34,7 +34,7 @@ const Post: React.FC<IPostComponent> = ({
   /**
    * Creates a like on the post
    */
-  const { currentPost } = useContext<IPostContext>(PostContext);
+  const { currentPost } = useContext<IPostContext>(SinglePostContext);
   const { setPosts, postList, setOpenModal, setSelectedPost } =
     useContext<IMainContext>(MainContext);
   const [isLiked, setisLiked] = useState(false);
@@ -176,12 +176,12 @@ const Post: React.FC<IPostComponent> = ({
           <AiOutlineComment onClick={() => null} /> {comments?.length}
         </span>
 
-        {isOwner &&
-          (isHomePage ? (
+        {isOwner && (
+          <>
             <AiOutlineDelete onClick={handlePostDelete} />
-          ) : (
             <AiOutlineEdit onClick={handleEditMode} />
-          ))}
+          </>
+        )}
       </styled.PostActionsContainer>
     </styled.Container>
   );

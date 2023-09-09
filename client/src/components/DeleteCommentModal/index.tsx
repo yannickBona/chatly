@@ -4,12 +4,12 @@ import { IMainContext, IPostContext } from "../../contexts/types";
 import { MainContext } from "../../contexts/MainContext";
 import { notifySuccess, notifyError } from "../../utils/toast";
 import { toast } from "react-toastify";
-import { PostContext } from "../../contexts/PostContext";
+import { SinglePostContext } from "../../contexts/SinglePostContext";
 
 const DeleteCommentModal: React.FC = () => {
   const { openModal, setOpenModal, handleCommentDelete, selectedComment } =
     useContext<IMainContext>(MainContext);
-  const { currentPost } = useContext<IPostContext>(PostContext);
+  const { currentPost } = useContext<IPostContext>(SinglePostContext);
 
   const handleConfirm = async () => {
     if (!selectedComment || !currentPost)

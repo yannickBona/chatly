@@ -2,7 +2,7 @@ import "./Globals.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Error404 from "./pages/Error/Error404";
 import Home from "./pages/Home/Home";
-import { PostProvider } from "./contexts/PostContext";
+import { SinglePostProvider } from "./contexts/SinglePostContext";
 import PostPage from "./pages/PostPage/PostPage";
 import Login from "./pages/Login/Login";
 import { AuthContextProvider } from "./contexts/AuthContext";

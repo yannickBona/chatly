@@ -79,7 +79,7 @@ const Profile = () => {
       <div className="post-list">
         {ownerPosts.map((post) => (
           <Link to={`/post/${post._id}`} key={post._id}>
-            <Post {...post} onDelete={(e) => handleDelete(e, post._id)} />
+            <Post {...post} />
           </Link>
         ))}
       </div>

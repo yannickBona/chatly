@@ -11,9 +11,9 @@ import { useParams } from "react-router-dom";
 import { IPost } from "../types";
 import { IPostContext } from "./types";
 
-export const PostContext = createContext<any>({});
+export const SinglePostContext = createContext<any>({});
 
-export const PostProvider = ({ children }: { children: ReactNode }) => {
+export const SinglePostProvider = ({ children }: { children: ReactNode }) => {
   const [currentPost, setCurrentPost] = useState<IPost | null>(null);
   const { id } = useParams();
 
@@ -40,8 +40,8 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
   const contextData: IPostContext = { currentPost, setCurrentPost };
 
   return (
-    <PostContext.Provider value={contextData}>
+    <SinglePostContext.Provider value={contextData}>
       {loading ? <h1>Loading</h1> : error ? <h1>error</h1> : children}
-    </PostContext.Provider>
+    </SinglePostContext.Provider>
   );
 };
