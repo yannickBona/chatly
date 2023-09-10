@@ -51,7 +51,7 @@ const CommentForm = () => {
         value={comment}
         placeholder="What are your thoughts?"
       ></textarea>
-      <button>Comment</button>
+      <button disabled={!comment}>Comment</button>
     </styled.Container>
   );
 };

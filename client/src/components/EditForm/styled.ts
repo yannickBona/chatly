@@ -30,6 +30,7 @@ const EditForm = styled.form<{ isComment: boolean }>`
     display: flex;
     justify-content: flex-end;
     > button {
+      cursor: pointer;
       padding: 0 1rem;
       background: ${colors.white};
       color: #05bfdb;
