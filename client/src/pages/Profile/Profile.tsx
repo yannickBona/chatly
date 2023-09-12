@@ -111,7 +111,7 @@ const Profile = () => {
           <p>No posts yet...</p>
         )}
       </div>
-      <LogoutButton />
+      {isProfileOwner && <LogoutButton />}
 
       {showBackButton && (
         <span onClick={() => navigate(-1)} className="back-button">

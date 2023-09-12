@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import { colors } from "../../themes/tokens";
+import { colors, shadows } from "../../themes/tokens";
 
 export const StyledSearchbar = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
+  position: relative;
 
   input[type="search"] {
     border: 1px solid ${colors.borderColor};
@@ -18,6 +19,28 @@ export const StyledSearchbar = styled.div`
 
     &:focus {
       outline: 1px solid ${colors.borderColorDark};
+    }
+  }
+
+  .search-results {
+    position: absolute;
+    top: 100%;
+    margin-top: 0.25rem;
+    right: 4rem;
+    width: 60%;
+    max-height: 40rem;
+    overflow-y: auto;
+    box-shadow: ${shadows.md};
+    background: ${colors.white};
+    border-radius: 0.25rem;
+
+    p {
+      padding: 1rem;
+      font-style: italic;
+      font-size: 1rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
     }
   }
 `;
