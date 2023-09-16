@@ -5,7 +5,7 @@ import styled from "./styled";
 import { AiOutlineUser } from "react-icons/ai";
 import { MainContext } from "../../contexts/MainContext";
 import { IPost } from "../../types";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Post from "../../components/Post/Post";
 import { deletePost } from "../../api/Posts/deletePost";
 import LogoutButton from "../../components/LogoutButton/LogoutButton";
@@ -15,10 +15,14 @@ const Profile = () => {
   const { user } = useContext<IAuthContext>(AuthContext);
   const { postList } = useContext<IMainContext>(MainContext);
 
-  const ownerPosts =
-    postList?.filter((post) => post.owner === user?.username) ?? [];
+  const { username } = useParams();
+  // TODO: set profile via API
+  const profile = user;
 
-  return (
+  const ownerPosts =
+    postList?.filter((post) => post.owner === profile?.username) ?? [];
+
+  return profile ? (
     <styled.Container>
       <h1>Profile Overview | {user?.username}</h1>
       <div className="profile-info">
@@ -60,6 +64,8 @@ const Profile = () => {
       </div>
       <LogoutButton />
     </styled.Container>
+  ) : (
+    <p>Profiile not found...</p>
   );
 };
 
