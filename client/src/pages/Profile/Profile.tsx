@@ -14,34 +14,9 @@ import { useUser } from "../../hooks/useUser";
 const Profile = () => {
   const { user } = useContext<IAuthContext>(AuthContext);
   const { postList } = useContext<IMainContext>(MainContext);
-  const [ownerPosts, setOwnerPosts] = useState<IPost[]>([]);
-  const { setUser } = useUser();
 
-  useEffect(() => {
-    const ownerPosts = postList?.filter(
-      (post) => post.owner === user?.username
-    );
-    setOwnerPosts(ownerPosts ?? []);
-  }, []);
-
-  const handleDelete = async (
-    e: React.MouseEvent<SVGElement, MouseEvent>,
-    id: string
-  ) => {
-    e.preventDefault();
-    const response = await deletePost(id);
-    if (response.status !== 200) return;
-
-    setUser((prevUser) => {
-      if (!prevUser) return null;
-      return { ...prevUser, postsUploaded: prevUser?.postsUploaded - 1 };
-    });
-
-    const newPosts = ownerPosts?.filter(
-      (post) => post._id !== response.data.post._id
-    );
-    setOwnerPosts(newPosts);
-  };
+  const ownerPosts =
+    postList?.filter((post) => post.owner === user?.username) ?? [];
 
   return (
     <styled.Container>
