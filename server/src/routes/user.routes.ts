@@ -4,11 +4,11 @@ import { requiresAuth } from "../middlewares/requiresAuth";
 
 const userRoutes = Router();
 
-// Creates a new user
-userRoutes.post("/create", controller.createUser);
+// Gets and Existing user
+userRoutes.get("/:username", controller.getUser);
 
-// Logs an existing user in the application
-userRoutes.post("/login", controller.loginUser);
+// Checks if the user is logged in
+userRoutes.get("/session", requiresAuth, controller.session);
 
 /**
  * Logs out an existing user from the application
@@ -16,14 +16,17 @@ userRoutes.post("/login", controller.loginUser);
  * */
 userRoutes.get("/logout", requiresAuth, controller.logoutUser);
 
-// Checks if the user is logged in
-userRoutes.get("/session", requiresAuth, controller.session);
+// Gets a list of suggested users to follow
+userRoutes.get("/suggested", requiresAuth, controller.getSuggestedUsers);
+
+// Creates a new user
+userRoutes.post("/create", controller.createUser);
+
+// Logs an existing user in the application
+userRoutes.post("/login", controller.loginUser);
 
 // Creates a new token from a refresh token
 userRoutes.post("/token", requiresAuth, controller.generateToken);
-
-// Gets a list of suggested users to follow
-userRoutes.get("/suggested", requiresAuth, controller.getSuggestedUsers);
 
 // Follow / Unfollow a user
 userRoutes.post("/follow", requiresAuth, controller.follow);

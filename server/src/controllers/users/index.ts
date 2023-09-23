@@ -5,6 +5,7 @@ import { generateToken } from "./generateToken";
 import { getSuggestedUsers } from "./getSuggestedUsers";
 import { logoutUser } from "./logoutUser";
 import { follow, unfollow } from "./manageFollow";
+import { getUser } from "./getUser";
 
 export default {
   createUser,
@@ -15,4 +16,5 @@ export default {
   getSuggestedUsers,
   follow,
   unfollow,
+  getUser,
 };

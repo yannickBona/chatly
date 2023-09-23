@@ -14,37 +14,37 @@ export function createAccessToken(user: JwtPayload) {
  */
 
 export const HTTP_200_OK = {
-  status: 200,
+  statusCode: 200,
   statusText: "Ok",
   data: null,
 };
 
 export const HTTP_400_BAD_REQUEST = {
-  status: 400,
+  statusCode: 400,
   statusText: "Bad request",
   details: null,
 };
 
 export const HTTP_401_UNAUHORIZED = {
-  status: 401,
+  statusCode: 401,
   statusText: "Unauthorized",
   details: null,
 };
 
 export const HTTP_403_FORBIDDEN = {
-  status: 403,
+  statusCode: 403,
   statusText: "Forbidden",
   details: null,
 };
 
 export const HTTP_404_NOT_FOUND = {
-  status: 404,
+  statusCode: 404,
   statusText: "Not found",
   details: null,
 };
 
 export const HTTP_500_INTERNAL_SERVER_ERROR = {
-  status: 500,
+  statusCode: 500,
   statusText: "Internal server error",
   details: null,
 };
