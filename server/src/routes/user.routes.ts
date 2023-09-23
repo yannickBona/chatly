@@ -5,7 +5,7 @@ import { requiresAuth } from "../middlewares/requiresAuth";
 const userRoutes = Router();
 
 // Gets and Existing user
-userRoutes.get("/:username", controller.getUser);
+userRoutes.get("/profile/:username", controller.getUser);
 
 // Checks if the user is logged in
 userRoutes.get("/session", requiresAuth, controller.session);

@@ -19,7 +19,7 @@ export const loginUser = async (req: Request, res: Response) => {
     const { username, password } = req.body;
 
     if (!username || !password)
-      return res.status(400).send({
+      return res.status(400).json({
         status: 400,
         statusText: "Bad Request",
         details: "No username or password provided",
@@ -27,7 +27,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
     const user = await User.findOne({ username });
     if (!user)
-      return res.status(404).send({
+      return res.status(404).json({
         status: 404,
         statusText: "Not found",
         details: "User does not exist",
