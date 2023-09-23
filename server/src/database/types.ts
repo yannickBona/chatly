@@ -48,5 +48,5 @@ export interface $UserSchemaInterface {
   followers: string[];
   followed: string[];
   refreshToken: string | null;
-  getPublicData: () => Promise<$PublicUser>;
+  getPublicData: (showRefreshToken?: boolean) => Promise<$PublicUser>;
 }

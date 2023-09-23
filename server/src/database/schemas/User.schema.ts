@@ -17,13 +17,17 @@ const UserSchema = new Schema<$UserSchemaInterface>(
   }
 );
 
-UserSchema.methods.getPublicData = async function (this: $UserSchemaInterface) {
+UserSchema.methods.getPublicData = async function (
+  this: $UserSchemaInterface,
+  showRefreshToken: boolean = true
+) {
   const userPostsCount = await Post.find({ user: this._id }).count();
+
   return {
     username: this.username,
     name: this.name,
     lastName: this.lastName,
-    refreshToken: this.refreshToken,
+    refreshToken: showRefreshToken ? this.refreshToken : null,
     followed: this.followed,
     followers: this.followers,
     postsUploaded: userPostsCount,

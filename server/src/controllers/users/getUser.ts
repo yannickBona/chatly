@@ -18,7 +18,7 @@ export const getUser = async (req: Request, res: Response) => {
         .status(404)
         .json({ ...HTTP_404_NOT_FOUND, details: `User ${username} not found` });
 
-    const publicUser = await user.getPublicData();
+    const publicUser = await user.getPublicData(false);
 
     return res.status(200).json({ ...HTTP_200_OK, data: publicUser });
   } catch (err) {
