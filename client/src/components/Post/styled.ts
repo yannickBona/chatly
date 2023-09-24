@@ -35,6 +35,9 @@ const Container = styled.div`
 
     padding: 1rem;
     font-size: 1.5rem;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
 
     svg {
       position: absolute;
@@ -50,6 +53,10 @@ const Container = styled.div`
       left: 50%;
       transform: translate(-50%, -50%);
     }
+
+    &:has(a):hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
   }
 
   svg {
@@ -62,6 +69,19 @@ const Container = styled.div`
 
   :hover {
     outline: 1px solid ${colors.neutral};
+  }
+
+  .profile-link {
+    text-decoration: none;
+    color: ${colors.black};
+
+    :hover {
+      text-decoration: underline;
+    }
+  }
+
+  .profile-link:has(i):hover {
+    color: red;
   }
 `;
 

@@ -42,11 +42,7 @@ const Profile = () => {
 
     if (postsData.status === 200 && postsData.data)
       setProfilePosts(postsData.data.posts);
-
-    console.log("HERE");
   };
-
-  console.log("HERE1", profilePosts, profile);
 
   const ownerPosts =
     profilePosts.filter((post) => post.owner === username) ?? [];

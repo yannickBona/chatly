@@ -16,7 +16,7 @@ import { SinglePostContext } from "../../contexts/SinglePostContext";
 import { useUser } from "../../hooks/useUser";
 import { formatDate } from "../../utils/dateFormat";
 import EditForm from "../EditForm/EditForm";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { MainContext } from "../../contexts/MainContext";
 
 const Post: React.FC<IPostComponent> = ({
@@ -146,9 +146,26 @@ const Post: React.FC<IPostComponent> = ({
       <div className="owner">
         <span className="comment__user-avatar">
           <AiOutlineUser />
+
+          {owner ? (
+            <Link to={`/profile/${owner}`}>
+              <AiOutlineUser />
+            </Link>
+          ) : (
+            <AiOutlineUser />
+          )}
         </span>
         <i>
-          Posted By <b>{owner ?? "Anonymous User"}</b>
+          Posted By{" "}
+          <b>
+            {owner ? (
+              <Link className="profile-link" to={`/profile/${owner}`}>
+                {owner}
+              </Link>
+            ) : (
+              "Anonymous User"
+            )}
+          </b>
           {isOwner && " (you)"}
         </i>
         · <span className="post-date">{formatDate(postedDate)}</span>
