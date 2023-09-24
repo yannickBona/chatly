@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CommentForm from "../../components/CommentForm/CommentForm";
 import Post from "../../components/Post/Post";
 import { SinglePostContext } from "../../contexts/SinglePostContext";
@@ -118,16 +118,29 @@ const PostPage: React.FC = () => {
             <div className="comment" key={comment._id}>
               <div>
                 <span className="comment__user-avatar">
-                  <AiOutlineUser />
+                  {comment.owner ? (
+                    <Link to={`/profile/${comment.owner}`}>
+                      <AiOutlineUser />
+                    </Link>
+                  ) : (
+                    <AiOutlineUser />
+                  )}
                 </span>
                 <b>
-                  {comment.owner ?? "Anonymous User"}{" "}
-                  {comment.owner === user?.username
-                    ? " (you)"
-                    : comment.owner === currentPost.owner && "(Owner)"}
-                </b>{" "}
-                ·{" "}
+                  {comment.owner ? (
+                    <Link
+                      className="profile-link"
+                      to={`/profile/${comment.owner}`}
+                    >
+                      {comment.owner}
+                    </Link>
+                  ) : (
+                    "Anonymous User"
+                  )}
+                </b>
+                {comment.owner === currentPost?.owner && " (Post Owner)"}
                 <span className="comment__date">
+                  {" "}
                   {formatDate(comment.createdAt.toString())}
                 </span>
               </div>

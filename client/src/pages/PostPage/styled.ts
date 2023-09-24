@@ -71,12 +71,25 @@ const CommentsSection = styled.div`
         left: 50%;
         transform: translate(-50%, -50%);
       }
+
+      &:has(a):hover svg {
+        background: rgba(0, 0, 0, 0.05);
+      }
     }
 
     p {
       color: ${colors.neutral};
       line-height: 1.5rem;
       padding: 0.5rem 0;
+    }
+  }
+
+  .profile-link {
+    text-decoration: none;
+    color: ${colors.black};
+
+    :hover {
+      text-decoration: underline;
     }
   }
 

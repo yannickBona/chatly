@@ -5,6 +5,7 @@ import { useUser } from "../../hooks/useUser";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { follow, unfollow } from "../../api/User/manageFollow";
 import { $ResponseData } from "../../types";
+import { Link } from "react-router-dom";
 
 const ProfileCard: React.FC<{ username: string }> = ({ username }) => {
   const { execute: manageFollow } = useAsyncFn(follow);
@@ -16,7 +17,8 @@ const ProfileCard: React.FC<{ username: string }> = ({ username }) => {
     user?.followed.some((user) => user === username)
   );
 
-  const handleFollow = async () => {
+  const handleFollow = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     if (!isFollowing) {
       const response: $ResponseData = await manageFollow(username);
       if (response.status !== 200) return;
@@ -53,15 +55,17 @@ const ProfileCard: React.FC<{ username: string }> = ({ username }) => {
   };
 
   return (
-    <styled.Container>
-      <span className="avatar">
-        <AiOutlineUser />
-      </span>
-      <p>{username}</p>
-      <button className={isFollowing ? "filled" : ""} onClick={handleFollow}>
-        {isFollowing ? "Already following" : "Follow"}
-      </button>
-    </styled.Container>
+    <Link to={`/profile/${username}`}>
+      <styled.Container>
+        <span className="avatar">
+          <AiOutlineUser />
+        </span>
+        <p>{username}</p>
+        <button className={isFollowing ? "filled" : ""} onClick={handleFollow}>
+          {isFollowing ? "Already following" : "Follow"}
+        </button>
+      </styled.Container>
+    </Link>
   );
 };
 

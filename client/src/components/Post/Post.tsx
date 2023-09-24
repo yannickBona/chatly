@@ -145,8 +145,6 @@ const Post: React.FC<IPostComponent> = ({
     <styled.Container key={`post-${_id}`}>
       <div className="owner">
         <span className="comment__user-avatar">
-          <AiOutlineUser />
-
           {owner ? (
             <Link to={`/profile/${owner}`}>
               <AiOutlineUser />
