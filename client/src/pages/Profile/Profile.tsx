@@ -1,66 +1,107 @@
-import React, { useContext, useEffect, useState } from "react";
-import { IAuthContext, IMainContext } from "../../contexts/types";
-import { AuthContext } from "../../contexts/AuthContext";
+import { useContext, useEffect, useState } from "react";
+import { IMainContext, TUser } from "../../contexts/types";
 import styled from "./styled";
 import { AiOutlineUser } from "react-icons/ai";
 import { MainContext } from "../../contexts/MainContext";
-import { IPost } from "../../types";
 import { Link, useParams } from "react-router-dom";
 import Post from "../../components/Post/Post";
-import { deletePost } from "../../api/Posts/deletePost";
 import LogoutButton from "../../components/LogoutButton/LogoutButton";
+import { getUser } from "../../api/User/getUser";
 import { useUser } from "../../hooks/useUser";
+import { IPost } from "../../types";
+import { getPosts } from "../../api/Posts/getPosts";
 
 const Profile = () => {
-  const { user } = useContext<IAuthContext>(AuthContext);
+  const [profile, setProfile] = useState<null | TUser>(null);
+  const [profilePosts, setProfilePosts] = useState<IPost[]>([]);
   const { postList } = useContext<IMainContext>(MainContext);
-
+  const { user } = useUser();
   const { username } = useParams();
-  // TODO: set profile via API
-  const profile = user;
+  const isProfileOwner = user ? username === user.username : false;
+
+  useEffect(() => {
+    initUserProfile();
+  }, [username]);
+
+  const initUserProfile = async () => {
+    if (!username) return;
+
+    if (isProfileOwner) {
+      setProfile(user);
+      setProfilePosts(postList ?? []);
+      return;
+    }
+
+    const [profileData, postsData] = await Promise.all([
+      getUser(username),
+      getPosts(username),
+    ]);
+
+    if (profileData.status === 200 && profileData.data)
+      setProfile(profileData.data);
+
+    if (postsData.status === 200 && postsData.data)
+      setProfilePosts(postsData.data.posts);
+
+    console.log("HERE");
+  };
+
+  console.log("HERE1", profilePosts, profile);
 
   const ownerPosts =
-    postList?.filter((post) => post.owner === profile?.username) ?? [];
+    profilePosts.filter((post) => post.owner === username) ?? [];
 
   return profile ? (
     <styled.Container>
-      <h1>Profile Overview | {user?.username}</h1>
+      <h1>Profile Overview | {profile.username}</h1>
       <div className="profile-info">
         <span className="avatar">
           <AiOutlineUser />
         </span>
-        <h2>@{user?.username}</h2>
+        <h2>@{profile.username}</h2>
         <section className="profile-details">
           <h3>
-            <span>{user?.postsUploaded}</span>
+            <span>{profile.postsUploaded}</span>
             <br />
             Posts
           </h3>
           <h3>
-            <span>{user?.followers.length}</span> <br />
+            <span>{profile?.followers.length}</span> <br />
             Followers
           </h3>
           <h3>
-            <span>{user?.followed.length}</span>
+            <span>{profile.followed.length}</span>
             <br />
             Followed
           </h3>
         </section>
-        <section className="profile-actions">
-          <button>Modify Profile</button>
-          <Link to="/explore">Add friends</Link>
-        </section>
+        {isProfileOwner && (
+          <section className="profile-actions">
+            <button>Modify Profile</button>
+            <Link to="/explore">Add friends</Link>
+          </section>
+        )}
       </div>
 
       <h3>
-        Your posts [<Link to="/">+New post</Link>]
+        {isProfileOwner ? (
+          <>
+            Your posts | <Link to="/">+New post</Link>
+          </>
+        ) : (
+          `@${username}'s posts`
+        )}
       </h3>
       <div className="post-list">
-        {ownerPosts.map((post) => (
-          <Link to={`/post/${post._id}`} key={post._id}>
-            <Post {...post} />
-          </Link>
-        ))}
+        {ownerPosts.length ? (
+          ownerPosts.map((post) => (
+            <Link to={`/post/${post._id}`} key={post._id}>
+              <Post {...post} />
+            </Link>
+          ))
+        ) : (
+          <p>No posts yet...</p>
+        )}
       </div>
       <LogoutButton />
     </styled.Container>
