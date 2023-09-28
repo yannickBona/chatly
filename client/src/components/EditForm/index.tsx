@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "./styled";
-import { useAsyncFn } from "../../hooks/useAsync";
-import { modifyPost } from "../../api/Posts/modifyPost";
+import { useAsyncFn } from "../../utils/hooks/useAsync";
+import { modifyPost } from "../../services/api/Posts/modifyPost";
 import { useSinglePostContext } from "../../contexts/SinglePostContext";
 import { $ResponseData, IComment } from "../../types";
-import { editComment } from "../../api/Comments/editComment";
+import { editComment } from "../../services/api/Comments/editComment";
 import { useMainContext } from "../../contexts/MainContext";
 import Button from "../Button";
 

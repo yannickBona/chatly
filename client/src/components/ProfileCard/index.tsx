@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import styled from "./styled";
 import { AiOutlineUser } from "react-icons/ai";
-import { useUser } from "../../hooks/useUser";
-import { useAsyncFn } from "../../hooks/useAsync";
-import { follow, unfollow } from "../../api/User/manageFollow";
+import { useUser } from "../../utils/hooks/useUser";
+import { useAsyncFn } from "../../utils/hooks/useAsync";
+import { follow, unfollow } from "../../services/api/User/manageFollow";
 import { $ResponseData } from "../../types";
 import { Link } from "react-router-dom";
 

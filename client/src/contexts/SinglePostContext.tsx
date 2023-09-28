@@ -5,8 +5,8 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useAsync } from "../hooks/useAsync";
-import { getPost } from "../api/Posts/getPost";
+import { useAsync } from "../utils/hooks/useAsync";
+import { getPost } from "../services/api/Posts/getPost";
 import { useParams } from "react-router-dom";
 import { IPost } from "../types";
 import { IPostContext } from "./types";

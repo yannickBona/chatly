@@ -9,12 +9,12 @@ import {
 } from "react-icons/ai";
 import { $ResponseData, IPostComponent } from "../../types";
 import styled from "./styled";
-import { useAsyncFn } from "../../hooks/useAsync";
-import { manageLikeOnPost } from "../../api/likes/manageLikeOnPost";
+import { useAsyncFn } from "../../utils/hooks/useAsync";
+import { manageLikeOnPost } from "../../services/api/likes/manageLikeOnPost";
 import { useSinglePostContext } from "../../contexts/SinglePostContext";
-import { useUser } from "../../hooks/useUser";
+import { useUser } from "../../utils/hooks/useUser";
 import { formatDate } from "../../utils/dateFormat";
-import EditForm from "../EditForm/EditForm";
+import EditForm from "../EditForm";
 import { Link, useParams } from "react-router-dom";
 import { useMainContext } from "../../contexts/MainContext";
 

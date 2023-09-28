@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useMainContext } from "../../contexts/MainContext";
 import { IPost } from "../../types";
-import Post from "../Post/Post";
+import Post from "../Post";
 import styled from "./styled";
-import { useUser } from "../../hooks/useUser";
+import { useUser } from "../../utils/hooks/useUser";
 
 const Postlist: React.FC = () => {
   const { postList, setPosts } = useMainContext();

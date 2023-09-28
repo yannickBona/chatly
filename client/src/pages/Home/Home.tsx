@@ -1,5 +1,5 @@
-import Newpost from "../../components/Newpost/Newpost";
-import Postlist from "../../components/Postlist/Postlist";
+import Newpost from "../../components/Newpost";
+import Postlist from "../../components/Postlist";
 import styled from "./styled";
 
 const Home = () => {

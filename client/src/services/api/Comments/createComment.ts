@@ -1,4 +1,4 @@
-import { $ResponseData } from "../../types";
+import { $ResponseData } from "../../../types";
 import { makeAuthorizedRequest, makeRequest } from "../makeRequest";
 
 export const createComment = (

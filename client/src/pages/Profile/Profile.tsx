@@ -4,12 +4,12 @@ import styled from "./styled";
 import { AiOutlineUser } from "react-icons/ai";
 import { useMainContext } from "../../contexts/MainContext";
 import { Link, useParams } from "react-router-dom";
-import Post from "../../components/Post/Post";
-import LogoutButton from "../../components/LogoutButton/LogoutButton";
-import { getUser } from "../../api/User/getUser";
-import { useUser } from "../../hooks/useUser";
+import Post from "../../components/Post";
+import LogoutButton from "../../components/LogoutButton";
+import { getUser } from "../../services/api/User/getUser";
+import { useUser } from "../../utils/hooks/useUser";
 import { IPost } from "../../types";
-import { getPosts } from "../../api/Posts/getPosts";
+import { getPosts } from "../../services/api/Posts/getPosts";
 
 const Profile = () => {
   const [profile, setProfile] = useState<null | TUser>(null);

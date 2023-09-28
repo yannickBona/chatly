@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { $ResponseData } from "../../types";
 import styled from "./styled";
-import { useAsyncFn } from "../../hooks/useAsync";
-import { createPost } from "../../api/Posts/createPosts";
+import { useAsyncFn } from "../../utils/hooks/useAsync";
+import { createPost } from "../../services/api/Posts/createPosts";
 import { useMainContext } from "../../contexts/MainContext";
-import { useUser } from "../../hooks/useUser";
+import { useUser } from "../../utils/hooks/useUser";
 
 const Newpost: React.FC = () => {
   const [formData, setFormData] = useState<{ title: string; body: string }>({

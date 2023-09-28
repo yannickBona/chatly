@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { IAuthContext, TUser } from "./types";
-import { checkSession } from "../api/User/sessionCheck";
+import { checkSession } from "../services/api/User/sessionCheck";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext<IAuthContext | null>(null);

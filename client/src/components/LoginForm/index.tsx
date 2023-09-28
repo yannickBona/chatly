@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "./styled";
 import { useAuthContext } from "../../contexts/AuthContext";
-import { useAsyncFn } from "../../hooks/useAsync";
-import { loginUser } from "../../api/User/loginUser";
-import { createUser } from "../../api/User/createUser";
+import { useAsyncFn } from "../../utils/hooks/useAsync";
+import { loginUser } from "../../services/api/User/loginUser";
+import { createUser } from "../../services/api/User/createUser";
 import { useNavigate } from "react-router-dom";
 
 interface IFormData {

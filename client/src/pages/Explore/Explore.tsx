@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "./styled";
-import ProfileCard from "../../components/ProfileCard/ProfileCard";
-import Post from "../../components/Post/Post";
-import { useAsyncFn } from "../../hooks/useAsync";
-import { getRandomPosts } from "../../api/Posts/getRandomPosts";
+import ProfileCard from "../../components/ProfileCard";
+import Post from "../../components/Post";
+import { useAsyncFn } from "../../utils/hooks/useAsync";
+import { getRandomPosts } from "../../services/api/Posts/getRandomPosts";
 import { $ResponseData, IPost } from "../../types";
 import { Link } from "react-router-dom";
-import { getSuggestedUsers } from "../../api/User/getSuggestedUsers";
+import { getSuggestedUsers } from "../../services/api/User/getSuggestedUsers";
 
 const Explore = () => {
   const [postList, setPostList] = useState<IPost[]>([]);

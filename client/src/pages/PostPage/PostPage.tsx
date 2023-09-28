@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import CommentForm from "../../components/CommentForm/CommentForm";
-import Post from "../../components/Post/Post";
+import CommentForm from "../../components/CommentForm";
+import Post from "../../components/Post";
 import { useSinglePostContext } from "../../contexts/SinglePostContext";
-import { manageLikeOnComment } from "../../api/likes/manageLikeOnComment";
+import { manageLikeOnComment } from "../../services/api/likes/manageLikeOnComment";
 
 import styled from "./styled";
 import { $ResponseData, IComment, ILike } from "../../types";
@@ -16,9 +16,9 @@ import {
   AiOutlineUser,
   AiFillHeart,
 } from "react-icons/ai";
-import { useAsyncFn } from "../../hooks/useAsync";
-import { deleteComment } from "../../api/Comments/deleteComment";
-import EditForm from "../../components/EditForm/EditForm";
+import { useAsyncFn } from "../../utils/hooks/useAsync";
+import { deleteComment } from "../../services/api/Comments/deleteComment";
+import EditForm from "../../components/EditForm";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useMainContext } from "../../contexts/MainContext";
 import DeleteCommentModal from "../../components/DeleteCommentModal";

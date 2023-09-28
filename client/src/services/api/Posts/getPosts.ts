@@ -1,4 +1,4 @@
-import { $ResponseData } from "../../types";
+import { $ResponseData } from "../../../types";
 import { makeAuthorizedRequest } from "../makeRequest";
 
 export const getPosts = (username?: string): Promise<$ResponseData> => {

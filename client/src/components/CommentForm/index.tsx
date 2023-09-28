@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "./styled";
-import { useAsyncFn } from "../../hooks/useAsync";
-import { createComment } from "../../api/Comments/createComment";
+import { useAsyncFn } from "../../utils/hooks/useAsync";
+import { createComment } from "../../services/api/Comments/createComment";
 import { useParams } from "react-router-dom";
 import { useSinglePostContext } from "../../contexts/SinglePostContext";
 import { $ResponseData, IPost } from "../../types";

@@ -1,4 +1,4 @@
-import { $ResponseData, IPost } from "../../types";
+import { $ResponseData, IPost } from "../../../types";
 import { makeAuthorizedRequest } from "../makeRequest";
 
 export const deletePost = (id: string): Promise<$ResponseData> =>

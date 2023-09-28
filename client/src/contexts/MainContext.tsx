@@ -6,12 +6,12 @@ import {
   useMemo,
   useState,
 } from "react";
-import { getPosts } from "../api/Posts/getPosts";
+import { getPosts } from "../services/api/Posts/getPosts";
 import { $ResponseData, IComment, IPost } from "../types";
 import { IMainContext, ModalTypes } from "./types";
-import { deletePost } from "../api/Posts/deletePost";
+import { deletePost } from "../services/api/Posts/deletePost";
 import { useAuthContext } from "./AuthContext";
-import { deleteComment } from "../api/Comments/deleteComment";
+import { deleteComment } from "../services/api/Comments/deleteComment";
 import { useSinglePostContext } from "./SinglePostContext";
 
 export const MainContext = createContext<IMainContext | null>(null);

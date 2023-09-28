@@ -1,5 +1,5 @@
-import { useAsyncFn } from "../../hooks/useAsync";
-import { logoutUser } from "../../api/User/logoutUser";
+import { useAsyncFn } from "../../utils/hooks/useAsync";
+import { logoutUser } from "../../services/api/User/logoutUser";
 import styled from "./styled";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthContext";

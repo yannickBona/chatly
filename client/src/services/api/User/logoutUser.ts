@@ -1,4 +1,4 @@
-import { TUser } from "../../contexts/types";
+import { TUser } from "../../../contexts/types";
 import { makeAuthorizedRequest } from "../makeRequest";
 
 export const logoutUser = (): Promise<{

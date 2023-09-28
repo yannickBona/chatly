@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { ReqMethods } from "../types";
+import { ReqMethods } from "../../types";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_SERVER_URL ?? "http://127.0.0.1:3000",
