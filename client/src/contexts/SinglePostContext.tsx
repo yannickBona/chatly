@@ -10,6 +10,7 @@ import { getPost } from "../services/api/Posts/getPost";
 import { useParams } from "react-router-dom";
 import { IPost } from "../types";
 import { IPostContext } from "./types";
+import Loader from "../components/Loader";
 
 export const SinglePostContext = createContext<IPostContext | null>(null);
 
@@ -52,7 +53,8 @@ export const SinglePostProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <SinglePostContext.Provider value={contextData}>
-      {loading ? <h1>Loading</h1> : error ? <h1>error</h1> : children}
+      {loading && <Loader />}
+      {error ? <h1>error</h1> : children}
     </SinglePostContext.Provider>
   );
 };

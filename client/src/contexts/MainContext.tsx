@@ -13,6 +13,7 @@ import { deletePost } from "../services/api/Posts/deletePost";
 import { useAuthContext } from "./AuthContext";
 import { deleteComment } from "../services/api/Comments/deleteComment";
 import { useSinglePostContext } from "./SinglePostContext";
+import Loader from "../components/Loader";
 
 export const MainContext = createContext<IMainContext | null>(null);
 
@@ -113,7 +114,8 @@ export function MainContextProvider({ children }: { children: ReactNode }) {
 
   return (
     <MainContext.Provider value={data}>
-      {loading ? <h1>Loading</h1> : error ? <h1>error</h1> : children}
+      {loading && <Loader />}
+      {error ? <h1>error</h1> : children}
     </MainContext.Provider>
   );
 }

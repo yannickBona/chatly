@@ -8,6 +8,7 @@ import {
 import { IAuthContext, TUser } from "./types";
 import { checkSession } from "../services/api/User/sessionCheck";
 import { useLocation, useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
 export const AuthContext = createContext<IAuthContext | null>(null);
 
@@ -56,7 +57,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider value={contextData}>
-      {loadingUser ? <h1>Loading</h1> : children}
+      {loadingUser && <Loader />}
+      {children}
     </AuthContext.Provider>
   );
 };

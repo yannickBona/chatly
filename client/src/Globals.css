@@ -23,12 +23,15 @@ body {
 .App {
   margin: 0;
   padding: 0;
+  padding-bottom: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
   background-color: #dae1e7;
   overflow: hidden;
+  height: 100%;
+  position: relative;
 }
 
 img,
