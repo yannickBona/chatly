@@ -1,16 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import Modal from "../Modal";
-import { IPostContext } from "../../contexts/types";
 import { useMainContext } from "../../contexts/MainContext";
 import { notifySuccess, notifyError } from "../../utils/toast";
-import { SinglePostContext } from "../../contexts/SinglePostContext";
+import { useSinglePostContext } from "../../contexts/SinglePostContext";
 import { useNavigate } from "react-router-dom";
 
 const DeletePostModal: React.FC = () => {
   const { openModal, setOpenModal, handlePostDelete, selectedPost } =
     useMainContext();
 
-  const { currentPost } = useContext<IPostContext>(SinglePostContext);
+  const { currentPost } = useSinglePostContext();
 
   const navigate = useNavigate();
 

@@ -1,9 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CommentForm from "../../components/CommentForm/CommentForm";
 import Post from "../../components/Post/Post";
-import { SinglePostContext } from "../../contexts/SinglePostContext";
-import { IPostContext } from "../../contexts/types";
+import { useSinglePostContext } from "../../contexts/SinglePostContext";
 import { manageLikeOnComment } from "../../api/likes/manageLikeOnComment";
 
 import styled from "./styled";
@@ -25,8 +24,7 @@ import { useMainContext } from "../../contexts/MainContext";
 import DeleteCommentModal from "../../components/DeleteCommentModal";
 
 const PostPage: React.FC = () => {
-  const { currentPost, setCurrentPost } =
-    useContext<IPostContext>(SinglePostContext);
+  const { currentPost, setCurrentPost } = useSinglePostContext();
   const { user } = useAuthContext();
   const { setOpenModal, setSelectedComment } = useMainContext();
   const { execute: manageCommentFn } = useAsyncFn(manageLikeOnComment);

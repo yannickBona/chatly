@@ -1,10 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import styled from "./styled";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { createComment } from "../../api/Comments/createComment";
 import { useParams } from "react-router-dom";
-import { SinglePostContext } from "../../contexts/SinglePostContext";
-import { IPostContext } from "../../contexts/types";
+import { useSinglePostContext } from "../../contexts/SinglePostContext";
 import { $ResponseData, IPost } from "../../types";
 import { useMainContext } from "../../contexts/MainContext";
 
@@ -12,8 +11,7 @@ const CommentForm = () => {
   const [comment, setComment] = useState("");
   const { execute: createCommentFn } = useAsyncFn(createComment);
   const { id: postId } = useParams();
-  const { setCurrentPost, currentPost } =
-    useContext<IPostContext>(SinglePostContext);
+  const { setCurrentPost, currentPost } = useSinglePostContext();
   const { postList, setPosts } = useMainContext();
 
   /**

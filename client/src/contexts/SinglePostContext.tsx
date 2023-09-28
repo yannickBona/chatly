@@ -11,7 +11,18 @@ import { useParams } from "react-router-dom";
 import { IPost } from "../types";
 import { IPostContext } from "./types";
 
-export const SinglePostContext = createContext<any>({});
+export const SinglePostContext = createContext<IPostContext | null>(null);
+
+export const useSinglePostContext = () => {
+  const singlePostContext = useContext(SinglePostContext);
+
+  if (!singlePostContext)
+    throw new Error(
+      "useSinglePostContextmust be used within its SinglePostProvider "
+    );
+
+  return singlePostContext;
+};
 
 export const SinglePostProvider = ({ children }: { children: ReactNode }) => {
   const [currentPost, setCurrentPost] = useState<IPost | null>(null);

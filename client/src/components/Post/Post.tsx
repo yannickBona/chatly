@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AiOutlineEdit,
   AiOutlineDelete,
@@ -11,13 +11,12 @@ import { $ResponseData, IPostComponent } from "../../types";
 import styled from "./styled";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { manageLikeOnPost } from "../../api/likes/manageLikeOnPost";
-import { IPostContext, IMainContext } from "../../contexts/types";
-import { SinglePostContext } from "../../contexts/SinglePostContext";
+import { useSinglePostContext } from "../../contexts/SinglePostContext";
 import { useUser } from "../../hooks/useUser";
 import { formatDate } from "../../utils/dateFormat";
 import EditForm from "../EditForm/EditForm";
 import { Link, useParams } from "react-router-dom";
-import { MainContext } from "../../contexts/MainContext";
+import { useMainContext } from "../../contexts/MainContext";
 
 const Post: React.FC<IPostComponent> = ({
   body,
@@ -34,9 +33,9 @@ const Post: React.FC<IPostComponent> = ({
   /**
    * Creates a like on the post
    */
-  const { currentPost } = useContext<IPostContext>(SinglePostContext);
+  const { currentPost } = useSinglePostContext();
   const { setPosts, postList, setOpenModal, setSelectedPost } =
-    useContext<IMainContext>(MainContext);
+    useMainContext();
   const [isLiked, setisLiked] = useState(false);
   const [currentLikes, setCurrentLikes] = useState(likes?.length ?? 0);
   const [editMode, setEditMode] = useState(false);

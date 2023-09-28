@@ -8,11 +8,11 @@ import {
 } from "react";
 import { getPosts } from "../api/Posts/getPosts";
 import { $ResponseData, IComment, IPost } from "../types";
-import { IMainContext, IPostContext, ModalTypes } from "./types";
+import { IMainContext, ModalTypes } from "./types";
 import { deletePost } from "../api/Posts/deletePost";
 import { useAuthContext } from "./AuthContext";
 import { deleteComment } from "../api/Comments/deleteComment";
-import { SinglePostContext } from "./SinglePostContext";
+import { useSinglePostContext } from "./SinglePostContext";
 
 export const MainContext = createContext<IMainContext | null>(null);
 
@@ -34,7 +34,7 @@ export function MainContextProvider({ children }: { children: ReactNode }) {
   const [selectedComment, setSelectedComment] = useState<IComment | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { setCurrentPost } = useContext<IPostContext>(SinglePostContext);
+  const { setCurrentPost } = useSinglePostContext();
   const { setUser } = useAuthContext();
 
   useEffect(() => {
