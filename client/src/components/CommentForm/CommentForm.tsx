@@ -4,9 +4,9 @@ import { useAsyncFn } from "../../hooks/useAsync";
 import { createComment } from "../../api/Comments/createComment";
 import { useParams } from "react-router-dom";
 import { SinglePostContext } from "../../contexts/SinglePostContext";
-import { IPostContext, IMainContext } from "../../contexts/types";
+import { IPostContext } from "../../contexts/types";
 import { $ResponseData, IPost } from "../../types";
-import { MainContext } from "../../contexts/MainContext";
+import { useMainContext } from "../../contexts/MainContext";
 
 const CommentForm = () => {
   const [comment, setComment] = useState("");
@@ -14,7 +14,7 @@ const CommentForm = () => {
   const { id: postId } = useParams();
   const { setCurrentPost, currentPost } =
     useContext<IPostContext>(SinglePostContext);
-  const { postList, setPosts } = useContext<IMainContext>(MainContext);
+  const { postList, setPosts } = useMainContext();
 
   /**
    * Creates a new comment for a specific post

@@ -1,15 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { deletePost } from "../../api/Posts/deletePost";
-import { MainContext } from "../../contexts/MainContext";
-import { IMainContext } from "../../contexts/types";
+import { useMainContext } from "../../contexts/MainContext";
 import { IPost } from "../../types";
 import Post from "../Post/Post";
 import styled from "./styled";
 import { useUser } from "../../hooks/useUser";
 
 const Postlist: React.FC = () => {
-  const { postList, setPosts } = useContext<IMainContext>(MainContext);
+  const { postList, setPosts } = useMainContext();
   const { setUser } = useUser();
 
   // if (loading) return <h1>Loading...</h1>;

@@ -21,15 +21,14 @@ import { useAsyncFn } from "../../hooks/useAsync";
 import { deleteComment } from "../../api/Comments/deleteComment";
 import EditForm from "../../components/EditForm/EditForm";
 import { AuthContext } from "../../contexts/AuthContext";
-import { MainContext } from "../../contexts/MainContext";
+import { useMainContext } from "../../contexts/MainContext";
 import DeleteCommentModal from "../../components/DeleteCommentModal";
 
 const PostPage: React.FC = () => {
   const { currentPost, setCurrentPost } =
     useContext<IPostContext>(SinglePostContext);
   const { user } = useContext<IAuthContext>(AuthContext);
-  const { setOpenModal, setSelectedComment } =
-    useContext<IMainContext>(MainContext);
+  const { setOpenModal, setSelectedComment } = useMainContext();
   const { execute: manageCommentFn } = useAsyncFn(manageLikeOnComment);
   const { execute: deleteCommentFn } = useAsyncFn(deleteComment);
   const [editMode, setEditMode] = useState(false);

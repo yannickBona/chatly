@@ -9,7 +9,7 @@ async function connect(test: boolean = false) {
   return connection;
 }
 
-// async function droptest(done: any) {
+// async function droptest(done) {
 //   mongoose.connection.db.dropDatabase();
 //   return;
 // }

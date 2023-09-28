@@ -1,14 +1,13 @@
 import React, { useContext } from "react";
 import Modal from "../Modal";
-import { IMainContext, IPostContext } from "../../contexts/types";
-import { MainContext } from "../../contexts/MainContext";
+import { IPostContext } from "../../contexts/types";
+import { useMainContext } from "../../contexts/MainContext";
 import { notifySuccess, notifyError } from "../../utils/toast";
-import { toast } from "react-toastify";
 import { SinglePostContext } from "../../contexts/SinglePostContext";
 
 const DeleteCommentModal: React.FC = () => {
   const { openModal, setOpenModal, handleCommentDelete, selectedComment } =
-    useContext<IMainContext>(MainContext);
+    useMainContext();
   const { currentPost } = useContext<IPostContext>(SinglePostContext);
 
   const handleConfirm = async () => {

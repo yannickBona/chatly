@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react";
-import { IMainContext, TUser } from "../../contexts/types";
+import { useEffect, useState } from "react";
+import { TUser } from "../../contexts/types";
 import styled from "./styled";
 import { AiOutlineUser } from "react-icons/ai";
-import { MainContext } from "../../contexts/MainContext";
+import { useMainContext } from "../../contexts/MainContext";
 import { Link, useParams } from "react-router-dom";
 import Post from "../../components/Post/Post";
 import LogoutButton from "../../components/LogoutButton/LogoutButton";
@@ -14,7 +14,7 @@ import { getPosts } from "../../api/Posts/getPosts";
 const Profile = () => {
   const [profile, setProfile] = useState<null | TUser>(null);
   const [profilePosts, setProfilePosts] = useState<IPost[]>([]);
-  const { postList } = useContext<IMainContext>(MainContext);
+  const { postList } = useMainContext();
   const { user } = useUser();
   const { username } = useParams();
   const isProfileOwner = user ? username === user.username : false;

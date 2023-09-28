@@ -14,7 +14,18 @@ import { AuthContext } from "./AuthContext";
 import { deleteComment } from "../api/Comments/deleteComment";
 import { SinglePostContext } from "./SinglePostContext";
 
-export const MainContext = createContext<any>({});
+export const MainContext = createContext<IMainContext | null>(null);
+
+export const useMainContext = () => {
+  const mainContext = useContext(MainContext);
+
+  if (!mainContext)
+    throw new Error(
+      "useMainContext has to be used within <MainContextProvider />"
+    );
+
+  return mainContext;
+};
 
 export function MainContextProvider({ children }: { children: ReactNode }) {
   const [posts, setPosts] = useState<IPost[] | undefined>();

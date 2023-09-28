@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { $ResponseData } from "../../types";
 import styled from "./styled";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { createPost } from "../../api/Posts/createPosts";
-import { IMainContext } from "../../contexts/types";
-import { MainContext } from "../../contexts/MainContext";
+import { useMainContext } from "../../contexts/MainContext";
 import { useUser } from "../../hooks/useUser";
 
 const Newpost: React.FC = () => {
@@ -13,7 +12,7 @@ const Newpost: React.FC = () => {
     body: "",
   });
   // const [showForm, setShowForm] = useState(false);
-  const { setPosts } = useContext<IMainContext>(MainContext);
+  const { setPosts } = useMainContext();
   const { execute: createNewPostFn } = useAsyncFn(createPost);
   const { setUser } = useUser();
 
