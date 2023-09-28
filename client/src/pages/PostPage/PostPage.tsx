@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CommentForm from "../../components/CommentForm/CommentForm";
 import Post from "../../components/Post/Post";
 import { SinglePostContext } from "../../contexts/SinglePostContext";
-import { IAuthContext, IMainContext, IPostContext } from "../../contexts/types";
+import { IPostContext } from "../../contexts/types";
 import { manageLikeOnComment } from "../../api/likes/manageLikeOnComment";
 
 import styled from "./styled";
@@ -20,14 +20,14 @@ import {
 import { useAsyncFn } from "../../hooks/useAsync";
 import { deleteComment } from "../../api/Comments/deleteComment";
 import EditForm from "../../components/EditForm/EditForm";
-import { AuthContext } from "../../contexts/AuthContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 import { useMainContext } from "../../contexts/MainContext";
 import DeleteCommentModal from "../../components/DeleteCommentModal";
 
 const PostPage: React.FC = () => {
   const { currentPost, setCurrentPost } =
     useContext<IPostContext>(SinglePostContext);
-  const { user } = useContext<IAuthContext>(AuthContext);
+  const { user } = useAuthContext();
   const { setOpenModal, setSelectedComment } = useMainContext();
   const { execute: manageCommentFn } = useAsyncFn(manageLikeOnComment);
   const { execute: deleteCommentFn } = useAsyncFn(deleteComment);

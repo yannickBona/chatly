@@ -1,9 +1,7 @@
-import { useContext } from "react";
-import { IAuthContext } from "../contexts/types";
-import { AuthContext } from "../contexts/AuthContext";
+import { useAuthContext } from "../contexts/AuthContext";
 
 export function useUser() {
-  const { user, setUser } = useContext<IAuthContext>(AuthContext);
+  const { user, setUser } = useAuthContext();
 
   return { user, setUser };
 }

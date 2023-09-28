@@ -1,12 +1,10 @@
-import React, { useContext } from "react";
 import styled from "./styled";
 import { Link, useLocation } from "react-router-dom";
-import { IAuthContext } from "../../contexts/types";
-import { AuthContext } from "../../contexts/AuthContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 const Navbar = () => {
   const location = useLocation();
-  const { user } = useContext<IAuthContext>(AuthContext);
+  const { user } = useAuthContext();
 
   const isSelected = (tabRoute: string) => {
     const currentRoute = location.pathname.split("/")[1];

@@ -8,9 +8,9 @@ import {
 } from "react";
 import { getPosts } from "../api/Posts/getPosts";
 import { $ResponseData, IComment, IPost } from "../types";
-import { IAuthContext, IMainContext, IPostContext, ModalTypes } from "./types";
+import { IMainContext, IPostContext, ModalTypes } from "./types";
 import { deletePost } from "../api/Posts/deletePost";
-import { AuthContext } from "./AuthContext";
+import { useAuthContext } from "./AuthContext";
 import { deleteComment } from "../api/Comments/deleteComment";
 import { SinglePostContext } from "./SinglePostContext";
 
@@ -35,7 +35,7 @@ export function MainContextProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const { setCurrentPost } = useContext<IPostContext>(SinglePostContext);
-  const { setUser } = useContext<IAuthContext>(AuthContext);
+  const { setUser } = useAuthContext();
 
   useEffect(() => {
     loadPosts();

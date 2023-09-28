@@ -1,14 +1,12 @@
-import React, { useContext } from "react";
 import { useAsyncFn } from "../../hooks/useAsync";
 import { logoutUser } from "../../api/User/logoutUser";
 import styled from "./styled";
 import { useNavigate } from "react-router-dom";
-import { IAuthContext } from "../../contexts/types";
-import { AuthContext } from "../../contexts/AuthContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 const LogoutButton = () => {
   const { execute: logoutUserFn } = useAsyncFn(logoutUser);
-  const { user } = useContext<IAuthContext>(AuthContext);
+  const { user } = useAuthContext();
   const navigate = useNavigate();
 
   const handleLogout = async () => {

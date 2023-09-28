@@ -1,9 +1,26 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { IAuthContext, TUser } from "./types";
 import { checkSession } from "../api/User/sessionCheck";
 import { useLocation, useNavigate } from "react-router-dom";
 
-export const AuthContext = createContext<any>({});
+export const AuthContext = createContext<IAuthContext | null>(null);
+
+export const useAuthContext = () => {
+  const authContext = useContext(AuthContext);
+
+  if (!authContext)
+    throw new Error(
+      "useAuthContext must be used inside its AuthContextProvider"
+    );
+
+  return authContext;
+};
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<TUser | null>(null);

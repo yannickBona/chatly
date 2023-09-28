@@ -1,8 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import styled from "./styled";
-import { IAuthContext, TUser } from "../../contexts/types";
-import { AuthContext } from "../../contexts/AuthContext";
-import { useAsync, useAsyncFn } from "../../hooks/useAsync";
+import { useAuthContext } from "../../contexts/AuthContext";
+import { useAsyncFn } from "../../hooks/useAsync";
 import { loginUser } from "../../api/User/loginUser";
 import { createUser } from "../../api/User/createUser";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +15,7 @@ interface IFormData {
 }
 
 const LoginForm: React.FC = () => {
-  const { setUser } = useContext<IAuthContext>(AuthContext);
+  const { setUser } = useAuthContext();
   const [formData, setFormData] = useState<IFormData>({
     username: "",
     lastName: "",
