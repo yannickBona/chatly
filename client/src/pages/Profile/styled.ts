@@ -47,6 +47,12 @@ const Container = styled.div`
       font-weight: normal;
       line-height: 2rem;
       flex: 1;
+      cursor: pointer;
+      transition: color 200ms ease;
+
+      :not(:nth-child(1)):hover {
+        color: ${colors.borderColorDark};
+      }
 
       span {
         font-weight: bold;

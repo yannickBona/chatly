@@ -14,5 +14,9 @@ export const StyledFooter = styled.footer`
     font-weight: bold;
     color: ${colors.black};
     text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;

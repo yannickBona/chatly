@@ -3,7 +3,7 @@ import { TUser } from "../../contexts/types";
 import styled from "./styled";
 import { AiOutlineUser } from "react-icons/ai";
 import { useMainContext } from "../../contexts/MainContext";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Post from "../../components/Post";
 import LogoutButton from "../../components/LogoutButton";
 import { getUser } from "../../services/api/User/getUser";
@@ -17,6 +17,8 @@ const Profile = () => {
   const { postList } = useMainContext();
   const { user } = useUser();
   const { username } = useParams();
+  const navigate = useNavigate();
+
   const isProfileOwner = user ? username === user.username : false;
 
   useEffect(() => {
@@ -44,6 +46,12 @@ const Profile = () => {
       setProfilePosts(postsData.data.posts);
   };
 
+  const scrollToPosts = () => {
+    const postList = document.getElementById("posts");
+
+    if (postList) postList.scrollIntoView({ behavior: "smooth" });
+  };
+
   const ownerPosts =
     profilePosts.filter((post) => post.owner === username) ?? [];
 
@@ -56,16 +64,16 @@ const Profile = () => {
         </span>
         <h2>@{profile.username}</h2>
         <section className="profile-details">
-          <h3>
+          <h3 onClick={scrollToPosts}>
             <span>{profile.postsUploaded}</span>
             <br />
             Posts
           </h3>
-          <h3>
+          <h3 onClick={() => navigate("/followers")}>
             <span>{profile?.followers.length}</span> <br />
             Followers
           </h3>
-          <h3>
+          <h3 onClick={() => navigate("/followed")}>
             <span>{profile.followed.length}</span>
             <br />
             Followed
@@ -88,7 +96,7 @@ const Profile = () => {
           `@${username}'s posts`
         )}
       </h3>
-      <div className="post-list">
+      <div className="post-list" id="posts">
         {ownerPosts.length ? (
           ownerPosts.map((post) => (
             <Link to={`/post/${post._id}`} key={post._id}>
