@@ -18,6 +18,10 @@ const Profile = () => {
   const { user } = useUser();
   const { username } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const queryParams = new URLSearchParams(location.search);
+  const showBackButton = !!queryParams.get("canGoBack");
 
   const isProfileOwner = user ? username === user.username : false;
 
@@ -55,6 +59,8 @@ const Profile = () => {
   const ownerPosts =
     profilePosts.filter((post) => post.owner === username) ?? [];
 
+  console.log(profile);
+
   return profile ? (
     <styled.Container>
       <h1>Profile Overview | {profile.username}</h1>
@@ -69,11 +75,11 @@ const Profile = () => {
             <br />
             Posts
           </h3>
-          <h3 onClick={() => navigate("/followers")}>
+          <h3 onClick={() => navigate(`/profile/${username}/followers`)}>
             <span>{profile?.followers.length}</span> <br />
             Followers
           </h3>
-          <h3 onClick={() => navigate("/followed")}>
+          <h3 onClick={() => navigate(`/profile/${username}/followed`)}>
             <span>{profile.followed.length}</span>
             <br />
             Followed
@@ -108,6 +114,12 @@ const Profile = () => {
         )}
       </div>
       <LogoutButton />
+
+      {showBackButton && (
+        <span onClick={() => navigate(-1)} className="back-button">
+          ⬅️
+        </span>
+      )}
     </styled.Container>
   ) : (
     <p>Profiile not found...</p>

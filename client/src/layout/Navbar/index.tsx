@@ -10,6 +10,7 @@ const Navbar = () => {
     const currentRoute = location.pathname.split("/")[1];
     return currentRoute === tabRoute;
   };
+
   return (
     <styled.Container>
       <Link to="/" className="logo">

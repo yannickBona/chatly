@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { colors } from "../../themes/tokens";
 
 const Container = styled.div`
@@ -47,6 +47,7 @@ const Container = styled.div`
       font-weight: normal;
       line-height: 2rem;
       flex: 1;
+
       cursor: pointer;
       transition: color 200ms ease;
 
@@ -125,6 +126,14 @@ const Container = styled.div`
     a {
       text-decoration: none;
     }
+  }
+
+  .back-button {
+    position: absolute;
+    left: -5rem;
+    top: 1, 5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
   }
 `;
 

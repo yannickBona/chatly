@@ -5,13 +5,14 @@ import { useUser } from "../../utils/hooks/useUser";
 import { useAsyncFn } from "../../utils/hooks/useAsync";
 import { follow, unfollow } from "../../services/api/User/manageFollow";
 import { $ResponseData } from "../../types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProfileCard: React.FC<{ username: string }> = ({ username }) => {
   const { execute: manageFollow } = useAsyncFn(follow);
   const { execute: manageUnfollow } = useAsyncFn(unfollow);
 
   const { user, setUser } = useUser();
+  const navigate = useNavigate();
 
   const [isFollowing, setIsFollowing] = useState(
     user?.followed.some((user) => user === username)
@@ -55,7 +56,7 @@ const ProfileCard: React.FC<{ username: string }> = ({ username }) => {
   };
 
   return (
-    <Link to={`/profile/${username}`}>
+    <a onClick={() => navigate(`/profile/${username}?canGoBack=1`)}>
       <styled.Container>
         <span className="avatar">
           <AiOutlineUser />
@@ -65,7 +66,7 @@ const ProfileCard: React.FC<{ username: string }> = ({ username }) => {
           {isFollowing ? "Already following" : "Follow"}
         </button>
       </styled.Container>
-    </Link>
+    </a>
   );
 };
 

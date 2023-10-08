@@ -11,6 +11,7 @@ import Explore from "./pages/Explore/Explore";
 import Profile from "./pages/Profile/Profile";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import UserList from "./pages/UsersList/UserList";
 
 function App() {
   return (
@@ -25,6 +26,14 @@ function App() {
               <Route path="/post/:id" element={<PostPage />} />
               <Route path="/profile/:username" element={<Profile />} />
               <Route path="/explore" element={<Explore />} />
+              <Route
+                path="/profile/:username/followed"
+                element={<UserList section="followed" />}
+              />
+              <Route
+                path="/profile/:username/followers"
+                element={<UserList section="followers" />}
+              />
             </Route>
 
             {/* Public Routes */}
