@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../themes/tokens";
+import { breakpoints, colors } from "../../themes/tokens";
 
 export const StyledContainer = styled.main`
   background: ${colors.background};
@@ -45,6 +45,13 @@ export const StyledContainer = styled.main`
 
     &:active{
       transform: scale(0.95);
+    }
+
+    @media(max-width: ${breakpoints.mobile}){
+      bottom: 1rem;
+      left: 1rem;
+      position: fixed;
+      z-index: 1;
     }
   }
 

@@ -16,6 +16,7 @@ const Container = styled.div`
     font-size: 1.5rem;
     top: 10rem;
     cursor: pointer;
+    z-index: 1;
   }
 `;
 

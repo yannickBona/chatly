@@ -26,7 +26,6 @@ const Navbar = () => {
     window.scrollY > 1 ? setShowBoxShadow(true) : setShowBoxShadow(false);
 
     if (window.scrollY < lastScrollY) setShowNavbar(true);
-    console.log(window.scrollY, lastScrollY);
     setLastScrollY(window.scrollY);
   };
 

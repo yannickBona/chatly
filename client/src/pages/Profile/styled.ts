@@ -134,6 +134,13 @@ const Container = styled.div`
     top: 1, 5rem;
     font-size: 1.5rem;
     cursor: pointer;
+
+    @media (max-width: ${breakpoints.mobile}) {
+      bottom: 1.5rem;
+      left: 1rem;
+      position: fixed;
+      z-index: 1;
+    }
   }
 
   @media (max-width: ${breakpoints.mobile}) {
