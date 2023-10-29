@@ -37,7 +37,9 @@ const UserList = ({ section }: { section: "followed" | "followers" }) => {
   return (
     <StyledContainer>
       <h1>
-        {isFollowed ? "People you are following" : "People following you"}
+        {isFollowed
+          ? `${usersList?.length} Followed`
+          : `${usersList?.length} Followers`}
       </h1>
 
       {usersList?.length ? (
