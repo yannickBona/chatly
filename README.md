@@ -13,6 +13,6 @@ This is a full stack web application that uses some basic & advanced topics that
 
 # Stack
 
-- React (Vite & Typescript)
+- React (Vite & Typescript.)
 - Node Express (Typescript)
 - MongoDB
