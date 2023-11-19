@@ -51,7 +51,9 @@ const UserList = ({ section }: { section: "followed" | "followers" }) => {
       ) : (
         <p>
           The list is empty...
-          <Link to="/explore"> Start interacting with some people!</Link>
+          {username === user?.username && (
+            <Link to="/explore"> Start interacting with some people!</Link>
+          )}
         </p>
       )}
 

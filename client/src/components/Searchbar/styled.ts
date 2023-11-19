@@ -50,5 +50,9 @@ export const StyledSearchbar = styled.div`
     input[type="search"] {
       width: 100%;
     }
+
+    .search-results {
+      left: 0;
+    }
   }
 `;

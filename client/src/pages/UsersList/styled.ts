@@ -37,7 +37,6 @@ export const StyledContainer = styled.main`
   }
 
   .back-button{
-    position: absolute;
     top: 1.5rem;
     left: -5rem;
     font-size: 1.5rem;
@@ -48,8 +47,10 @@ export const StyledContainer = styled.main`
     }
 
     @media(max-width: ${breakpoints.mobile}){
-      bottom: 1rem;
-      left: 1rem;
+      left:1rem;
+      bottom: 2rem;
+      top: unset;
+
       position: fixed;
       z-index: 1;
     }
@@ -61,5 +62,25 @@ export const StyledContainer = styled.main`
     width: 100%;
     gap: 1rem;
     margin: 2rem 0;
+  }
+
+
+  @media(max-width: ${breakpoints.mobile}){
+    width: 90%;
+
+    h1{
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    .cards-container{
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    p{
+      text-align: center;
+    }
   }
 `;

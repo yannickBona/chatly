@@ -16,6 +16,7 @@ const Container = styled.nav<{ showBoxShadow: boolean; showNavbar: boolean }>`
   .hamburger {
     height: 2rem;
     width: 2rem;
+    display: none;
   }
 
   .logo {
@@ -106,6 +107,10 @@ const Container = styled.nav<{ showBoxShadow: boolean; showNavbar: boolean }>`
     .logout-button {
       display: block;
       color: red !important;
+    }
+
+    .hamburger {
+      display: block;
     }
   }
 `;
