@@ -22,15 +22,16 @@ import EditForm from "../../components/EditForm";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useMainContext } from "../../contexts/MainContext";
 import DeleteCommentModal from "../../components/DeleteCommentModal";
+import ReplyForm from "../../components/ReplyForm/ReplyForm";
 
 const PostPage: React.FC = () => {
   const { currentPost, setCurrentPost } = useSinglePostContext();
   const { user } = useAuthContext();
   const { setOpenModal, setSelectedComment } = useMainContext();
   const { execute: manageCommentFn } = useAsyncFn(manageLikeOnComment);
-  const { execute: deleteCommentFn } = useAsyncFn(deleteComment);
   const [editMode, setEditMode] = useState(false);
   const [editingComment, setEditingComment] = useState("");
+  const [commentReply, setCommentReply] = useState<IComment | null>(null);
   const navigate = useNavigate();
 
   const handleLikeOnComment = async (comment: IComment) => {
@@ -102,6 +103,12 @@ const PostPage: React.FC = () => {
     setEditingComment(id);
   };
 
+  const getTag = (content: string) => {
+    const words = content.split("@");
+
+    return `@${words[1].split(" ")[0]}`;
+  };
+
   return currentPost ? (
     <styled.Container>
       <Post {...currentPost} key={currentPost?._id} />
@@ -109,6 +116,9 @@ const PostPage: React.FC = () => {
         <CommentForm />
         {currentPost.comments.length === 0 && (
           <span className="no-comments">No comments here. Be the first!</span>
+        )}
+        {!!commentReply && (
+          <ReplyForm setCommentReply={setCommentReply} comment={commentReply} />
         )}
         {currentPost.comments
           .map((comment: IComment) => (
@@ -129,7 +139,8 @@ const PostPage: React.FC = () => {
                       className="profile-link"
                       to={`/profile/${comment.owner}`}
                     >
-                      {comment.owner}
+                      {comment.owner}{" "}
+                      {comment.owner === user?.username ? "(you)" : ""}
                     </Link>
                   ) : (
                     "Anonymous User"
@@ -148,6 +159,22 @@ const PostPage: React.FC = () => {
                   setEditMode={setEditMode}
                   comment={comment}
                 />
+              ) : comment.content.includes("@") ? (
+                <span
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                  }}
+                >
+                  <Link
+                    className="profile-link tag"
+                    to={`/profile/${getTag(comment.content).replace("@", "")}`}
+                  >
+                    {getTag(comment.content)}
+                  </Link>
+                  <p>{comment.content.replace(getTag(comment.content), "")}</p>
+                </span>
               ) : (
                 <p>{comment.content}</p>
               )}
@@ -182,7 +209,11 @@ const PostPage: React.FC = () => {
                   </>
                 )}
 
-                <AiOutlineComment onClick={() => null} />
+                <AiOutlineComment
+                  onClick={() =>
+                    setCommentReply(!!commentReply ? null : comment)
+                  }
+                />
               </styled.commentActionsContainer>
             </div>
           ))

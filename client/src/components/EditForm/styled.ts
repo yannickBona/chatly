@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { colors } from "../../themes/tokens";
 
-const EditForm = styled.form<{ isComment: boolean }>`
+export const EditForm = styled.form<{ isComment: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;

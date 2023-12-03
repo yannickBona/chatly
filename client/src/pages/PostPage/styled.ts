@@ -87,10 +87,15 @@ const CommentsSection = styled.div`
   .profile-link {
     text-decoration: none;
     color: ${colors.black};
+    font-weight: bold;
 
     :hover {
       text-decoration: underline;
     }
+  }
+
+  .tag {
+    color: ${colors.neutral};
   }
 
   :has(textarea:active, textarea:focus, button:active, button:focus) {
