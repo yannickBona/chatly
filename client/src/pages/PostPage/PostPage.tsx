@@ -30,7 +30,7 @@ const PostPage: React.FC = () => {
   const { execute: deleteCommentFn } = useAsyncFn(deleteComment);
   const [editMode, setEditMode] = useState(false);
   const [selectedComment, setSelectedComment] = useState("");
-  const { id: userId } = useUser();
+  const username = useUser();
 
   /**
    * Deletes a comment given its ID
@@ -61,8 +61,7 @@ const PostPage: React.FC = () => {
       (comm) => comm._id === comment._id
     );
 
-    const isLiked = comment.likes.some((like) => like === userId);
-
+    const isLiked = comment.likes.some((like) => like === username);
     if (!isLiked) {
       const response: $ResponseData = await manageCommentFn(
         comment._id,
@@ -72,14 +71,12 @@ const PostPage: React.FC = () => {
 
       if (response.status !== 200) return;
 
-      const newLike: ILike = response.data.like;
-      const newLikes = [...(comment.likes ?? []), newLike.userId];
+      const newLikes = [...(comment.likes ?? []), username];
 
       const updatedComments = [...currentPost?.comments];
       updatedComments[idx] = {
         ...updatedComments[idx],
         likes: newLikes,
-        owner: user?.username ?? null,
       };
 
       setCurrentPost((prevPost) => {
@@ -102,14 +99,13 @@ const PostPage: React.FC = () => {
       if (response.status !== 200) return;
       const removedLike: ILike = response.data.like;
       const newLikes = comment.likes?.filter(
-        (like: string) => like !== removedLike.userId
+        (like: string) => like !== username
       );
 
       const updatedComments = [...currentPost?.comments];
       updatedComments[idx] = {
         ...updatedComments[idx],
         likes: newLikes,
-        owner: user?.username ?? null,
       };
 
       setCurrentPost((prevPost) => {
@@ -168,7 +164,7 @@ const PostPage: React.FC = () => {
 
               <styled.commentActionsContainer>
                 <span className="likes">
-                  {comment.likes.some((like) => like === userId) ? (
+                  {comment.likes.some((like) => like === username) ? (
                     <AiFillHeart
                       className="filled"
                       onClick={() => handleLikeOnComment(comment)}

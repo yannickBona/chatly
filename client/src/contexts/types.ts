@@ -17,6 +17,6 @@ export type TUser = {
   refreshToken: string;
 };
 export interface IAuthContext {
-  user: TUser | null;
+  user: TUser;
   setUser: React.Dispatch<React.SetStateAction<TUser | null>>;
 }

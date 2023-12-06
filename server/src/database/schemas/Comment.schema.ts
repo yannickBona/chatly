@@ -1,4 +1,3 @@
-import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import { Like, User } from "../models";
 import { logger } from "../../utils/helpers";
@@ -70,7 +69,17 @@ CommentSchema.pre("deleteOne", async function (next) {
 CommentSchema.methods.getPublicData = async function (
   this: $CommentSchemaInterface
 ) {
-  const user = await User.findById(this.userId);
+  // Gets owner username
+  const owner = await User.findById(this.userId);
+
+  // Gets list of usernames in likes
+  const likes = [];
+  for (const like of this.likes) {
+    const user = await User.findById(like);
+    if (!user) continue;
+    likes.push(user.username);
+  }
+
   return {
     content: this.content,
     children: this.children,
@@ -79,9 +88,9 @@ CommentSchema.methods.getPublicData = async function (
     postId: this.postId,
     parentId: this.parentId,
     userId: this.userId,
-    likes: this.likes,
+    likes: likes,
     _id: this._id,
-    owner: user ? user.username : null,
+    owner: owner ? owner.username : null,
   };
 };
 

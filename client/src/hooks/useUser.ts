@@ -1,4 +1,10 @@
+import { useContext } from "react";
+import { IAuthContext } from "../contexts/types";
+import { AuthContext } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+
 export function useUser() {
-  const id = /userId=([^;]*)/.exec(document.cookie)?.[1];
-  return { id: "6491eeaa725b66c3fa8caf37" };
+  const { user } = useContext<IAuthContext>(AuthContext);
+
+  return user.username;
 }

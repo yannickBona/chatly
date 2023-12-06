@@ -46,7 +46,7 @@ const Post: React.FC<IPostComponent> = ({
   const [currentLikes, setCurrentLikes] = useState(likes?.length ?? 0);
   const [editMode, setEditMode] = useState(false);
   const { execute: manageLikeFn } = useAsyncFn(manageLikeOnPost);
-  const { id: userId } = useUser();
+  const username = useUser();
 
   const isOwner = user?.username === owner;
 
@@ -58,7 +58,7 @@ const Post: React.FC<IPostComponent> = ({
 
   useEffect(() => {
     if (likes?.length === 0 || !likes) return;
-    setisLiked(likes.some((like: string) => like === userId));
+    setisLiked(likes.some((like: string) => like === username));
     setCurrentLikes(likes.length);
   }, [likes]);
 

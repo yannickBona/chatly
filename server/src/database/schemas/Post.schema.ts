@@ -55,17 +55,24 @@ PostSchema.pre("findOneAndDelete", async function (next) {
 });
 
 PostSchema.methods.getPublicData = async function (this: $PostSchemaInterface) {
-  const user = await User.findById(this.user);
+  const owner = await User.findById(this.user);
+
+  const likes = [];
+  for (const like of this.likes) {
+    const user = await User.findById(like);
+    if (!user) continue;
+    likes.push(user.username);
+  }
 
   return {
     _id: this._id,
     title: this.title,
     body: this.body,
-    likes: this.likes,
+    likes: likes,
     comments: this.comments,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
-    owner: user ? user.username : null,
+    owner: owner ? owner.username : null,
   };
 };
 
