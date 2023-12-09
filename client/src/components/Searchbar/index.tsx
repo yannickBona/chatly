@@ -8,6 +8,7 @@ import { TUser } from "../../contexts/types";
 import { $ResponseData } from "../../types";
 import ProfileCard from "../ProfileCard";
 import ResultCard from "../ResultCard";
+import { useNavigate } from "react-router-dom";
 
 const Searchbar = () => {
   const [search, setSearch] = useState("");
@@ -16,6 +17,7 @@ const Searchbar = () => {
   const [searchResult, setSearchResult] = useState<TUser[]>([]);
 
   const debouncedValue = useDebounce(search);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!debouncedValue) return setSearchResult([]);
@@ -36,7 +38,7 @@ const Searchbar = () => {
     })();
   }, [debouncedValue]);
 
-  const onResultNavigate = () => {};
+  const onResultNavigate = () => navigate(`/profile/${search}`);
 
   return (
     <StyledSearchbar>
@@ -47,7 +49,11 @@ const Searchbar = () => {
         onChange={(e) => setSearch(e.target.value)}
         value={search}
       />
-      <Button disabled={!debouncedValue} text="Search" />
+      <Button
+        disabled={!debouncedValue}
+        text="Search"
+        onClick={onResultNavigate}
+      />
 
       {!!search && (
         <div className="search-results">

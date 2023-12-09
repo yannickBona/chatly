@@ -73,7 +73,7 @@ const Container = styled.div`
       gap: 2rem;
 
       button,
-      button + a {
+      a {
         text-decoration: none;
         text-align: center;
         padding: 1rem 2rem;

@@ -85,7 +85,7 @@ const Profile = () => {
         </section>
         {isProfileOwner && (
           <section className="profile-actions">
-            <button>Modify Profile</button>
+            {/* <button>Modify Profile</button> */}
             <Link to="/explore">Add friends</Link>
           </section>
         )}
@@ -120,7 +120,9 @@ const Profile = () => {
       )}
     </styled.Container>
   ) : (
-    <p>Profiile not found...</p>
+    <p>
+      Profile not found... <Link to="..">Back Home</Link>
+    </p>
   );
 };
 
