@@ -85,7 +85,6 @@ const Profile = () => {
         </section>
         {isProfileOwner && (
           <section className="profile-actions">
-            {/* <button>Modify Profile</button> */}
             <Link to="/explore">Add friends</Link>
           </section>
         )}
