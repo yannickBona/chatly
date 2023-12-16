@@ -6,6 +6,7 @@ const userRoutes = Router();
 
 // Gets and Existing user
 userRoutes.get("/profile/:username", controller.getUser);
+userRoutes.get("/all", controller.getUsers);
 
 // Checks if the user is logged in
 userRoutes.get("/session", requiresAuth, controller.session);

@@ -6,6 +6,7 @@ import { getSuggestedUsers } from "./getSuggestedUsers";
 import { logoutUser } from "./logoutUser";
 import { follow, unfollow } from "./manageFollow";
 import { getUser } from "./getUser";
+import { getUsers } from "./getUsers";
 
 export default {
   createUser,
@@ -17,4 +18,5 @@ export default {
   follow,
   unfollow,
   getUser,
+  getUsers,
 };
