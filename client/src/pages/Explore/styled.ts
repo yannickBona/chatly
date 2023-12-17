@@ -44,5 +44,20 @@ const Container = styled.div`
       padding: 1rem 0;
     }
   }
+
+  .header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+
+    .title,
+    > div:has(input[type="search"]) {
+      flex: 1;
+    }
+    .title h1 {
+      margin-bottom: 1rem;
+    }
+  }
 `;
 export default { Container };

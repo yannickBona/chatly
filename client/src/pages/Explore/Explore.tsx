@@ -7,6 +7,7 @@ import { getRandomPosts } from "../../services/api/Posts/getRandomPosts";
 import { $ResponseData, IPost } from "../../types";
 import { Link } from "react-router-dom";
 import { getSuggestedUsers } from "../../services/api/User/getSuggestedUsers";
+import Searchbar from "../../components/Searchbar";
 
 const Explore = () => {
   const [postList, setPostList] = useState<IPost[]>([]);
@@ -31,8 +32,13 @@ const Explore = () => {
 
   return (
     <styled.Container>
-      <h1>Explore</h1>
-      <p>Follow and discover other users' content.</p>
+      <div className="header">
+        <div className="title">
+          <h1>Explore</h1>
+          <p>Follow and discover other users' content.</p>
+        </div>
+        <Searchbar />
+      </div>
       <div className="container profiles">
         <h3>Suggested profiles</h3>
         <div className="profiles-list">
