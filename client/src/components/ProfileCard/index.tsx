@@ -19,6 +19,8 @@ const ProfileCard: React.FC<{ username: string }> = ({ username }) => {
   );
 
   const handleFollow = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (username === user?.username) return;
+
     e.stopPropagation();
     if (!isFollowing) {
       const response: $ResponseData = await manageFollow(username);
@@ -63,7 +65,11 @@ const ProfileCard: React.FC<{ username: string }> = ({ username }) => {
         </span>
         <p>{username}</p>
         <button className={isFollowing ? "filled" : ""} onClick={handleFollow}>
-          {isFollowing ? "Already following" : "Follow"}
+          {username === user?.username
+            ? "You"
+            : isFollowing
+            ? "Already following"
+            : "Follow"}
         </button>
       </styled.Container>
     </a>

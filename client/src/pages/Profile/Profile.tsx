@@ -8,20 +8,29 @@ import Post from "../../components/Post";
 import LogoutButton from "../../components/LogoutButton";
 import { getUser } from "../../services/api/User/getUser";
 import { useUser } from "../../utils/hooks/useUser";
-import { IPost } from "../../types";
+import { $ResponseData, IPost } from "../../types";
 import { getPosts } from "../../services/api/Posts/getPosts";
+import { follow, unfollow } from "../../services/api/User/manageFollow";
+import { useAsyncFn } from "../../utils/hooks/useAsync";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 const Profile = () => {
   const [profile, setProfile] = useState<null | TUser>(null);
   const [profilePosts, setProfilePosts] = useState<IPost[]>([]);
+  const { execute: manageFollow } = useAsyncFn(follow);
+  const { execute: manageUnfollow } = useAsyncFn(unfollow);
   const { postList } = useMainContext();
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const { username } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
 
   const queryParams = new URLSearchParams(location.search);
   const showBackButton = !!queryParams.get("canGoBack");
+
+  const [isFollowing, setIsFollowing] = useState(
+    user?.followed.some((user) => user === username)
+  );
 
   const isProfileOwner = user ? username === user.username : false;
 
@@ -59,6 +68,55 @@ const Profile = () => {
   const ownerPosts =
     profilePosts.filter((post) => post.owner === username) ?? [];
 
+  const handleFollow = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!profile || !user) return;
+
+    e.stopPropagation();
+    if (!isFollowing) {
+      const response: $ResponseData = await manageFollow(username);
+      if (response.status !== 200) return;
+      setIsFollowing(true);
+
+      setUser((prevUser) => {
+        if (!prevUser) return null;
+        const updatedFollowed = [...(prevUser.followed || []), username!];
+
+        return {
+          ...prevUser,
+          followed: updatedFollowed,
+        };
+      });
+
+      profile.followers.push(user.username);
+
+      setProfile({ ...profile });
+    }
+
+    if (isFollowing) {
+      const response: $ResponseData = await manageUnfollow(username);
+      if (response.status !== 200) return;
+      setIsFollowing(false);
+
+      setUser((prevUser) => {
+        if (!prevUser) return null;
+        const updatedFollowed = prevUser.followed.filter(
+          (user) => user !== username
+        );
+
+        return {
+          ...prevUser,
+          followed: updatedFollowed,
+        };
+      });
+
+      if (!profile) return;
+      profile.followers = profile.followers.filter((u) => u !== user?.username);
+
+      setProfile({ ...profile });
+      return;
+    }
+  };
+
   return profile ? (
     <styled.Container>
       <h1>Profile Overview | {profile.username}</h1>
@@ -83,9 +141,18 @@ const Profile = () => {
             Followed
           </h3>
         </section>
-        {isProfileOwner && (
+        {isProfileOwner ? (
           <section className="profile-actions">
             <Link to="/explore">Add friends</Link>
+          </section>
+        ) : (
+          <section className="profile-actions">
+            <button
+              className={isFollowing ? "filled" : ""}
+              onClick={handleFollow}
+            >
+              {isFollowing ? "Already following" : "Follow"}
+            </button>
           </section>
         )}
       </div>
