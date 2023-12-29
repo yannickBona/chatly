@@ -102,7 +102,10 @@ const ReplyForm = ({
           }}
         >
           <button onClick={() => setCommentReply(null)}>Cancel</button>
-          <Button text="Reply" disabled={!content} />
+          <Button
+            text="Reply"
+            disabled={!content.replace(`@${comment.owner}`, "").trim()}
+          />
         </div>
       </EditForm>
     </div>

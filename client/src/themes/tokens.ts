@@ -44,3 +44,10 @@ export const shadows: { [key in shadowsEnum]: string } = {
   lg: "0 10px 10px -4px rgba(18, 20, 20, 0.12), 0 14px 28px 0 rgba(18, 20, 20, 0.12)",
   xl: "0 15px 12px -6px rgba(57, 62, 70, 0.08), 0 19px 38px 0 rgba(57, 62, 70, 0.12)",
 };
+
+enum breakpointsEnum {
+  mobile = "mobile",
+}
+export const breakpoints: { [key in breakpointsEnum]: string } = {
+  mobile: "700px",
+};

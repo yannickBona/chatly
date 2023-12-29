@@ -1,11 +1,13 @@
 import styled from "styled-components";
-import { colors } from "../../themes/tokens";
+import { breakpoints, colors } from "../../themes/tokens";
 
 const Container = styled.div`
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1.5rem;
+  padding: 3rem 1rem;
   position: relative;
 
 
@@ -18,6 +20,8 @@ const Container = styled.div`
       text-decoration: none;
       color: ${colors.black};
       position: relative;
+      width: 80%;
+      
 
       :hover{
         border: 1px solid ${colors.neutral}
@@ -41,6 +45,15 @@ const Container = styled.div`
         :hover{
             transform: scale(1.1)
         }
+    }
+  }
+
+
+  @media (max-width: ${breakpoints.mobile}){
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    .post-card{
+      width: 100%;
     }
   }
 `;

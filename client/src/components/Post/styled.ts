@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../themes/tokens";
+import { breakpoints, colors } from "../../themes/tokens";
 
 const Container = styled.div`
   background: ${colors.white};
@@ -82,6 +82,11 @@ const Container = styled.div`
 
   .profile-link:has(i):hover {
     color: red;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    .owner {
+      flex-wrap: wrap;
   }
 `;
 
