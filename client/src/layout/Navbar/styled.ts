@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors, shadows } from "../../themes/tokens";
+import { breakpoints, colors, shadows } from "../../themes/tokens";
 
 const Container = styled.nav`
   background: ${colors.white};
@@ -12,6 +12,11 @@ const Container = styled.nav`
   justify-content: space-between;
   align-items: center;
   z-index: 99999;
+
+  .hamburger {
+    height: 2rem;
+    width: 2rem;
+  }
 
   .logo {
     display: flex;
@@ -54,6 +59,39 @@ const Container = styled.nav`
 
     :hover a:not(:hover) {
       opacity: 0.4;
+    }
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    padding: 1rem;
+    z-index: 10;
+    background: ${colors.white};
+
+    .nav-options {
+      position: absolute;
+      top: 5rem;
+      left: 0;
+      width: 100%;
+      z-index: -1;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      max-height: 0;
+      background: ${colors.white};
+
+      a {
+        display: none;
+      }
+
+      &:is(.expanded) {
+        padding-block: 1rem;
+        box-shadow: ${shadows.md};
+        max-height: 700px;
+
+        a {
+          display: block;
+        }
+      }
     }
   }
 `;

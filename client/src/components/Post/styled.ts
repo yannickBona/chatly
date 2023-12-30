@@ -85,8 +85,12 @@ const Container = styled.div`
   }
 
   @media (max-width: ${breakpoints.mobile}) {
+    h1 {
+      font-size: 1.5rem;
+    }
     .owner {
       flex-wrap: wrap;
+    }
   }
 `;
 

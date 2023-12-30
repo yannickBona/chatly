@@ -49,5 +49,5 @@ enum breakpointsEnum {
   mobile = "mobile",
 }
 export const breakpoints: { [key in breakpointsEnum]: string } = {
-  mobile: "700px",
+  mobile: "850px",
 };

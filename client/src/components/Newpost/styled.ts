@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../themes/tokens";
+import { breakpoints, colors } from "../../themes/tokens";
 
 const Container = styled.form<{ showForm: boolean }>`
   // transform: ${({ showForm }) => (showForm ? "scale(1)" : "scale(0)")};
@@ -63,6 +63,10 @@ const Container = styled.form<{ showForm: boolean }>`
     :active:not([disabled]) {
       transform: scale(0.95);
     }
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 95%;
   }
 `;
 

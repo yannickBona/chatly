@@ -6,6 +6,6 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  margin-top: 2rem;
+  margin-block: 2rem;
 `;
 export default { Container };
