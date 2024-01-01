@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../themes/tokens";
+import { breakpoints, colors } from "../../themes/tokens";
 
 export const StyledModal = styled.div`
   background: rgba(0, 0, 0, 0.6);
@@ -42,6 +42,11 @@ export const StyledModalContainer = styled.div`
       transform: scale(1);
     }
   }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    max-width: 90vw;
+    max-height: fit-content;
+  }
 `;
 
 export const StyledModalHeader = styled.header`
@@ -73,6 +78,18 @@ export const StyledModalHeader = styled.header`
     width: 1.5rem;
     color: ${colors.black};
   }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    .title {
+      font-size: 1.25rem;
+    }
+
+    svg {
+      height: 1.25rem;
+      width: 1.25rem;
+      color: ${colors.black};
+    }
+  }
 `;
 export const StyledModalContent = styled.main`
   display: flex;
@@ -83,7 +100,13 @@ export const StyledModalContent = styled.main`
   max-height: 80vh;
   overflow-y: auto;
   padding: 2rem 1rem;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    max-height: fit-content;
+    display: table-cell;
+  }
 `;
+
 export const StyledModalFooter = styled.footer`
   display: flex;
   padding: 1rem;
