@@ -10,7 +10,7 @@ This repository contains a full-stack web application built from scratch using R
 
 The project includes the following key features, all developed from scratch:
 
-- **JWT Authentication**: Implements a secure authentication system using JSON Web Tokens (JWT) with session token refresh functionality: each JWT is signed by the Server with its own secret and stored on the localStorage, expiring every 7 days. A refreshToken HTTP Only cookie (expires every 30d) is stored on the user's browser and is used to generate a new accessToken automatically every 7 days;
+- **JWT Authentication**: Implements a secure authentication system using JSON Web Tokens (JWT) with session token refresh functionality: each JWT is signed by the Server with its own secret and stored on the user's localStorage, expiring every 7 days. A refreshToken HTTP Only cookie (expires every 30d and isgned witha  different secret) is also stored on the user's browser and is used to generate a new accessToken automatically every 7 days;
 - **Enhanced Password Encryption**: Utilizes a robust hashing algorithm in conjunction with SALTS to ensure the secure storage of passwords in the database.
 - **Node.js**: Utilizes various Node.js features such as routing, middlewares, Mongoose, Express, and TypeScript for server-side development;
 - **NoSQL**: Integrates NoSQL databases, specifically MongoDB, to handle data storage and retrieval efficiently;
