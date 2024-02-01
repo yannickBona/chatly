@@ -123,7 +123,7 @@ const PostPage: React.FC = () => {
         {currentPost.comments
           .map((comment: IComment) => (
             <div className="comment" key={comment._id}>
-              <div>
+              <div className="comment_info">
                 <span className="comment__user-avatar">
                   {comment.owner ? (
                     <Link to={`/profile/${comment.owner}`}>

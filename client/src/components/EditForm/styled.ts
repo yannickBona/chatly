@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../themes/tokens";
+import { breakpoints, colors } from "../../themes/tokens";
 
 export const EditForm = styled.form<{ isComment: boolean }>`
   display: flex;

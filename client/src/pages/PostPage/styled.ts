@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../themes/tokens";
+import { breakpoints, colors } from "../../themes/tokens";
 
 const Container = styled.div`
   width: 80%;
@@ -17,6 +17,19 @@ const Container = styled.div`
     top: 10rem;
     cursor: pointer;
     z-index: 1;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 100%;
+    padding: 0;
+    margin-block: 2rem;
+    margin-bottom: 8rem;
+
+    .back-button {
+      top: unset;
+      left: 1rem;
+      bottom: 2rem;
+    }
   }
 `;
 
@@ -110,6 +123,22 @@ const CommentsSection = styled.div`
   h3 {
     align-self: flex-start;
     font-size: 2rem;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    padding: 1rem 0.5rem;
+
+    .comment__user-avatar {
+      padding: 0;
+    }
+
+    .comment_info {
+      line-height: 2.5rem;
+
+      .comment__date {
+        display: block;
+      }
+    }
   }
 `;
 

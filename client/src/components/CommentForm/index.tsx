@@ -49,7 +49,7 @@ const CommentForm = () => {
         onChange={(e) => setComment(e.currentTarget.value)}
         value={comment}
         placeholder="What are your thoughts?"
-      ></textarea>
+      />
       <button disabled={!comment}>Comment</button>
     </styled.Container>
   );

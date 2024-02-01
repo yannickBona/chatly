@@ -69,7 +69,7 @@ const ReplyForm = ({
 
   return (
     <div className="comment" key={comment._id}>
-      <div>
+      <div className="comment_info">
         <span className="comment__user-avatar">
           <AiOutlineUser />
         </span>

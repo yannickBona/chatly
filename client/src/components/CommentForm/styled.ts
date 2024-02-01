@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../themes/tokens";
+import { breakpoints, colors } from "../../themes/tokens";
 
 const Container = styled.form`
   display: flex;
@@ -43,6 +43,15 @@ const Container = styled.form`
 
     :active:not([disabled]) {
       transform: scale(0.95);
+    }
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    flex-direction: column;
+
+    button {
+      padding: 0.5rem;
+      height: auto;
     }
   }
 `;
